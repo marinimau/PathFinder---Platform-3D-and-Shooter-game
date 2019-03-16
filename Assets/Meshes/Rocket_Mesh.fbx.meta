@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 944e2f404abdc5a468150ffbab18da5e
+guid: ccb54992a133cdd46bc0bbe378b0078d
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -220,22 +220,7 @@ ModelImporter:
     4300002: Rocket
     9500000: //RootNode
     13700000: Rocket
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Body
-    second: {fileID: 2100000, guid: 93d7b58b043c32844819dd9a7588c914, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Head
-    second: {fileID: 2100000, guid: 36bc7e13c901ec648ae3c86f016df1eb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: HeadAlpha
-    second: {fileID: 2100000, guid: 36bc7e13c901ec648ae3c86f016df1eb, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -245,7 +230,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
