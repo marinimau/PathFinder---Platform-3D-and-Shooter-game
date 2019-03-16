@@ -555,3 +555,7 @@ Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
 Library/ScriptAssemblies/Unity.TextMeshPro.pdb
 Library/shadercompiler-UnityShaderCompiler.exe0.log
 *.dwlt
+*.dwlt
+*.dwlt
+*.dwlt
+Library/CurrentLayout.dwlt
