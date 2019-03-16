@@ -559,3 +559,8 @@ Library/shadercompiler-UnityShaderCompiler.exe0.log
 *.dwlt
 *.dwlt
 Library/CurrentLayout.dwlt
+*.dwlt
+Assets/Scenes/Test.unity
+Library/assetDatabase3
+Library/CurrentLayout.dwlt
+Library/StateCache/SceneView/02f5e7-mainStage.json
