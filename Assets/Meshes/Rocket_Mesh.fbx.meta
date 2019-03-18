@@ -220,7 +220,22 @@ ModelImporter:
     4300002: Rocket
     9500000: //RootNode
     13700000: Rocket
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 93d7b58b043c32844819dd9a7588c914, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Head
+    second: {fileID: 2100000, guid: 36bc7e13c901ec648ae3c86f016df1eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeadAlpha
+    second: {fileID: 2100000, guid: 36bc7e13c901ec648ae3c86f016df1eb, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -230,7 +245,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
