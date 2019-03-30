@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f4b9dfb8330f49544a8655edce967a1c
+guid: db6ed57192a2fe34c8be4a782c357e35
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -204,6 +204,7 @@ ModelImporter:
     7400000: CINEMA_4D_Main
     9500000: //RootNode
     13700000: mesh
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -216,7 +217,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
+      Ensure both rig type match\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -281,7 +283,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
