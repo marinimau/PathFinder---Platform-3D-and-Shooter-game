@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
+    public float WaitTime = 0.5f;
 
     public float walkSpeed = 2;
     public float runSpeed = 6;
@@ -22,6 +24,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     float airTime;
     bool isJumping;
+    float staticJumpBuff;
 
     Animator animator;
     Transform cameraT;
@@ -41,11 +44,20 @@ public class CharacterControllerScript : MonoBehaviour
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
 
-        if (Input.GetAxis("Jump") > 0)
+        if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
         {
-            Jump();
-            animator.SetBool("Jumping", true);
+            animator.SetBool("jumpStatic", true);
+            StartCoroutine("Jump_Static_Land", WaitTime);
 
+        }
+        else
+        {
+            if (Input.GetAxis("Jump") > 0)
+            {
+                Jump();
+                animator.SetBool("Jumping", true);
+
+            }
         }
 
         //input per movimento
@@ -78,6 +90,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (controller.isGrounded)
         {
             animator.SetBool("Jumping", false);
+
             velocityY = 0;
             airTime = 0;
             animator.SetBool("airTime", false);
@@ -93,7 +106,7 @@ public class CharacterControllerScript : MonoBehaviour
                 animator.SetBool("airTime", true);
             }
 
-            if(airTime > 0 && isJumping == false)
+            if (airTime > 0 && isJumping == false)
             {
                 animator.SetBool("airTime", true);
             }
@@ -126,4 +139,15 @@ public class CharacterControllerScript : MonoBehaviour
 
         return smoothTime / airControlPercent;
     }
+
+    IEnumerator Jump_Static_Land(float Count)
+    {
+        yield return new WaitForSeconds(Count);
+        Jump();
+        yield return new WaitForSeconds(Count);
+        animator.SetBool("jumpStatic", false);
+                                                
+        yield return null;
+    }
+
 }
