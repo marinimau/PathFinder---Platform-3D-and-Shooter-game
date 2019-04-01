@@ -79,6 +79,7 @@ public class MainMenuNew : MonoBehaviour {
 			SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 		}
 	}
+    
 
 	public void  DisablePlayCampaign (){
 		continueBtn.gameObject.SetActive(false);
