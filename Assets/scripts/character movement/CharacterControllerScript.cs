@@ -30,6 +30,9 @@ public class CharacterControllerScript : MonoBehaviour
     Transform cameraT;
     CharacterController controller;
 
+    //TEST
+    public GameObject target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,7 +109,7 @@ public class CharacterControllerScript : MonoBehaviour
                 animator.SetBool("airTime", true);
             }
 
-            if (airTime > 0 && isJumping == false)
+            if (airTime > 0.3f && isJumping == false)
             {
                 animator.SetBool("airTime", true);
             }
