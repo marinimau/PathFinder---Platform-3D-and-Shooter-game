@@ -32,6 +32,7 @@ public class CharacterControllerScript : MonoBehaviour
     Transform cameraT;
     CharacterController controller;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,7 @@ public class CharacterControllerScript : MonoBehaviour
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
         if (Input.GetButton("Fire2")){
+
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
                 animator.SetBool("jumpStatic", true);

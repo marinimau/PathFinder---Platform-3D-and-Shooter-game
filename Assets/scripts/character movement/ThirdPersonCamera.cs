@@ -8,7 +8,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float mouseSensitivity = 10;
     public Transform target;
     public float distanceFromTarget = 2.0f;
-    public float distanceFromTargetInAiming = 2.0f;
+    public float distanceFromTargetInAiming = 1.0f;
     public Vector2 pitchMinMax = new Vector2(-40, 85);
 
     public float rotationSmoothTime = 0.12f;
@@ -31,28 +31,35 @@ public class ThirdPersonCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Input.GetButton("Fire2")){
+        if (Input.GetButton("Fire2"))
+        {
 
-            currentRotation = Vector3.SmoothDamp(target.eulerAngles,currentRotation, ref rotationSmoothVelocity, rotationSmoothTime);
-             transform.eulerAngles = currentRotation;
+            currentRotation = target.localEulerAngles;
+            transform.localEulerAngles = currentRotation;
+            transform.position = target.position - transform.forward * distanceFromTargetInAiming;
 
-             transform.position=target.position - transform.forward * distanceFromTarget;
-
-
-        
-
-
-    } else {
+        }
+        else
+        {
             yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
             pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
             pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
 
-            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+            if (Input.GetButtonUp("Fire2"))
+            {
+                currentRotation = new Vector3(pitch, yaw);
+            }
+            else
+            {
+                currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+            }
+
             transform.eulerAngles = currentRotation;
+
 
             transform.position = target.position - transform.forward * distanceFromTarget;
 
         }
-       
+
     }
 }
