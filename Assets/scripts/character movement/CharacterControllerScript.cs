@@ -148,7 +148,9 @@ public class CharacterControllerScript : MonoBehaviour
     {
     
         Vector3 moveDirection;
-        moveDirection = new Vector3(inputDir.x, 0.0f, inputDir.y);
+
+        velocityY += Time.deltaTime * gravity;
+        moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection = moveDirection * 3;
 
