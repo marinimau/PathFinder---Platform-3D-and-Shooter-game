@@ -14,6 +14,8 @@ public class CharacterControllerScript : MonoBehaviour
     [Range(0, 1)]
     public float airControlPercent;
 
+    public float global_target_rotation = 0.0f;
+
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
 
@@ -39,31 +41,56 @@ public class CharacterControllerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
+        bool running = Input.GetKey(KeyCode.LeftShift);
+
+
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
-
-        if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
-        {
-            animator.SetBool("jumpStatic", true);
-            StartCoroutine("Jump_Static_Land", WaitTime);
-
-        }
-        else
-        {
-            if (Input.GetAxis("Jump") > 0)
+        if (Input.GetButton("Fire2")){
+            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
-                Jump();
-                animator.SetBool("Jumping", true);
+                animator.SetBool("jumpStatic", true);
+                StartCoroutine("Jump_Static_Land", WaitTime);
 
             }
+            else
+            {
+                if (Input.GetAxis("Jump") > 0)
+                {
+                    Jump();
+                    animator.SetBool("Jumping", true);
+
+                }
+            }
+
+            MoveWhileAiming(inputDir, running);
+
         }
+        else{
+       
 
-        //input per movimento
-        bool running = Input.GetKey(KeyCode.LeftShift);
-        Move(inputDir, running);
+            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            {
+                animator.SetBool("jumpStatic", true);
+                StartCoroutine("Jump_Static_Land", WaitTime);
 
+            }
+            else
+            {
+                if (Input.GetAxis("Jump") > 0)
+                {
+                    Jump();
+                    animator.SetBool("Jumping", true);
+
+                }
+            }
+
+            //input per movimento
+            Move(inputDir, running);
+
+
+        }
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
         animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
@@ -75,6 +102,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
+            global_target_rotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
         }
 
@@ -114,6 +142,46 @@ public class CharacterControllerScript : MonoBehaviour
         }
 
     }
+
+
+    void MoveWhileAiming(Vector2 inputDir, bool running)
+    {
+    
+        Vector3 moveDirection;
+        moveDirection = new Vector3(inputDir.x, 0.0f, inputDir.y);
+        moveDirection = transform.TransformDirection(moveDirection);
+        moveDirection = moveDirection * 3;
+
+
+        controller.Move(moveDirection * Time.deltaTime);
+
+        if (controller.isGrounded)
+        {
+            animator.SetBool("Jumping", false);
+
+            velocityY = 0;
+            airTime = 0;
+            animator.SetBool("airTime", false);
+            isJumping = false;
+        }
+
+        if (!controller.isGrounded)
+        {
+            airTime += Time.deltaTime;
+
+            if (airTime > 1.2f && isJumping == true)
+            {
+                animator.SetBool("airTime", true);
+            }
+
+            if (airTime > 0 && isJumping == false)
+            {
+                animator.SetBool("airTime", true);
+            }
+
+        }
+    }
+
 
     void Jump()
     {
