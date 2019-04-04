@@ -16,8 +16,6 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 currentRotation;
 
 
-
-
     float yaw;
     float pitch;
 
@@ -34,13 +32,17 @@ public class ThirdPersonCamera : MonoBehaviour
     void LateUpdate()
     {
         if(Input.GetButton("Fire2")){
-            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(target.rotation.x, target.rotation.y, target.rotation.z), ref rotationSmoothVelocity, rotationSmoothTime);
-            transform.eulerAngles = currentRotation;
 
-            transform.position=target.position - transform.forward.normalized * distanceFromTarget;
+            currentRotation = Vector3.SmoothDamp(currentRotation,target.eulerAngles, ref rotationSmoothVelocity, rotationSmoothTime);
+             transform.eulerAngles = currentRotation;
+
+             transform.position=target.position - transform.forward * distanceFromTarget;
 
 
-        } else {
+        
+
+
+    } else {
             yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
             pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
             pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
