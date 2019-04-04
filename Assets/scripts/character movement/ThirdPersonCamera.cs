@@ -33,7 +33,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if(Input.GetButton("Fire2")){
 
-            currentRotation = Vector3.SmoothDamp(currentRotation,target.eulerAngles, ref rotationSmoothVelocity, rotationSmoothTime);
+            currentRotation = Vector3.SmoothDamp(target.eulerAngles,currentRotation, ref rotationSmoothVelocity, rotationSmoothTime);
              transform.eulerAngles = currentRotation;
 
              transform.position=target.position - transform.forward * distanceFromTarget;
