@@ -70,7 +70,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         }
         else{
-       
+
 
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
@@ -136,7 +136,7 @@ public class CharacterControllerScript : MonoBehaviour
                 animator.SetBool("airTime", true);
             }
 
-            if (airTime > 0 && isJumping == false)
+            if (airTime > 0.3f && isJumping == false)
             {
                 animator.SetBool("airTime", true);
             }
@@ -148,7 +148,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     void MoveWhileAiming(Vector2 inputDir, bool running)
     {
-    
+
         Vector3 moveDirection;
 
         velocityY += Time.deltaTime * gravity;
@@ -218,7 +218,7 @@ public class CharacterControllerScript : MonoBehaviour
         Jump();
         yield return new WaitForSeconds(Count);
         animator.SetBool("jumpStatic", false);
-                                                
+
         yield return null;
     }
 
