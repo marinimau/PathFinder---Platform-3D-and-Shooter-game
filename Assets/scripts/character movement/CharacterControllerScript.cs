@@ -33,6 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     CharacterController controller;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -221,5 +222,6 @@ public class CharacterControllerScript : MonoBehaviour
 
         yield return null;
     }
+
 
 }

@@ -37,7 +37,7 @@ public class ThirdPersonCamera : MonoBehaviour
             currentRotation = target.localEulerAngles;
             transform.localEulerAngles = currentRotation;
             transform.position = target.position - transform.forward * distanceFromTargetInAiming;
-
+            currentRotation = new Vector3(pitch, yaw);
         }
         else
         {
