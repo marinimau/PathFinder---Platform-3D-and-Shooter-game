@@ -5,6 +5,7 @@ public class GunScript : MonoBehaviour
     public float damage = 10f;
     public float range = 100f;
     public GameObject pistol;
+    public AudioSource gunfire;
 
 
     void Update()
@@ -21,9 +22,11 @@ public class GunScript : MonoBehaviour
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.right, out hit, range))
         {
+            gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.right * 10, Color.green);
             Debug.Log(hit.transform.name);
         }
 
     }
+
 }

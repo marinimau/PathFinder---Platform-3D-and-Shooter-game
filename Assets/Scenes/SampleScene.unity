@@ -600,7 +600,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300010, guid: db6ed57192a2fe34c8be4a782c357e35, type: 3}
   m_Bones:
@@ -1402,7 +1402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648386760}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.214, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 648152336}
@@ -3211,10 +3211,11 @@ MonoBehaviour:
   gravity: -12
   jumpHeight: 1
   airControlPercent: 0
-  global_target_rotation: 0
   turnSmoothTime: 0.2
   speedSmoothTime: 0.1
+  mouseSensitivity: 10
   pitchMinMax: {x: -40, y: 85}
+  flag: 0
 --- !u!1 &648386930
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,3 +3819,4 @@ MonoBehaviour:
   damage: 10
   range: 100
   pistol: {fileID: 1931055699}
+  gunfire: {fileID: 0}

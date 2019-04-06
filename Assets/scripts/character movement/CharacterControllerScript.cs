@@ -14,29 +14,30 @@ public class CharacterControllerScript : MonoBehaviour
     [Range(0, 1)]
     public float airControlPercent;
 
-    public float global_target_rotation = 0.0f;
 
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
 
     public float speedSmoothTime = 0.1f;
-    public float speedSmoothVelocity;
-    public float currentSpeed;
-    public float velocityY;
+    float speedSmoothVelocity;
+    float currentSpeed;
+    float velocityY;
 
     public int mouseSensitivity = 10;
 
-    public float airTime;
-    public bool isJumping;
-    public float staticJumpBuff;
+    float airTime;
+    bool isJumping;
+    float staticJumpBuff;
 
     Animator animator;
     Transform cameraT;
     CharacterController controller;
 
     public Vector2 pitchMinMax = new Vector2(-40, 85);
-    public float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
+    float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
     public Boolean flag = false;
+
+    float targetSpeed;
 
 
     // Start is called before the first frame update
@@ -79,7 +80,8 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
-            if(flag){
+            if (flag)
+            {
                 transform.localEulerAngles = new Vector3(0, lastRotation, 0);
                 flag = false;
             }
@@ -116,11 +118,10 @@ public class CharacterControllerScript : MonoBehaviour
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
-            global_target_rotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
         }
 
-        float targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
 
         velocityY += Time.deltaTime * gravity;      //velocità asse y calcolata a parte.
@@ -161,10 +162,9 @@ public class CharacterControllerScript : MonoBehaviour
     void MoveWhileAiming(Vector2 inputDir, bool running)
     {
 
-
         Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-       //float max = 0, min = 0;
+        //float max = 0, min = 0;
 
         if (inputMouse.x != 0)
         {
@@ -177,29 +177,37 @@ public class CharacterControllerScript : MonoBehaviour
 
         }
 
-        if (inputMouse.y != 0 && ((transform.eulerAngles.x - inputMouse.y * mouseSensitivity) >= float.MinValue 
-            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity < 45) 
-            || (transform.eulerAngles.x - inputMouse.y * mouseSensitivity >= 320 
+        if (inputMouse.y != 0 && ((transform.eulerAngles.x - inputMouse.y * mouseSensitivity) >= float.MinValue
+            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity < 45)
+            || (transform.eulerAngles.x - inputMouse.y * mouseSensitivity >= 320
             && transform.eulerAngles.x - inputMouse.y * mouseSensitivity <= float.MaxValue))
         {
             //rotazioni sull'asse x
-            Debug.Log("Angolo" + transform.localEulerAngles.x);
             transform.Rotate(new Vector3(-inputMouse.y * mouseSensitivity, 0, 0));
-        }
-        else
-        {
-          
+
         }
 
         Vector3 moveDirection;
-
+        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
+        Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
         moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
         moveDirection = transform.TransformDirection(moveDirection);
-        moveDirection = moveDirection * 3;
+        if(running == false)
+        {
+            moveDirection = moveDirection * walkSpeed;
+        }
+        else
+        {
+            moveDirection = moveDirection * runSpeed;
+        }
+        
 
 
         controller.Move(moveDirection * Time.deltaTime);
+
+        currentSpeed = new Vector2(controller.velocity.x, controller.velocity.z).magnitude;
 
         if (controller.isGrounded)
         {

@@ -16,6 +16,8 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 rotationSmoothVelocity;
     Vector3 currentRotation;
 
+    Vector3 currentVelocity;
+
 
     float yaw;
     float pitch;
@@ -37,7 +39,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
             currentRotation = target_aim.localEulerAngles;
             transform.localEulerAngles = currentRotation;
-            transform.position = target_aim.position - transform.forward * distanceFromTargetInAiming;
+            transform.position = Vector3.SmoothDamp(transform.position, target_aim.position - transform.forward * distanceFromTargetInAiming, ref currentVelocity, rotationSmoothTime);
 
         }
         else
