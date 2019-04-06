@@ -32,6 +32,9 @@ public class CharacterControllerScript : MonoBehaviour
     Transform cameraT;
     CharacterController controller;
 
+    public Vector2 pitchMinMax = new Vector2(-40, 85);
+    float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,14 +45,16 @@ public class CharacterControllerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(){
-        bool running = Input.GetKey(KeyCode.LeftShift);
+    void Update()
+    {
 
+        bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
-        if (Input.GetButton("Fire2")){
 
+        if (Input.GetButton("Fire2"))
+        {
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
                 animator.SetBool("jumpStatic", true);
@@ -69,7 +74,8 @@ public class CharacterControllerScript : MonoBehaviour
             MoveWhileAiming(inputDir, running);
 
         }
-        else{
+        else
+        {
 
 
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
@@ -148,6 +154,19 @@ public class CharacterControllerScript : MonoBehaviour
 
     void MoveWhileAiming(Vector2 inputDir, bool running)
     {
+
+
+        Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+        float max = 0, min = 0;
+
+        if (inputMouse.x != 0 && inputMouse.y != 0)
+        {
+
+            lastRotation = transform.rotation.x;
+            transform.Rotate(new Vector3(0, inputMouse.x, 0));
+
+        }
 
         Vector3 moveDirection;
 
