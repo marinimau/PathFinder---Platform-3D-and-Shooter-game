@@ -7,6 +7,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public bool lockCursor;
     public float mouseSensitivity = 10;
     public Transform target;
+    public Transform target_aim;
     public float distanceFromTarget = 2.0f;
     public float distanceFromTargetInAiming = 1.0f;
     public Vector2 pitchMinMax = new Vector2(-40, 85);
@@ -34,9 +35,9 @@ public class ThirdPersonCamera : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
 
-            currentRotation = target.localEulerAngles;
+            currentRotation = target_aim.localEulerAngles;
             transform.localEulerAngles = currentRotation;
-            transform.position = target.position - transform.forward * distanceFromTargetInAiming;
+            transform.position = target_aim.position - transform.forward * distanceFromTargetInAiming;
 
         }
         else
