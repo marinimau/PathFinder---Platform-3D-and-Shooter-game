@@ -20,20 +20,23 @@ public class CharacterControllerScript : MonoBehaviour
     float turnSmoothVelocity;
 
     public float speedSmoothTime = 0.1f;
-    float speedSmoothVelocity;
-    float currentSpeed;
-    float velocityY;
+    public float speedSmoothVelocity;
+    public float currentSpeed;
+    public float velocityY;
 
-    float airTime;
-    bool isJumping;
-    float staticJumpBuff;
+    public int mouseSensitivity = 10;
+
+    public float airTime;
+    public bool isJumping;
+    public float staticJumpBuff;
 
     Animator animator;
     Transform cameraT;
     CharacterController controller;
 
     public Vector2 pitchMinMax = new Vector2(-40, 85);
-    float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
+    public float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
+    public Boolean flag = false;
 
 
     // Start is called before the first frame update
@@ -76,7 +79,10 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
-
+            if(flag){
+                transform.localEulerAngles = new Vector3(0, lastRotation, 0);
+                flag = false;
+            }
 
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
@@ -158,14 +164,23 @@ public class CharacterControllerScript : MonoBehaviour
 
         Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-        float max = 0, min = 0;
+       //float max = 0, min = 0;
 
-        if (inputMouse.x != 0 && inputMouse.y != 0)
+        if (inputMouse.x != 0)
         {
 
-            lastRotation = transform.rotation.x;
-            transform.Rotate(new Vector3(0, inputMouse.x, 0));
+            //rotazione sull'asse y
+            transform.Rotate(new Vector3(0, inputMouse.x * mouseSensitivity, 0), Space.World);
+            lastRotation = transform.eulerAngles.y;
+            flag = true;
 
+
+        }
+        
+        if(inputMouse.y != 0 && (true)){
+            //rotazioni sull'asse x
+            Debug.Log("Angolo"+transform.localEulerAngles.x* Mathf.Rad2Deg);
+            transform.Rotate(new Vector3(-inputMouse.y*mouseSensitivity, 0, 0));
         }
 
         Vector3 moveDirection;
