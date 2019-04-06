@@ -176,11 +176,19 @@ public class CharacterControllerScript : MonoBehaviour
 
 
         }
-        
-        if(inputMouse.y != 0 && (true)){
+
+        if (inputMouse.y != 0 && ((transform.eulerAngles.x - inputMouse.y * mouseSensitivity) >= float.MinValue 
+            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity < 45) 
+            || (transform.eulerAngles.x - inputMouse.y * mouseSensitivity >= 320 
+            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity <= float.MaxValue))
+        {
             //rotazioni sull'asse x
-            Debug.Log("Angolo"+transform.localEulerAngles.x* Mathf.Rad2Deg);
-            transform.Rotate(new Vector3(-inputMouse.y*mouseSensitivity, 0, 0));
+            Debug.Log("Angolo" + transform.localEulerAngles.x);
+            transform.Rotate(new Vector3(-inputMouse.y * mouseSensitivity, 0, 0));
+        }
+        else
+        {
+          
         }
 
         Vector3 moveDirection;
