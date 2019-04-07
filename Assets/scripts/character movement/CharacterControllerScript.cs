@@ -162,12 +162,10 @@ public class CharacterControllerScript : MonoBehaviour
         animator.SetBool("airTime", false);
         if (controller.isGrounded && Input.GetAxis("Horizontal") == 0f && Input.GetAxis("Vertical") == 0f)
         {
-            Debug.Log("Gravity ridotta");
             gravity = -1f;
         }
         else
         {
-            Debug.Log("Gravity normale");
             gravity = -12f;
         }
 
