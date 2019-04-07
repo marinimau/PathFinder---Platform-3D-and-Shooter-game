@@ -111,6 +111,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     void Move(Vector2 inputDir, bool running)
     {
+        gravity = -12;
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
