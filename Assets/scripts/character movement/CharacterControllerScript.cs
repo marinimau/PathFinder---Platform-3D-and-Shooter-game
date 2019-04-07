@@ -74,9 +74,7 @@ public class CharacterControllerScript : MonoBehaviour
 
                 }
             }
-
             MoveWhileAiming(inputDir, running);
-
         }
         else
         {
@@ -101,12 +99,10 @@ public class CharacterControllerScript : MonoBehaviour
 
                 }
             }
-
             //input per movimento
             Move(inputDir, running);
-
-
         }
+
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
         animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
@@ -162,19 +158,27 @@ public class CharacterControllerScript : MonoBehaviour
     void MoveWhileAiming(Vector2 inputDir, bool running)
     {
 
+        animator.SetBool("airTime", false);
+        if (controller.isGrounded && Input.GetAxis("Horizontal") == 0f && Input.GetAxis("Vertical") == 0f)
+        {
+            Debug.Log("Gravity ridotta");
+            gravity = -1f;
+        }
+        else
+        {
+            Debug.Log("Gravity normale");
+            gravity = -12f;
+        }
+
         Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
         //float max = 0, min = 0;
-
         if (inputMouse.x != 0)
         {
-
             //rotazione sull'asse y
             transform.Rotate(new Vector3(0, inputMouse.x * mouseSensitivity, 0), Space.World);
             lastRotation = transform.eulerAngles.y;
             flag = true;
-
-
         }
 
         if (inputMouse.y != 0 && ((transform.eulerAngles.x - inputMouse.y * mouseSensitivity) >= float.MinValue
@@ -194,7 +198,8 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
         moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
         moveDirection = transform.TransformDirection(moveDirection);
-        if(running == false)
+
+        if (running == false)
         {
             moveDirection = moveDirection * walkSpeed;
         }
@@ -202,8 +207,6 @@ public class CharacterControllerScript : MonoBehaviour
         {
             moveDirection = moveDirection * runSpeed;
         }
-        
-
 
         controller.Move(moveDirection * Time.deltaTime);
 
@@ -215,25 +218,10 @@ public class CharacterControllerScript : MonoBehaviour
 
             velocityY = 0;
             airTime = 0;
-            animator.SetBool("airTime", false);
+            //animator.SetBool("airTime", false);
             isJumping = false;
         }
 
-        if (!controller.isGrounded)
-        {
-            airTime += Time.deltaTime;
-
-            if (airTime > 1.2f && isJumping == true)
-            {
-                animator.SetBool("airTime", true);
-            }
-
-            if (airTime > 0 && isJumping == false)
-            {
-                animator.SetBool("airTime", true);
-            }
-
-        }
     }
 
 
