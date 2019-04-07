@@ -38,6 +38,7 @@ public class CharacterControllerScript : MonoBehaviour
     public Boolean flag = false;
 
     float targetSpeed;
+    Boolean fire = false;
 
 
     // Start is called before the first frame update
@@ -103,9 +104,24 @@ public class CharacterControllerScript : MonoBehaviour
             Move(inputDir, running);
         }
 
+        if(Input.GetButton("Fire1") && !fire){
+            AnimazioneSparo();
+        }
+
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
         animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
+
+    }
+
+    void AnimazioneSparo(){
+        transform.Rotate(new Vector3(-5, 0, 0));
+        fire = true;
+        float res=0;
+        transform.Rotate(Mathf.SmoothDamp(transform.rotation.x, transform.rotation.x + 5, ref res, 0.05f), transform.rotation.y, transform.rotation.z);
+        //transform.rotation.x = Mathf.SmoothDamp(transform.rotation.x, transform.rotation.x + 5, ref res, 0.3f);
+        //transform.Rotate(new Vector3(-5, 0, 0));
+        //transform.Rotate(new Vector3(1, 0, 0));
 
     }
 
