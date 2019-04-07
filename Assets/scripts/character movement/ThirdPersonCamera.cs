@@ -60,7 +60,7 @@ public class ThirdPersonCamera : MonoBehaviour
                 pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
                 pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
             }
-            
+
             currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
 
             transform.eulerAngles = currentRotation;

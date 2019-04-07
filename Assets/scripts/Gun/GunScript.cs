@@ -11,12 +11,12 @@ public class GunScript : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
