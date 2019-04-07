@@ -14,7 +14,6 @@ public class CharacterControllerScript : MonoBehaviour
     [Range(0, 1)]
     public float airControlPercent;
 
-    public float global_target_rotation = 0.0f;
 
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
@@ -24,6 +23,8 @@ public class CharacterControllerScript : MonoBehaviour
     float currentSpeed;
     float velocityY;
 
+    public int mouseSensitivity = 10;
+
     float airTime;
     bool isJumping;
     float staticJumpBuff;
@@ -31,6 +32,12 @@ public class CharacterControllerScript : MonoBehaviour
     Animator animator;
     Transform cameraT;
     CharacterController controller;
+
+    public Vector2 pitchMinMax = new Vector2(-40, 85);
+    float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
+    public Boolean flag = false;
+
+    float targetSpeed;
 
 
 
@@ -43,14 +50,16 @@ public class CharacterControllerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(){
-        bool running = Input.GetKey(KeyCode.LeftShift);
+    void Update()
+    {
 
+        bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
-        if (Input.GetButton("Fire2")){
 
+        if (Input.GetButton("Fire2"))
+        {
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
                 animator.SetBool("jumpStatic", true);
@@ -66,12 +75,15 @@ public class CharacterControllerScript : MonoBehaviour
 
                 }
             }
-
             MoveWhileAiming(inputDir, running);
-
         }
-        else{
-
+        else
+        {
+            if (flag)
+            {
+                transform.localEulerAngles = new Vector3(0, lastRotation, 0);
+                flag = false;
+            }
 
             if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
@@ -88,12 +100,10 @@ public class CharacterControllerScript : MonoBehaviour
 
                 }
             }
-
             //input per movimento
             Move(inputDir, running);
-
-
         }
+
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
         animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
@@ -102,14 +112,14 @@ public class CharacterControllerScript : MonoBehaviour
 
     void Move(Vector2 inputDir, bool running)
     {
+        gravity = -12;
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
-            global_target_rotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
         }
 
-        float targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
 
         velocityY += Time.deltaTime * gravity;      //velocità asse y calcolata a parte.
@@ -150,15 +160,51 @@ public class CharacterControllerScript : MonoBehaviour
     void MoveWhileAiming(Vector2 inputDir, bool running)
     {
 
-        Vector3 moveDirection;
+        animator.SetBool("airTime", false);
 
+        gravity = controller.isGrounded && Input.GetAxis("Horizontal") <= 0.5f && Input.GetAxis("Vertical") <= 0.5f ? -1f : -12f;
+
+        Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+        //float max = 0, min = 0;
+        if (inputMouse.x != 0)
+        {
+            //rotazione sull'asse y
+            transform.Rotate(new Vector3(0, inputMouse.x * mouseSensitivity, 0), Space.World);
+            lastRotation = transform.eulerAngles.y;
+            flag = true;
+        }
+
+        if (inputMouse.y != 0 && ((transform.eulerAngles.x - inputMouse.y * mouseSensitivity) >= float.MinValue
+            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity < 45)
+            || (transform.eulerAngles.x - inputMouse.y * mouseSensitivity >= 320
+            && transform.eulerAngles.x - inputMouse.y * mouseSensitivity <= float.MaxValue))
+        {
+            //rotazioni sull'asse x
+            transform.Rotate(new Vector3(-inputMouse.y * mouseSensitivity, 0, 0));
+
+        }
+
+        Vector3 moveDirection;
+        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
+        Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
         moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
         moveDirection = transform.TransformDirection(moveDirection);
-        moveDirection = moveDirection * 3;
 
+        if (running == false)
+        {
+            moveDirection = moveDirection * walkSpeed;
+        }
+        else
+        {
+            moveDirection = moveDirection * runSpeed;
+        }
 
         controller.Move(moveDirection * Time.deltaTime);
+
+        currentSpeed = new Vector2(controller.velocity.x, controller.velocity.z).magnitude;
 
         if (controller.isGrounded)
         {
@@ -166,25 +212,10 @@ public class CharacterControllerScript : MonoBehaviour
 
             velocityY = 0;
             airTime = 0;
-            animator.SetBool("airTime", false);
+            //animator.SetBool("airTime", false);
             isJumping = false;
         }
 
-        if (!controller.isGrounded)
-        {
-            airTime += Time.deltaTime;
-
-            if (airTime > 1.2f && isJumping == true)
-            {
-                animator.SetBool("airTime", true);
-            }
-
-            if (airTime > 0 && isJumping == false)
-            {
-                animator.SetBool("airTime", true);
-            }
-
-        }
     }
 
 
