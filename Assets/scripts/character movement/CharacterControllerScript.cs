@@ -160,14 +160,8 @@ public class CharacterControllerScript : MonoBehaviour
     {
 
         animator.SetBool("airTime", false);
-        if (controller.isGrounded && Input.GetAxis("Horizontal") == 0f && Input.GetAxis("Vertical") == 0f)
-        {
-            gravity = -1f;
-        }
-        else
-        {
-            gravity = -12f;
-        }
+
+        gravity = controller.isGrounded && Input.GetAxis("Horizontal") <= 0.5f && Input.GetAxis("Vertical") <= 0.5f ? -1f : -12f;
 
         Vector2 inputMouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
