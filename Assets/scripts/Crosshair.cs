@@ -19,5 +19,12 @@ public class Crosshair : MonoBehaviour
         {
             canvas.enabled = true; 
         }
+
+        else
+        {
+            canvas.enabled = false;
+        }
+
+
     }
 }
