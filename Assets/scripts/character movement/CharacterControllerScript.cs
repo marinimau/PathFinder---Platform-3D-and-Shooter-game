@@ -189,8 +189,11 @@ public class CharacterControllerScript : MonoBehaviour
         targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
+
         Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
         moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
+
+        // Debug.Log(" ");
         moveDirection = transform.TransformDirection(moveDirection);
 
         if (running == false)
