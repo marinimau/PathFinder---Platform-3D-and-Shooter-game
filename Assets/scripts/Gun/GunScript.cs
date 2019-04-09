@@ -8,7 +8,9 @@ public class GunScript : MonoBehaviour
     public Animator anim;
     public AudioSource gunfire;
     public GameObject bulletTex;
-    public int nColpi = 15;
+    public static int nColpi = 14;
+    public static bool armaScarica = false;
+
 
     private void Start()
     {
@@ -17,12 +19,21 @@ public class GunScript : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetButtonDown("Fire1") & nColpi>0)
+        if (nColpi < 0)
         {
-            Shoot();
-        } else {
-            Click();
+            armaScarica = true;
+        }
+
+        if (Input.GetButtonDown("Fire1")){
+            if (!armaScarica)
+            {
+                nColpi=Shoot();
+            }
+            else
+            {
+                Click();
+            }
+
         }
 
         if(Input.GetKey(KeyCode.R)){
@@ -30,7 +41,7 @@ public class GunScript : MonoBehaviour
         }
     }
 
-    void Shoot()
+    int Shoot()
     {
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -47,8 +58,9 @@ public class GunScript : MonoBehaviour
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
         }
-        nColpi--;
-        Debug.Log("Numero colpi: "+nColpi);
+        Debug.Log("Numero colpo: "+(nColpi));
+
+        return nColpi - 1;
 
     }
 
@@ -60,14 +72,16 @@ public class GunScript : MonoBehaviour
     void Reload(){
         //animazione reload
 
-        if(nColpi==0){
+        if(armaScarica){
             //ricarico a arma scarica
-            nColpi = 14;
+            nColpi = 13;
             Debug.Log("reload a arma scarica");
+            armaScarica = false;
         } else {
             //ricarico con un colpo in canna
-            nColpi = 15;
+            nColpi = 14;
             Debug.Log("reload con un colpo ancora in canna");
+            armaScarica = false;
         }
     }
 
