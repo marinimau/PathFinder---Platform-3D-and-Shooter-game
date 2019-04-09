@@ -85,4 +85,7 @@ public class GunScript : MonoBehaviour
         }
     }
 
+    public static bool getArmaScarica(){
+        return armaScarica;
+    }
 }
