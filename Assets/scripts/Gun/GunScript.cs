@@ -21,13 +21,28 @@ public class GunScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1") & nColpi>0)
         {
             Shoot();
-        } else {
-            Click();
         }
 
-        if(Input.GetKey(KeyCode.R)){
-            Reload();
+        if (nColpi == 0)
+        {
+            Click();
+
+            if (Input.GetKey(KeyCode.R))
+            {
+                Reload();
+            }
         }
+
+       if (nColpi > 0)
+        {
+            if (Input.GetKey(KeyCode.R))
+            {
+                Reload();
+            }
+
+        }
+
+
     }
 
     void Shoot()
@@ -54,21 +69,18 @@ public class GunScript : MonoBehaviour
 
     void Click(){
         //riproduci suono arma scarica
-        Debug.Log("arma scarica");
+        Debug.Log("Arma Scarica");
     }
 
     void Reload(){
         //animazione reload
 
-        if(nColpi==0){
-            //ricarico a arma scarica
-            nColpi = 14;
-            Debug.Log("reload a arma scarica");
-        } else {
-            //ricarico con un colpo in canna
+        if(nColpi>=0){
+
             nColpi = 15;
-            Debug.Log("reload con un colpo ancora in canna");
+            Debug.Log("Ricarica");
         }
+
     }
 
 }
