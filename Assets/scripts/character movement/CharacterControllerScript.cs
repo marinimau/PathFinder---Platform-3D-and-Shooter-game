@@ -61,7 +61,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            if (Input.GetKeyDown(KeyCode.Space) && currentSpeed <= 0.1f)
             {
                 animator.SetBool("jumpStatic", true);
                 StartCoroutine("Jump_Static_Land", WaitTime);
@@ -71,7 +71,7 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 if (Input.GetAxis("Jump") > 0)
                 {
-                    Jump();
+                    JumpWhileAiming();
                     animator.SetBool("Jumping", true);
 
                 }
@@ -239,6 +239,17 @@ public class CharacterControllerScript : MonoBehaviour
 
 
     void Jump()
+    {
+        if (controller.isGrounded)
+        {
+            float jumpVelocity = Mathf.Sqrt(-2 * gravity * jumpHeight);
+            velocityY = jumpVelocity;
+            isJumping = true;
+        }
+    }
+
+
+    void JumpWhileAiming()
     {
         if (controller.isGrounded)
         {

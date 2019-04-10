@@ -8,29 +8,32 @@ public class GunScript : MonoBehaviour
     public Animator anim;
     public AudioSource gunfire;
     public GameObject bulletTex;
-    public int nColpi = 15;
+    public static int nColpi = 14;
+    public static bool armaScarica = false;
+
 
     private void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
-        if (Input.GetButtonDown("Fire1") & nColpi>0)
+        if (nColpi < 0)
         {
-            Shoot();
+            armaScarica = true;
         }
 
-        if (nColpi == 0)
-        {
-            Click();
-
-            if (Input.GetKey(KeyCode.R))
+        if (Input.GetButtonDown("Fire1")){
+            if (!armaScarica)
             {
-                Reload();
+                nColpi=Shoot();
             }
+            else
+            {
+                Click();
+            }
+
         }
 
        if (nColpi > 0)
@@ -45,14 +48,15 @@ public class GunScript : MonoBehaviour
 
     }
 
-    void Shoot()
+    int Shoot()
     {
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.forward, out hit, range))
         {
-            Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            GameObject clone = Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            Destroy(clone, 10f);
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
             Debug.Log(hit.transform.name);
@@ -62,8 +66,9 @@ public class GunScript : MonoBehaviour
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
         }
-        nColpi--;
-        Debug.Log("Numero colpi: "+nColpi);
+        Debug.Log("Numero colpo: "+(nColpi));
+
+        return nColpi - 1;
 
     }
 
@@ -75,12 +80,21 @@ public class GunScript : MonoBehaviour
     void Reload(){
         //animazione reload
 
-        if(nColpi>=0){
-
-            nColpi = 15;
-            Debug.Log("Ricarica");
+        if(armaScarica){
+            //ricarico a arma scarica
+            nColpi = 13;
+            Debug.Log("reload a arma scarica");
+            armaScarica = false;
+        } else {
+            //ricarico con un colpo in canna
+            nColpi = 14;
+            Debug.Log("reload con un colpo ancora in canna");
+            armaScarica = false;
         }
 
     }
 
+    public static bool getArmaScarica(){
+        return armaScarica;
+    }
 }
