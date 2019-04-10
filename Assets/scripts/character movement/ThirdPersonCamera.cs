@@ -53,11 +53,11 @@ public class ThirdPersonCamera : MonoBehaviour
                 pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
                 flag_mira = !flag_mira;
 
-                /*currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+                currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
 
-                transform.eulerAngles = currentRotation;
+                transform.localEulerAngles = currentRotation;
 
-                transform.position = target.position - transform.forward * distanceFromTarget;*/
+                transform.position = target.position - transform.forward * distanceFromTarget;
             }
 
             if (flag_mira == false)
@@ -66,13 +66,18 @@ public class ThirdPersonCamera : MonoBehaviour
                 pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
                 pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
 
+                currentRotation = new Vector3(pitch, yaw);
+                //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+
+                transform.eulerAngles = currentRotation;
+
+                transform.position = target.position - transform.forward * distanceFromTarget;
+
             }
 
-            currentRotation = new Vector3(pitch, yaw);
+           
 
-            transform.eulerAngles = currentRotation;
 
-            transform.position = target.position - transform.forward * distanceFromTarget;
 
 
         }
