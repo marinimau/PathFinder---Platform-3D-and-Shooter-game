@@ -55,7 +55,7 @@ public class GunScript : MonoBehaviour
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.forward, out hit, range))
         {
-            GameObject clone = Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            GameObject clone=Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
             Destroy(clone, 10f);
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
