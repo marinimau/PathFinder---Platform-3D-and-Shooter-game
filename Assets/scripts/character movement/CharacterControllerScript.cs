@@ -11,6 +11,10 @@ public class CharacterControllerScript : MonoBehaviour
     public float runSpeed = 6;
     public float gravity = -12;
     public float jumpHeight = 1;
+    public float timerJump = 0;
+    public float timeRientroRinculo=2f;
+    public float smooth;
+    Quaternion old_rotation;
     [Range(0, 1)]
     public float airControlPercent;
 
@@ -38,13 +42,14 @@ public class CharacterControllerScript : MonoBehaviour
     public Boolean flag = false;
 
     float targetSpeed;
-    Boolean fire = false;
+    public static Boolean fire = false;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        old_rotation = transform.rotation;
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
@@ -61,7 +66,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            if (Input.GetKeyDown(KeyCode.Space) && currentSpeed <= 0.1f)
+            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
             {
                 animator.SetBool("jumpStatic", true);
                 StartCoroutine("Jump_Static_Land", WaitTime);
@@ -105,9 +110,22 @@ public class CharacterControllerScript : MonoBehaviour
             Move(inputDir, running);
         }
 
-        if(Input.GetButton("Fire1") && !fire){
+        if(Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
+        {
             AnimazioneSparo();
         }
+
+
+        if (fire)
+        {
+            smooth += Time.deltaTime * 4F;
+            transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
+            if (smooth > 1)
+            {
+                fire = false;
+            }
+        }
+
 
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
@@ -116,15 +134,14 @@ public class CharacterControllerScript : MonoBehaviour
     }
 
     void AnimazioneSparo(){
-        transform.Rotate(new Vector3(-5, 0, 0));
-        fire = true;
-        float res=0;
-        transform.Rotate(Mathf.SmoothDamp(transform.rotation.x, transform.rotation.x + 5, ref res, 0.05f), transform.rotation.y, transform.rotation.z);
-        //transform.rotation.x = Mathf.SmoothDamp(transform.rotation.x, transform.rotation.x + 5, ref res, 0.3f);
-        //transform.Rotate(new Vector3(-5, 0, 0));
-        //transform.Rotate(new Vector3(1, 0, 0));
-
+        if(!fire){
+            smooth = 0;
+            old_rotation = transform.rotation;
+            transform.Rotate(new Vector3(-5, 0, 0));
+            fire = true;
+        }
     }
+
 
     void Move(Vector2 inputDir, bool running)
     {
@@ -251,11 +268,12 @@ public class CharacterControllerScript : MonoBehaviour
 
     void JumpWhileAiming()
     {
-        if (controller.isGrounded)
+        if (controller.isGrounded && timerJump<=0)
         {
             float jumpVelocity = Mathf.Sqrt(-2 * gravity * jumpHeight);
-            velocityY = jumpVelocity;
+            velocityY = jumpVelocity/2;
             isJumping = true;
+            timerJump = 0.3f;
         }
     }
 
@@ -277,7 +295,7 @@ public class CharacterControllerScript : MonoBehaviour
     IEnumerator Jump_Static_Land(float Count)
     {
         yield return new WaitForSeconds(Count);
-        Jump();
+        JumpWhileAiming();
         yield return new WaitForSeconds(Count);
         animator.SetBool("jumpStatic", false);
 
