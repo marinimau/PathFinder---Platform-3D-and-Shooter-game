@@ -5,35 +5,27 @@ using UnityEngine.UI;
 
 public class show_reload_popup : MonoBehaviour
 {
-    bool armaScarica = false;
-    static int nColpi = 5;
+
     public GameObject reload_popup;
+    public Text popupText;
+
     // Start is called before the first frame update
     void Start()
     {
+        popupText.text = "";
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(nColpi==0){
-            armaScarica = true;
-        }
-        if(Input.GetButtonDown("Fire1")){
-            if(!armaScarica){
-                nColpi=nColpi-1;
-                Debug.Log("numero di colpi:" + nColpi);
-            } 
-        }
-        if(Input.GetKey(KeyCode.R)){
-            nColpi = 14;
-            armaScarica = false;
-        }
-        if(armaScarica){
-            reload_popup.SetActive(true);
+        if(GunScript.armaScarica){
+            popupText.text = "Reload!";
+
         }
         else{
-            reload_popup.SetActive(false);
+            popupText.text = "";
         }
     }
+
 }
