@@ -14,7 +14,7 @@ public class GunScript : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     void Update()
