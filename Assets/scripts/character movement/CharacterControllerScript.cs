@@ -58,7 +58,7 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       
         bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -66,7 +66,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
             {
                 animator.SetBool("jumpStatic", true);
                 StartCoroutine("Jump_Static_Land", WaitTime);
@@ -268,7 +268,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     void JumpWhileAiming()
     {
-        if (controller.isGrounded && timerJump<=0)
+        if (controller.isGrounded)
         {
             float jumpVelocity = Mathf.Sqrt(-2 * gravity * jumpHeight);
             velocityY = jumpVelocity/2;
