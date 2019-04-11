@@ -14,7 +14,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     public float rotationSmoothTime = 0.12f;
     Vector3 rotationSmoothVelocity;
-    Vector3 currentRotation;
+    Vector3 currentRotation = Vector3.zero;
 
     Vector3 currentVelocity;
 
@@ -38,49 +38,37 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            flag_mira = !flag_mira;
-            currentRotation = target_aim.localEulerAngles;
-            transform.localEulerAngles = currentRotation;
+            Debug.Log("entrato");
+            flag_mira = true;
+            currentRotation = target_aim.eulerAngles;
+            transform.eulerAngles = currentRotation;
             transform.position = Vector3.SmoothDamp(transform.position, target_aim.position - transform.forward * distanceFromTargetInAiming, ref currentVelocity, rotationSmoothTime);
         }
 
-        if (!Input.GetButton("Fire2"))
+        if (Input.GetButtonUp("Fire2"))
         {
             if (flag_mira == true)
             {
                 yaw = transform.forward.x;
                 pitch = transform.forward.y;
                 pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
-                flag_mira = !flag_mira;
-
-                currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
-
-                transform.localEulerAngles = currentRotation;
-
-                transform.position = target.position - transform.forward * distanceFromTarget;
+                flag_mira = false;
             }
 
-            if (flag_mira == false)
-            {
-                yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
-                pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-                pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+        }
 
-                currentRotation = new Vector3(pitch, yaw);
-                //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
-
-                transform.eulerAngles = currentRotation;
-
-                transform.position = target.position - transform.forward * distanceFromTarget;
-
-            }
-
-           
-
-
+        if(flag_mira == false )
+        {
+            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw, 0f), ref rotationSmoothVelocity, rotationSmoothTime);
+            transform.eulerAngles = currentRotation;
+            yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
+            pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+            pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+            transform.position = target.position - transform.forward * distanceFromTarget;
 
 
         }
+
 
     }
 }
