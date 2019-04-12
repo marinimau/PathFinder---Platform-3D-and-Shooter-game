@@ -17,7 +17,7 @@ public class Patrol : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-
+    public bool isLamabile;
 
 
     // Start is called before the first frame update
@@ -31,6 +31,7 @@ public class Patrol : MonoBehaviour
         navMesh.autoBraking = false;
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
+        isLamabile = false;
 
 
         /*------------------------
