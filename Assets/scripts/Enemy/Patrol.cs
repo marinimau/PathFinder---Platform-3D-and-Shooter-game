@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Patrol : MonoBehaviour
 {
-    public float speed;
+    public float speed = 5;
     public Transform[] moveSpots;
     private int randomSpots;
 
     private float waitTime;
     public float startWaitTime;
+
+
+
 
     // Start is called before the first frame update
     void Start()
