@@ -11,6 +11,10 @@ public class CharacterControllerScript : MonoBehaviour
     public float runSpeed = 6;
     public float gravity = -12;
     public float jumpHeight = 1;
+    public float timerJump = 0;
+    public float timeRientroRinculo=2f;
+    public float smooth;
+    Quaternion old_rotation;
     [Range(0, 1)]
     public float airControlPercent;
 
@@ -38,11 +42,14 @@ public class CharacterControllerScript : MonoBehaviour
     public Boolean flag = false;
 
     float targetSpeed;
+    public static Boolean fire = false;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        old_rotation = transform.rotation;
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
@@ -51,7 +58,7 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       
         bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -59,7 +66,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
             {
                 animator.SetBool("jumpStatic", true);
                 StartCoroutine("Jump_Static_Land", WaitTime);
@@ -69,7 +76,7 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 if (Input.GetAxis("Jump") > 0)
                 {
-                    Jump();
+                    JumpWhileAiming();
                     animator.SetBool("Jumping", true);
 
                 }
@@ -103,11 +110,38 @@ public class CharacterControllerScript : MonoBehaviour
             Move(inputDir, running);
         }
 
+        if(Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
+        {
+            AnimazioneSparo();
+        }
+
+
+        if (fire)
+        {
+            smooth += Time.deltaTime * 4F;
+            transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
+            if (smooth > 1)
+            {
+                fire = false;
+            }
+        }
+
+
         //animator
         float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
         animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
 
     }
+
+    void AnimazioneSparo(){
+        if(!fire){
+            smooth = 0;
+            old_rotation = transform.rotation;
+            transform.Rotate(new Vector3(-5, 0, 0));
+            fire = true;
+        }
+    }
+
 
     void Move(Vector2 inputDir, bool running)
     {
@@ -188,8 +222,11 @@ public class CharacterControllerScript : MonoBehaviour
         targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
+
         Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
         moveDirection = new Vector3(inputDir.x, velocityY, inputDir.y);
+
+        // Debug.Log(" ");
         moveDirection = transform.TransformDirection(moveDirection);
 
         if (running == false)
@@ -228,6 +265,18 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
+
+    void JumpWhileAiming()
+    {
+        if (controller.isGrounded)
+        {
+            float jumpVelocity = Mathf.Sqrt(-2 * gravity * jumpHeight);
+            velocityY = jumpVelocity/2;
+            isJumping = true;
+            timerJump = 0.3f;
+        }
+    }
+
     float GetModifiedSmoothTime(float smoothTime)
     {
         if (controller.isGrounded)
@@ -246,11 +295,12 @@ public class CharacterControllerScript : MonoBehaviour
     IEnumerator Jump_Static_Land(float Count)
     {
         yield return new WaitForSeconds(Count);
-        Jump();
+        JumpWhileAiming();
         yield return new WaitForSeconds(Count);
         animator.SetBool("jumpStatic", false);
 
         yield return null;
     }
+
 
 }
