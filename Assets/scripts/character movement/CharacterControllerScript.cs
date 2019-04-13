@@ -19,7 +19,6 @@ public class CharacterControllerScript : MonoBehaviour
     [Range(0, 1)]
     public float airControlPercent;
 
-
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
 
@@ -112,12 +111,12 @@ public class CharacterControllerScript : MonoBehaviour
             Move(inputDir, running);
         }
 
-        /*
+
         if(Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
         {
-            AnimazioneSparo();
-        }*/
-
+            //AnimazioneSparo();
+            Recoil.recoilActive = true;
+        }
 
         if (fire)
         {
