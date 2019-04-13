@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Waypoints
+  - Enemy
+  - BloodP
+  - ZonaLama
   layers:
   - Default
   - TransparentFX
