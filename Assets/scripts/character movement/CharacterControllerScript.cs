@@ -86,6 +86,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
+            
             if (flag)
             {
                 transform.localEulerAngles = new Vector3(0, lastRotation, 0);
@@ -111,10 +112,11 @@ public class CharacterControllerScript : MonoBehaviour
             Move(inputDir, running);
         }
 
+        /*
         if(Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
         {
             AnimazioneSparo();
-        }
+        }*/
 
 
         if (fire)
