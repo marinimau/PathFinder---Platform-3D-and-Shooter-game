@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GunScript : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class GunScript : MonoBehaviour
     public GameObject bulletTex;
     public static int nColpi = 14;
     public static bool armaScarica = false;
+    public GameObject player;
+    Animation animation;
 
 
     private void Start()
     {
-
+        anim = player.GetComponent<Animator>();
     }
 
     void Update()
@@ -39,7 +42,9 @@ public class GunScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            Reload();
+            anim.SetBool("reloading", true);
+            StartCoroutine(OnAnimationComplete("reload_static"));
+            
         }
     }
 
@@ -96,5 +101,16 @@ public class GunScript : MonoBehaviour
     public static bool getArmaScarica()
     {
         return armaScarica;
+    }
+
+    IEnumerator OnAnimationComplete(string name)
+    {
+        float pepega = 2.0f;
+        anim.SetBool("reloading", true);
+        yield return new WaitForSeconds(pepega);
+        anim.SetBool("reloading", false);
+        Reload();
+        yield return true;
+
     }
 }
