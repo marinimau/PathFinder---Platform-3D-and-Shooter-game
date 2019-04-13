@@ -21,7 +21,7 @@ public class ShowMessage : MonoBehaviour
                 message.text = "";
                 break;
             case 1:
-                message.text = "Uccisione silenziosa <T>";
+                message.text = "Uccisione silenziosa <V>";
                 break;
         }
     }

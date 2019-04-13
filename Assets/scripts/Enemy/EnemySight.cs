@@ -9,36 +9,43 @@ using UnityEngine;
 public class EnemySight : MonoBehaviour
 {
 
-    public bool player_contact;
-    public bool light;
+    public static bool player_contact;
 
     // Start is called before the first frame update
     void Start()
     {
         player_contact = false;
-        light = false;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(player_contact && light){
+        if(player_contact){
             Show_stealth_status.icon = 2;
+        } else {
+            if(Light.area_illuminata){
+                Show_stealth_status.icon = 1;
+            } else {
+                Show_stealth_status.icon = 0;
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
         //player
-        if(other.gameObject.name=="thug1"){
-            player_contact = true;
-            Debug.Log(" player_contact " + player_contact);
-        }
-        //luce
-        if (other.gameObject.name == "light")
-        {
-            light = true;
+        if(other.gameObject.name=="thug1" ){
+            if(Show_stealth_status.icon==0){
+                Debug.Log(" player dentro ma non è illuminato ");
+                player_contact = false;
+            } else {
+                player_contact = true;
+                //è per forza nella stessa luce che interseca il cono perchè il controllo lo facciamo quando il player è già nel cono
+                Debug.Log(" player dentro illuminato, player_contact: " + player_contact);
+            }
+
+
         }
 
 
@@ -52,12 +59,6 @@ public class EnemySight : MonoBehaviour
             Debug.Log(" player_contact " + player_contact);
 
         }
-
-        if (other.gameObject.name == "light")
-        {
-            light = false;
-        }
-
 
     }
 

@@ -11,9 +11,8 @@ public class Patrol : MonoBehaviour
     private int randomSpots;
 
     private float waitTime;
-    public float startWaitTime=5;
+    public float startWaitTime=20;
 
-    public bool contact_status=false;
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
@@ -45,7 +44,7 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(!contact_status)
+        if(EnemySight.player_contact)
         {
                 /*------------------------
                  *  se il nemico non ci vede
