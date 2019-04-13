@@ -38,7 +38,6 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            Debug.Log("entrato");
             flag_mira = true;
             currentRotation = target_aim.eulerAngles;
             transform.eulerAngles = currentRotation;

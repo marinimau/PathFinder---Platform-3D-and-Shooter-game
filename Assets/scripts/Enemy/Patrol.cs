@@ -16,6 +16,7 @@ public class Patrol : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
+    public GameObject waypoints;
     public bool isLamabile;
 
 
@@ -31,6 +32,9 @@ public class Patrol : MonoBehaviour
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
         isLamabile = false;
+        waypoints = GameObject.FindGameObjectWithTag("Waypoints");
+        moveSpots = waypoints.GetComponentsInChildren<Transform>();
+        player = GameObject.FindGameObjectWithTag("Player");
 
 
         /*------------------------
@@ -62,7 +66,11 @@ public class Patrol : MonoBehaviour
                      *  vai alla prossima posizione
                      * -----------------------*/
                     //randomSpots =(Random.Range(0, moveSpots.Length);
-                    randomSpots = (randomSpots + 1) % moveSpots.Length;
+                    if (moveSpots.Length == 0) {
+                        randomSpots = 0;
+                    } else {
+                        randomSpots = Random.Range(0, moveSpots.Length);
+                    }
                     waitTime = startWaitTime;
                     navMesh.SetDestination(moveSpots[randomSpots].position);
 
