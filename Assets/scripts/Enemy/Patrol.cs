@@ -97,6 +97,7 @@ public class Patrol : MonoBehaviour
              * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
+            navMesh.stoppingDistance = 5;
         }
 
 

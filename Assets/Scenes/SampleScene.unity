@@ -5264,7 +5264,6 @@ MonoBehaviour:
   - {fileID: 399109667}
   - {fileID: 335238771}
   startWaitTime: 0
-  contact_status: 0
   gravity: -12
   navMesh: {fileID: 0}
   player: {fileID: 648386928}
@@ -7122,4 +7121,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78239729bb34440359a6b9b5eb500e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_contact: 0
