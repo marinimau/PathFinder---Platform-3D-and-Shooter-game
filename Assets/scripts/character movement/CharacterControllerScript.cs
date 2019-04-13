@@ -6,7 +6,8 @@ using UnityEngine;
 public class CharacterControllerScript : MonoBehaviour
 {
     public float WaitTime = 0.5f;
-
+    float standard_walkspeed = 2;
+    float reloading_walkspeed = 0.18f;
     public float walkSpeed = 2;
     public float runSpeed = 6;
     public float gravity = -12;
@@ -302,5 +303,14 @@ public class CharacterControllerScript : MonoBehaviour
         yield return null;
     }
 
+    public void setReloadingWalkSpeed()
+    {
+        this.walkSpeed = reloading_walkspeed;
+    }
+
+    public void setStandardWalkSpeed()
+    {
+        this.walkSpeed = standard_walkspeed;
+    }
 
 }

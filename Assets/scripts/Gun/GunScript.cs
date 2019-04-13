@@ -13,11 +13,13 @@ public class GunScript : MonoBehaviour
     public static bool armaScarica = false;
     public GameObject player;
     Animation animation;
+    CharacterControllerScript controller;
 
 
     private void Start()
     {
         anim = player.GetComponent<Animator>();
+        controller = player.GetComponent<CharacterControllerScript>();
     }
 
     void Update()
@@ -107,10 +109,12 @@ public class GunScript : MonoBehaviour
     {
         float pepega = 2.0f;
         anim.SetBool("reloading", true);
+        controller.setReloadingWalkSpeed();
         yield return new WaitForSeconds(pepega);
         anim.SetBool("reloading", false);
+        controller.setStandardWalkSpeed();
         Reload();
         yield return true;
-
     }
+
 }
