@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - BloodP
   - ZonaLama
+  - Head
+  - Body
   layers:
   - Default
   - TransparentFX
