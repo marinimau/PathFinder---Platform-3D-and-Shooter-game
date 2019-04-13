@@ -23,22 +23,16 @@ public class EnemySight : MonoBehaviour
     {
         if(player_contact){
             Show_stealth_status.icon = 2;
-        } else {
-            if(Light.area_illuminata){
-                Show_stealth_status.icon = 1;
-            } else {
-                Show_stealth_status.icon = 0;
-            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
         //player
-        if(other.gameObject.name=="thug1" ){
+        if(other.gameObject.name=="thug1" && !player_contact)
+        {
             if(Show_stealth_status.icon==0){
                 Debug.Log(" player dentro ma non è illuminato ");
-                player_contact = false;
             } else {
                 player_contact = true;
                 //è per forza nella stessa luce che interseca il cono perchè il controllo lo facciamo quando il player è già nel cono
@@ -53,7 +47,7 @@ public class EnemySight : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "thug1")
+        if (other.gameObject.name == "thug1" && !player_contact)
         {
             player_contact = false;
             Debug.Log(" player_contact " + player_contact);

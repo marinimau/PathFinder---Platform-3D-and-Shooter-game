@@ -44,7 +44,7 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(EnemySight.player_contact)
+        if(!EnemySight.player_contact)
         {
                 /*------------------------
                  *  se il nemico non ci vede
