@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Waypoints
+  - Enemy
+  - BloodP
+  - ZonaLama
+  - Head
+  - Body
   layers:
   - Default
   - TransparentFX

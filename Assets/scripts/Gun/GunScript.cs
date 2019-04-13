@@ -11,9 +11,11 @@ public class GunScript : MonoBehaviour
     public GameObject bulletTex;
     public static int nColpi = 14;
     public static bool armaScarica = false;
+    
     public GameObject player;
     Animation animation;
     CharacterControllerScript controller;
+    public ParticleSystem bloodEffect;
 
 
     private void Start()
@@ -46,7 +48,7 @@ public class GunScript : MonoBehaviour
         {
             anim.SetBool("reloading", true);
             StartCoroutine(OnAnimationComplete("reload_static"));
-            
+
         }
     }
 
@@ -57,11 +59,25 @@ public class GunScript : MonoBehaviour
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.forward, out hit, range))
         {
-            GameObject clone = Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-            Destroy(clone, 10f);
-            gunfire.Play();
-            Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
-            Debug.Log(hit.transform.name);
+                gunfire.Play();
+                Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
+
+            if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
+            {
+                bloodEffect.Play();
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
+            {
+                Debug.Log("Hai colpito il corpo");
+            }
+            else    //Se non colpisci un nemico
+            {
+                Physics.IgnoreCollision(hit.collider, hit.collider);
+                GameObject clone = Instantiate(bulletTex, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                Destroy(clone, 10f);
+            }
+
         }
         else
         {
