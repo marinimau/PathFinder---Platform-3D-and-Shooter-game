@@ -6,10 +6,13 @@ public class Recoil : MonoBehaviour
 {
 
     Vector3 idlePosition = new Vector3(0, 0, 0);
+    Vector3 idleRotation = new Vector3(0, 0, 0);
     Vector3 recoilPosition = new Vector3(0, 0, 0);
+    Vector3 recoilRotation = new Vector3(0, 0, 0);
     float recoilTimer = 0f;
     public static bool recoilActive = false;
     Vector3 initialPosition;
+    Vector3 initialRotation;
 
     float RecoilUp;
     float RecoilBack;
@@ -21,6 +24,7 @@ public class Recoil : MonoBehaviour
     private void Start()
     {
         initialPosition = transform.localPosition;
+        initialRotation = transform.localEulerAngles;
     }
 
     void Update()
@@ -31,6 +35,9 @@ public class Recoil : MonoBehaviour
         // equivalent to: new Vector3(0, RecoilUp, RecoilBack);
         recoilPosition.y = RecoilUp;
         recoilPosition.z = RecoilBack;
+
+        recoilRotation.y = transform.localRotation.y-10f;
+
 
 
         if (recoilActive)
@@ -47,9 +54,10 @@ public class Recoil : MonoBehaviour
             // Pulling gun back to idle position (recovering)
             if (recoilTimer > 0f)
             {
-                recoilTimer -= Time.deltaTime * 5;
+                recoilTimer -= Time.deltaTime * 10;
             }
         }
-        transform.localPosition = initialPosition + Vector3.Lerp(-idlePosition, -recoilPosition, recoilTimer * recoilTimer); // recoil*recoil to smooth it out a bit
+        transform.localPosition = initialPosition + Vector3.Lerp(idlePosition, recoilPosition, recoilTimer * recoilTimer); // recoil*recoil to smooth it out a bit
+        transform.localEulerAngles=initialRotation + Vector3.Lerp(idleRotation, recoilRotation, recoilTimer * recoilTimer);
     }
 }
