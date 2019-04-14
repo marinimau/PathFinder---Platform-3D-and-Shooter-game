@@ -39,7 +39,7 @@ public class Patrol : MonoBehaviour
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
-        
+
     }
 
     // Update is called once per frame
