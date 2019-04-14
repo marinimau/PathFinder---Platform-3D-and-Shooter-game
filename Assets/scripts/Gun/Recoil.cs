@@ -25,8 +25,8 @@ public class Recoil : MonoBehaviour
 
     void Update()
     {
-        RecoilUp = (Grain / 1000f);
-        RecoilBack = (MuzzleVelocity / 105000f);
+        RecoilUp = (Grain / 100f);
+        RecoilBack = (MuzzleVelocity / 10500f);
 
         // equivalent to: new Vector3(0, RecoilUp, RecoilBack);
         recoilPosition.y = RecoilUp;
@@ -50,6 +50,6 @@ public class Recoil : MonoBehaviour
                 recoilTimer -= Time.deltaTime * 5;
             }
         }
-        transform.localPosition = initialPosition + Vector3.Lerp(idlePosition, -recoilPosition, recoilTimer * recoilTimer); // recoil*recoil to smooth it out a bit
+        transform.localPosition = initialPosition + Vector3.Lerp(-idlePosition, -recoilPosition, recoilTimer * recoilTimer); // recoil*recoil to smooth it out a bit
     }
 }
