@@ -9191,7 +9191,7 @@ GameObject:
   - component: {fileID: 1200608197}
   - component: {fileID: 1200608196}
   m_Layer: 0
-  m_Name: thug1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12688,7 +12688,6 @@ MonoBehaviour:
   gravity: -12
   navMesh: {fileID: 0}
   player: {fileID: 0}
-  waypoints: {fileID: 0}
   isLamabile: 0
 --- !u!195 &1718216422
 NavMeshAgent:
@@ -13232,8 +13231,7 @@ MonoBehaviour:
   startWaitTime: 0
   gravity: -12
   navMesh: {fileID: 0}
-  player: {fileID: 0}
-  waypoints: {fileID: 0}
+  player: {fileID: 1200608195}
   isLamabile: 0
 --- !u!4 &1782886816
 Transform:

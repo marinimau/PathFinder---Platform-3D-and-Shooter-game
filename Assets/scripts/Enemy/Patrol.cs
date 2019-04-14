@@ -16,7 +16,6 @@ public class Patrol : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-    public GameObject waypoints;
     public bool isLamabile;
 
 
@@ -32,8 +31,6 @@ public class Patrol : MonoBehaviour
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
         isLamabile = false;
-        waypoints = GameObject.FindGameObjectWithTag("Waypoints");
-        moveSpots = waypoints.GetComponentsInChildren<Transform>();
         player = GameObject.FindGameObjectWithTag("Player");
 
 
