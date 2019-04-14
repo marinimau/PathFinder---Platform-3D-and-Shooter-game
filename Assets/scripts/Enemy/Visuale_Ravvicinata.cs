@@ -18,7 +18,7 @@ public class Visuale_Ravvicinata : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "thug1" && !EnemySight.player_contact){
+        if (other.gameObject.tag.Equals("Player") && !EnemySight.player_contact){
             EnemySight.player_contact = true;
             Show_stealth_status.icon = 2;
             //è per forza nella stessa luce che interseca il cono perchè il controllo lo facciamo quando il player è già nel cono
