@@ -24,7 +24,7 @@ public class AllowToUseKnife : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.name == "thug1")
+        if (other.gameObject.tag.Equals("Player"))
         {
             allowKnife = true;
             ShowMessage.id = 1;
@@ -34,7 +34,7 @@ public class AllowToUseKnife : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "thug1")
+        if (other.gameObject.tag.Equals("Player"))
         {
             allowKnife = false;
             ShowMessage.id = 0;

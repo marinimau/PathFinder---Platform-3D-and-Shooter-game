@@ -29,7 +29,7 @@ public class EnemySight : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if(other.gameObject.name=="thug1" && !player_contact)
+        if(other.gameObject.tag.Equals("Player") && !player_contact)
         {
             if(Show_stealth_status.icon==0){
                 Debug.Log(" player dentro ma non è illuminato ");
@@ -47,7 +47,7 @@ public class EnemySight : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "thug1" && !player_contact)
+        if (other.gameObject.tag.Equals("Player") && !player_contact)
         {
             player_contact = false;
             Debug.Log(" player_contact " + player_contact);

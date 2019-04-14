@@ -20,7 +20,7 @@ public class Light : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.name == "thug1" && !EnemySight.player_contact)
+        if (other.gameObject.tag.Equals("Player") && !EnemySight.player_contact)
         {
             Show_stealth_status.icon = 1;
             Debug.Log("entrato nell'area luminosa");
@@ -31,7 +31,7 @@ public class Light : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "thug1" && !EnemySight.player_contact)
+        if (other.gameObject.tag.Equals("Player") && !EnemySight.player_contact)
         {
             Show_stealth_status.icon = 0;
             area_illuminata = false;
