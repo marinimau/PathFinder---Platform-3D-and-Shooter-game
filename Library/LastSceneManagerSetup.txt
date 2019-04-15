@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPrincipale_scena.unity
+- path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPausa_scena.unity
   isLoaded: 1
   isActive: 1

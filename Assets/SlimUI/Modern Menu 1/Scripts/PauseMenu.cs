@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject salvaBtn;
     public GameObject menuPrincipaleBtn;
     public GameObject areYouSure;
+
+    public string sceneName = "MenuPrincipale_scena";
 
     void Start()
     {
@@ -94,5 +97,12 @@ public class PauseMenu : MonoBehaviour
     public void Yes()
     {
         Application.Quit();
+    }
+    public void goToMenu()
+    {
+        if (sceneName != "")
+        {
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        }
     }
 }
