@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPausa_scena.unity
+- path: Assets/Scenes/Playground.unity
   isLoaded: 1
   isActive: 1

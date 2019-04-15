@@ -102,9 +102,30 @@ public class Patrol : MonoBehaviour
              * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
-            navMesh.stoppingDistance = 5;
+            navMesh.stoppingDistance = 10;
+            if(navMesh.remainingDistance<50){
+                //se è abbastanza vicino spara
+                fireOnPlayer();
+
+            }
         }
 
 
     }
+
+    void fireOnPlayer()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(navMesh.transform.position, navMesh.transform.forward, out hit))
+        {
+            Debug.Log("Enemy Fire");
+            Debug.DrawRay(navMesh.transform.position, navMesh.transform.forward * 10, Color.green);
+            if (hit.collider.gameObject.tag == "Player")
+            {
+                CharacterControllerScript.decrHealth(19);
+                Debug.Log("Player hit");
+            }
+        }
+    }
+
 }
