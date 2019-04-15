@@ -147,27 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Second_Scene
-  PanelControls: {fileID: 0}
-  PanelVideo: {fileID: 0}
-  PanelGame: {fileID: 0}
-  PanelKeyBindings: {fileID: 0}
-  PanelMovement: {fileID: 0}
-  PanelCombat: {fileID: 0}
-  PanelGeneral: {fileID: 0}
-  PanelareYouSure: {fileID: 0}
-  hoverSound: {fileID: 1335380583}
-  sliderSound: {fileID: 139677985}
-  swooshSound: {fileID: 2131008616}
   continueBtn: {fileID: 0}
   newGameBtn: {fileID: 0}
   loadGameBtn: {fileID: 0}
-  lineGame: {fileID: 0}
-  lineVideo: {fileID: 0}
-  lineControls: {fileID: 0}
-  lineKeyBindings: {fileID: 0}
-  lineMovement: {fileID: 0}
-  lineCombat: {fileID: 0}
-  lineGeneral: {fileID: 0}
+  PanelareYouSure: {fileID: 0}
 --- !u!114 &79581928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,7 +1157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 257567915}
   m_Layer: 0
-  m_Name: MenuPausa
+  m_Name: Backup di MenuPausa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13817,27 +13800,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Second_Scene
-  PanelControls: {fileID: 0}
-  PanelVideo: {fileID: 0}
-  PanelGame: {fileID: 0}
-  PanelKeyBindings: {fileID: 0}
-  PanelMovement: {fileID: 0}
-  PanelCombat: {fileID: 0}
-  PanelGeneral: {fileID: 0}
-  PanelareYouSure: {fileID: 478608981}
-  hoverSound: {fileID: 1719159970}
-  sliderSound: {fileID: 1552487574}
-  swooshSound: {fileID: 2135992962}
   continueBtn: {fileID: 87539037}
   newGameBtn: {fileID: 708023165}
   loadGameBtn: {fileID: 207750965}
-  lineGame: {fileID: 0}
-  lineVideo: {fileID: 0}
-  lineControls: {fileID: 0}
-  lineKeyBindings: {fileID: 0}
-  lineMovement: {fileID: 0}
-  lineCombat: {fileID: 0}
-  lineGeneral: {fileID: 0}
+  PanelareYouSure: {fileID: 478608981}
 --- !u!114 &1803601093
 MonoBehaviour:
   m_ObjectHideFlags: 0
