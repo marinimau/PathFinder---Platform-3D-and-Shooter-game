@@ -16,7 +16,9 @@ public class Patrol : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
+    private Animator anim;
     public bool isLamabile;
+    public GameObject enemy;
 
 
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class Patrol : MonoBehaviour
          *  inizializzo la navmesh
          * -----------------------*/
         navMesh = GetComponent<NavMeshAgent>();
+        anim = player.GetComponent<Animator>();
         navMesh.speed = speed;
         navMesh.autoBraking = false;
         waitTime = startWaitTime;
@@ -33,7 +36,7 @@ public class Patrol : MonoBehaviour
         isLamabile = false;
         player = GameObject.FindGameObjectWithTag("Player");
 
-
+        anim.SetBool("isWalking", true);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
@@ -78,6 +81,7 @@ public class Patrol : MonoBehaviour
                      *  aspetta nel waypoint
                      * -----------------------*/
                     waitTime -= Time.deltaTime;
+                    anim.SetBool("isWalking", false);
                     //qua deve guardarsi attorno
                 }
 

@@ -8,6 +8,7 @@ public class GunScript : MonoBehaviour
     public float range = 100f;
     public GameObject pistol;
     public Animator anim;
+    public Animator animHeadShot;
     public AudioSource gunfire;
     public GameObject bulletTex;
     public static int nColpi = 14;
@@ -62,9 +63,14 @@ public class GunScript : MonoBehaviour
         {
                 gunfire.Play();
                 Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
-
+                animHeadShot = hit.transform.GetComponentInParent<Animator>();
+                
+                Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
+            
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
+                navMesh.enabled = false;
+                animHeadShot.SetBool("isHeadHit", true);
                 bloodEffect.Play();
                 Debug.Log("HEADSHOT!");
             }
