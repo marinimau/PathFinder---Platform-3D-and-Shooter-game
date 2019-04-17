@@ -17,6 +17,7 @@ public class Patrol : MonoBehaviour
     public NavMeshAgent navMesh;
     public GameObject player;
     private Animator anim;
+    private Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
 
@@ -29,13 +30,14 @@ public class Patrol : MonoBehaviour
          * -----------------------*/
         navMesh = GetComponent<NavMeshAgent>();
         anim = player.GetComponent<Animator>();
+        animEnemy = transform.GetComponent<Animator>();
         navMesh.speed = speed;
         navMesh.autoBraking = false;
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
         isLamabile = false;
         player = GameObject.FindGameObjectWithTag("Player");
-
+        animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         anim.SetBool("isWalking", true);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
@@ -109,6 +111,9 @@ public class Patrol : MonoBehaviour
             navMesh.stoppingDistance = 5;
         }
 
-
+        if (animEnemy.GetBool("isHeadHit") == true)
+            navMesh.enabled = false;
+            //navMesh.speed = 0;
+        
     }
 }
