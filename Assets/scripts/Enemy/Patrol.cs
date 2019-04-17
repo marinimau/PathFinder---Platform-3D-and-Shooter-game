@@ -134,7 +134,7 @@ public class Patrol : MonoBehaviour
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.tag == "Player")
                 {
-                    CharacterControllerScript.decrHealth(6);
+                    CharacterControllerScript.decrHealth(25);
                     Debug.Log("Player hit");
                 }
             }
