@@ -4,14 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuNew : MonoBehaviour {
-
-	Animator CameraObject;
-
-	[Header("Loaded Scene")]
-	[Tooltip("The name of the scene in the build settings that will load")]
-	public string sceneName = ""; 
-
-	[Header("Panels")]
+    /*[Header("Panels")]
 	[Tooltip("The UI Panel that holds the CONTROLS window tab")]
 	public GameObject PanelControls;
 	[Tooltip("The UI Panel that holds the VIDEO window tab")]
@@ -61,9 +54,25 @@ public class MainMenuNew : MonoBehaviour {
 	[Tooltip("Highlight Image for when COMBAT Sub-Tab is selected in KEY BINDINGS")]
 	public GameObject lineCombat;
 	[Tooltip("Highlight Image for when GENERAL Sub-Tab is selected in KEY BINDINGS")]
-	public GameObject lineGeneral;
+	public GameObject lineGeneral;*/
 
-	void Start(){
+    Animator CameraObject;
+
+    [Header("Loaded Scene")]
+    [Tooltip("The name of the scene in the build settings that will load")]
+    public string sceneName = "Second_Scene";
+
+    [Header("PLAY Sub-Buttons")]
+    [Tooltip("Continue Button GameObject Pop Up")]
+    public GameObject continueBtn;
+    [Tooltip("New Game Button GameObject Pop Up")]
+    public GameObject newGameBtn;
+    [Tooltip("Load Game Button GameObject Pop Up")]
+    public GameObject loadGameBtn;
+    [Tooltip("The UI Pop-Up when 'EXIT' is clicked")]
+    public GameObject PanelareYouSure;
+
+    void Start(){
 		CameraObject = transform.GetComponent<Animator>();
 	}
 
@@ -96,112 +105,117 @@ public class MainMenuNew : MonoBehaviour {
 		CameraObject.SetFloat("Animate",0);
 	}
 
-	public void  GamePanel (){
-		PanelControls.gameObject.SetActive(false);
-		PanelVideo.gameObject.SetActive(false);
-		PanelGame.gameObject.SetActive(true);
-		PanelKeyBindings.gameObject.SetActive(false);
+    // Are You Sure - Quit Panel Pop Up
+    public void AreYouSure()
+    {
+        PanelareYouSure.gameObject.SetActive(true);
+        DisablePlayCampaign();
+    }
 
-		lineGame.gameObject.SetActive(true);
-		lineControls.gameObject.SetActive(false);
-		lineVideo.gameObject.SetActive(false);
-		lineKeyBindings.gameObject.SetActive(false);
-	}
+    public void No()
+    {
+        PanelareYouSure.gameObject.SetActive(false);
+    }
 
-	public void  VideoPanel (){
-		PanelControls.gameObject.SetActive(false);
-		PanelVideo.gameObject.SetActive(true);
-		PanelGame.gameObject.SetActive(false);
-		PanelKeyBindings.gameObject.SetActive(false);
-
-		lineGame.gameObject.SetActive(false);
-		lineControls.gameObject.SetActive(false);
-		lineVideo.gameObject.SetActive(true);
-		lineKeyBindings.gameObject.SetActive(false);
-	}
-
-	public void  ControlsPanel (){
-		PanelControls.gameObject.SetActive(true);
-		PanelVideo.gameObject.SetActive(false);
-		PanelGame.gameObject.SetActive(false);
-		PanelKeyBindings.gameObject.SetActive(false);
-
-		lineGame.gameObject.SetActive(false);
-		lineControls.gameObject.SetActive(true);
-		lineVideo.gameObject.SetActive(false);
-		lineKeyBindings.gameObject.SetActive(false);
-	}
-
-	public void  KeyBindingsPanel (){
-		PanelControls.gameObject.SetActive(false);
-		PanelVideo.gameObject.SetActive(false);
-		PanelGame.gameObject.SetActive(false);
-		PanelKeyBindings.gameObject.SetActive(true);
-
-		lineGame.gameObject.SetActive(false);
-		lineControls.gameObject.SetActive(false);
-		lineVideo.gameObject.SetActive(true);
-		lineKeyBindings.gameObject.SetActive(true);
-	}
-
-	public void  MovementPanel (){
-		PanelMovement.gameObject.SetActive(true);
-		PanelCombat.gameObject.SetActive(false);
-		PanelGeneral.gameObject.SetActive(false);
-
-		lineMovement.gameObject.SetActive(true);
-		lineCombat.gameObject.SetActive(false);
-		lineGeneral.gameObject.SetActive(false);
-	}
-
-	public void CombatPanel (){
-		PanelMovement.gameObject.SetActive(false);
-		PanelCombat.gameObject.SetActive(true);
-		PanelGeneral.gameObject.SetActive(false);
-
-		lineMovement.gameObject.SetActive(false);
-		lineCombat.gameObject.SetActive(true);
-		lineGeneral.gameObject.SetActive(false);
-	}
-
-	public void GeneralPanel (){
-		PanelMovement.gameObject.SetActive(false);
-		PanelCombat.gameObject.SetActive(false);
-		PanelGeneral.gameObject.SetActive(true);
-
-		lineMovement.gameObject.SetActive(false);
-		lineCombat.gameObject.SetActive(false);
-		lineGeneral.gameObject.SetActive(true);
-	}
-
-	public void PlayHover (){
-		hoverSound.GetComponent<AudioSource>().Play();
-	}
-
-	public void PlaySFXHover (){
-		sliderSound.GetComponent<AudioSource>().Play();
-	}
-
-	public void PlaySwoosh (){
-		swooshSound.GetComponent<AudioSource>().Play();
-	}
-
-	// Are You Sure - Quit Panel Pop Up
-	public void  AreYouSure (){
-		PanelareYouSure.gameObject.SetActive(true);
-		DisablePlayCampaign();
-	}
-
-	public void  No (){
-		PanelareYouSure.gameObject.SetActive(false);
-	}
-
-	public void  Yes (){
-		Application.Quit();
-	}
+    public void Yes()
+    {
+        Application.Quit();
+    }
 
     public void SelectLevel()
     {
         // da fare quando ci sarà un livello completo
     }
+
+    /*public void  GamePanel (){
+            PanelControls.gameObject.SetActive(false);
+            PanelVideo.gameObject.SetActive(false);
+            PanelGame.gameObject.SetActive(true);
+            PanelKeyBindings.gameObject.SetActive(false);
+
+            lineGame.gameObject.SetActive(true);
+            lineControls.gameObject.SetActive(false);
+            lineVideo.gameObject.SetActive(false);
+            lineKeyBindings.gameObject.SetActive(false);
+        }
+
+        public void  VideoPanel (){
+            PanelControls.gameObject.SetActive(false);
+            PanelVideo.gameObject.SetActive(true);
+            PanelGame.gameObject.SetActive(false);
+            PanelKeyBindings.gameObject.SetActive(false);
+
+            lineGame.gameObject.SetActive(false);
+            lineControls.gameObject.SetActive(false);
+            lineVideo.gameObject.SetActive(true);
+            lineKeyBindings.gameObject.SetActive(false);
+        }
+
+        public void  ControlsPanel (){
+            PanelControls.gameObject.SetActive(true);
+            PanelVideo.gameObject.SetActive(false);
+            PanelGame.gameObject.SetActive(false);
+            PanelKeyBindings.gameObject.SetActive(false);
+
+            lineGame.gameObject.SetActive(false);
+            lineControls.gameObject.SetActive(true);
+            lineVideo.gameObject.SetActive(false);
+            lineKeyBindings.gameObject.SetActive(false);
+        }
+
+        public void  KeyBindingsPanel (){
+            PanelControls.gameObject.SetActive(false);
+            PanelVideo.gameObject.SetActive(false);
+            PanelGame.gameObject.SetActive(false);
+            PanelKeyBindings.gameObject.SetActive(true);
+
+            lineGame.gameObject.SetActive(false);
+            lineControls.gameObject.SetActive(false);
+            lineVideo.gameObject.SetActive(true);
+            lineKeyBindings.gameObject.SetActive(true);
+        }
+
+        public void  MovementPanel (){
+            PanelMovement.gameObject.SetActive(true);
+            PanelCombat.gameObject.SetActive(false);
+            PanelGeneral.gameObject.SetActive(false);
+
+            lineMovement.gameObject.SetActive(true);
+            lineCombat.gameObject.SetActive(false);
+            lineGeneral.gameObject.SetActive(false);
+        }
+
+        public void CombatPanel (){
+            PanelMovement.gameObject.SetActive(false);
+            PanelCombat.gameObject.SetActive(true);
+            PanelGeneral.gameObject.SetActive(false);
+
+            lineMovement.gameObject.SetActive(false);
+            lineCombat.gameObject.SetActive(true);
+            lineGeneral.gameObject.SetActive(false);
+        }
+
+        public void GeneralPanel (){
+            PanelMovement.gameObject.SetActive(false);
+            PanelCombat.gameObject.SetActive(false);
+            PanelGeneral.gameObject.SetActive(true);
+
+            lineMovement.gameObject.SetActive(false);
+            lineCombat.gameObject.SetActive(false);
+            lineGeneral.gameObject.SetActive(true);
+        }
+
+        public void PlayHover (){
+            hoverSound.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlaySFXHover (){
+            sliderSound.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlaySwoosh (){
+            swooshSound.GetComponent<AudioSource>().Play();
+        }*/
+
+
 }

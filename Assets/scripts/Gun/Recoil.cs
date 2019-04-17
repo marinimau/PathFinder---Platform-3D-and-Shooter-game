@@ -43,7 +43,7 @@ public class Recoil : MonoBehaviour
         if (recoilActive)
         {
             // Pushing gun back (recoiling)
-            recoilTimer += Time.deltaTime * 15; // recil is 2x as fast as recover
+            recoilTimer += Time.deltaTime * 26; // recoil is 2x as fast as recover
             if (recoilTimer > 1f)
             {
                 recoilActive = false;
@@ -54,7 +54,7 @@ public class Recoil : MonoBehaviour
             // Pulling gun back to idle position (recovering)
             if (recoilTimer > 0f)
             {
-                recoilTimer -= Time.deltaTime * 10;
+                recoilTimer -= Time.deltaTime * 26;
             }
         }
         transform.localPosition = initialPosition + Vector3.Lerp(idlePosition, recoilPosition, recoilTimer * recoilTimer); // recoil*recoil to smooth it out a bit

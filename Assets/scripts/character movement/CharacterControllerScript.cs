@@ -33,6 +33,9 @@ public class CharacterControllerScript : MonoBehaviour
     bool isJumping;
     float staticJumpBuff;
 
+    public static int health;
+    public static bool isDead;
+
     Animator animator;
     Transform cameraT;
     CharacterController controller;
@@ -53,6 +56,8 @@ public class CharacterControllerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
+        health = 100;
+        isDead = false;
     }
 
     // Update is called once per frame
@@ -63,75 +68,80 @@ public class CharacterControllerScript : MonoBehaviour
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 inputDir = input.normalized;
-
-        if (Input.GetButton("Fire2"))
-        {
-            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+        if(!isDead){
+            if (Input.GetButton("Fire2"))
             {
-                animator.SetBool("jumpStatic", true);
-                StartCoroutine("Jump_Static_Land", WaitTime);
+                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+                {
+                    animator.SetBool("jumpStatic", true);
+                    StartCoroutine("Jump_Static_Land", WaitTime);
 
+                }
+                else
+                {
+                    if (Input.GetAxis("Jump") > 0)
+                    {
+                        JumpWhileAiming();
+                        animator.SetBool("Jumping", true);
+
+                    }
+                }
+                MoveWhileAiming(inputDir, running);
             }
             else
             {
-                if (Input.GetAxis("Jump") > 0)
+
+                if (flag)
                 {
-                    JumpWhileAiming();
-                    animator.SetBool("Jumping", true);
+                    transform.localEulerAngles = new Vector3(0, lastRotation, 0);
+                    flag = false;
+                }
+
+                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+                {
+                    animator.SetBool("jumpStatic", true);
+                    StartCoroutine("Jump_Static_Land", WaitTime);
 
                 }
-            }
-            MoveWhileAiming(inputDir, running);
-        }
-        else
-        {
-            
-            if (flag)
-            {
-                transform.localEulerAngles = new Vector3(0, lastRotation, 0);
-                flag = false;
-            }
-
-            if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
-            {
-                animator.SetBool("jumpStatic", true);
-                StartCoroutine("Jump_Static_Land", WaitTime);
-
-            }
-            else
-            {
-                if (Input.GetAxis("Jump") > 0)
+                else
                 {
-                    Jump();
-                    animator.SetBool("Jumping", true);
+                    if (Input.GetAxis("Jump") > 0)
+                    {
+                        Jump();
+                        animator.SetBool("Jumping", true);
 
+                    }
+                }
+                //input per movimento
+                Move(inputDir, running);
+            }
+
+
+            if (Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
+            {
+                //AnimazioneSparo();
+                Recoil.recoilActive = true;
+            }
+
+            if (fire)
+            {
+                smooth += Time.deltaTime * 4F;
+                transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
+                if (smooth > 1)
+                {
+                    fire = false;
                 }
             }
-            //input per movimento
-            Move(inputDir, running);
+
+
+            //animator
+            float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
+            animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
+
+        } else{
+            //Il player è morto
+            Debug.Log("Player Ucciso");
         }
-
-
-        if(Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
-        {
-            //AnimazioneSparo();
-            Recoil.recoilActive = true;
-        }
-
-        if (fire)
-        {
-            smooth += Time.deltaTime * 4F;
-            transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
-            if (smooth > 1)
-            {
-                fire = false;
-            }
-        }
-
-
-        //animator
-        float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
-        animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
 
     }
 
@@ -314,4 +324,24 @@ public class CharacterControllerScript : MonoBehaviour
         this.walkSpeed = standard_walkspeed;
     }
 
+    public static void decrHealth(int damage){
+        if(health-damage>0){
+            health -= damage;
+        } else{
+            isDead = true;
+        }
+
+    }
+
+    public static void incHealth(int cura)
+    {
+        if (health + cura <=100)
+        {
+            health+= cura;
+        }
+        else
+        {
+            health = 100;
+        }
+    }
 }

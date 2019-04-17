@@ -21,6 +21,11 @@ public class Patrol : MonoBehaviour
     public bool isLamabile;
     public GameObject enemy;
 
+    public bool isFiring;
+    public float fireTimer;
+
+    public float cadenzaFuoco=1f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +41,7 @@ public class Patrol : MonoBehaviour
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
         isLamabile = false;
+        isFiring = false;
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         anim.SetBool("isWalking", true);
@@ -108,7 +114,12 @@ public class Patrol : MonoBehaviour
              * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
-            navMesh.stoppingDistance = 5;
+            navMesh.stoppingDistance = 10;
+            if(navMesh.remainingDistance<50){
+                //se è abbastanza vicino spara
+                fireOnPlayer();
+
+            }
         }
 
         if (animEnemy.GetBool("isHeadHit") == true)
@@ -116,4 +127,31 @@ public class Patrol : MonoBehaviour
             //navMesh.speed = 0;
         
     }
+
+    void fireOnPlayer()
+    {
+        RaycastHit hit;
+        Vector3 fucile = navMesh.transform.position;
+        fucile.y += 0.5f;
+        if(!isFiring){
+            isFiring = true;
+            fireTimer = 1f;
+            if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
+            {
+                Debug.Log("Enemy Fire");
+                Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
+                Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
+                if (hit.collider.gameObject.tag == "Player")
+                {
+                    CharacterControllerScript.decrHealth(25);
+                    Debug.Log("Player hit");
+                }
+            }
+        }
+        fireTimer -= Time.deltaTime*cadenzaFuoco;
+        if(fireTimer<=0){
+            isFiring = false;
+        }
+    }
+
 }

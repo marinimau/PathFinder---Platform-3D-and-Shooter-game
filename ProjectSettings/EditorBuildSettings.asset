@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPrincipale_scena.unity
+    guid: 53e0db7c579d54f4da5d360b96be0985
+  - enabled: 1
+    path: Assets/SlimUI/Modern Menu 1/Scenes/Second_Scene.unity
+    guid: 4c89c579092f70744885e7d9f6baba7f
+  - enabled: 1
+    path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPausa_scena.unity
+    guid: 23017d8dce9dd4de489965bd6187cfe0
   m_configObjects: {}
