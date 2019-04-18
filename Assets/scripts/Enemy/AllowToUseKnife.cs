@@ -10,7 +10,6 @@ public class AllowToUseKnife : MonoBehaviour
     void Start()
     {
         allowKnife = false;
-        enemy=gameObject.GetComponentInParent<GameObject>();
     }
 
     // Update is called once per frame
