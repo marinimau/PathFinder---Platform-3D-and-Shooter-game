@@ -26,6 +26,8 @@ public class Patrol : MonoBehaviour
 
     public float cadenzaFuoco=1f;
 
+    public GameObject zonaLama;
+    public GameObject[] childs;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,14 @@ public class Patrol : MonoBehaviour
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
         isLamabile = false;
+        childs = GetComponentsInChildren<GameObject>();
+
+        for (int i = 0; i < childs.Length; i++){
+            if(childs[i].CompareTag("ZonaLama")){
+                zonaLama = childs[i];
+            }
+        }
+
         isFiring = false;
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
@@ -125,6 +135,8 @@ public class Patrol : MonoBehaviour
         if (animEnemy.GetBool("isHeadHit") == true)
             navMesh.enabled = false;
             //navMesh.speed = 0;
+            Destroy(zonaLama);
+
         
     }
 
