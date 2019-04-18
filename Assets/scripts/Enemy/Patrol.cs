@@ -25,6 +25,9 @@ public class Patrol : MonoBehaviour
     public bool isFiring;
     public float fireTimer;
 
+    public float life;
+    public bool isDead;
+
     public float cadenzaFuoco = 1f;
 
     public GameObject zonaLama;
@@ -44,6 +47,9 @@ public class Patrol : MonoBehaviour
         navMesh.updateRotation = false;
         isLamabile = false;
         isFiring = false;
+        isDead = false;
+
+        life = 100f;
 
         zonaLama = gameObject.transform.GetChild(0).gameObject;
 
@@ -62,6 +68,10 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if(isDead){
+            kill();
+        }
+
         if (!EnemySight.player_contact)
         {
             /*------------------------
@@ -137,9 +147,7 @@ public class Patrol : MonoBehaviour
         }
 
         if (animEnemy.GetBool("isHeadHit") == true){
-            Destroy(zonaLama);
-            navMesh.enabled = false;
-            //navMesh.speed = 0;
+            decrLife(100);
         }
 
     }
@@ -170,6 +178,37 @@ public class Patrol : MonoBehaviour
         {
             isFiring = false;
         }
+    }
+
+    public void decrLife(int damage)
+    {
+        if (life - damage > 0)
+        {
+            life -= damage;
+        }
+        else
+        {
+            life = 0;
+            isDead = true;
+        }
+
+    }
+
+    public void incLife(int cura)
+    {
+        if (life + cura <= 100)
+        {
+            life += cura;
+        }
+        else
+        {
+            life = 100;
+        }
+    }
+
+    public void kill(){
+        Destroy(zonaLama);
+        navMesh.enabled = false;
     }
 
 }
