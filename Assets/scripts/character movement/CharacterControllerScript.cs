@@ -35,6 +35,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     public static int health;
     public static bool isDead;
+    public static bool immortality;
 
     Animator animator;
     Transform cameraT;
@@ -58,6 +59,7 @@ public class CharacterControllerScript : MonoBehaviour
         controller = GetComponent<CharacterController>();
         health = 100;
         isDead = false;
+        immortality = false;
     }
 
     // Update is called once per frame
