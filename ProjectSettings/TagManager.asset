@@ -11,6 +11,7 @@ TagManager:
   - Head
   - Body
   - Coltello
+  - LightPoint
   layers:
   - Default
   - TransparentFX

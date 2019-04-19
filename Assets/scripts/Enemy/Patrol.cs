@@ -78,7 +78,6 @@ public class Patrol : MonoBehaviour
     {
         if(isDead){
             kill();
-
         }
 
         if (!EnemySight.player_contact)
@@ -146,7 +145,7 @@ public class Patrol : MonoBehaviour
              * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
-            navMesh.stoppingDistance = 10;
+            navMesh.stoppingDistance = 20;
             if (navMesh.remainingDistance < 50)
             {
                 //se è abbastanza vicino spara

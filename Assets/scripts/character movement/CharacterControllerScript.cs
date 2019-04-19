@@ -37,6 +37,8 @@ public class CharacterControllerScript : MonoBehaviour
     public static int health;
     public static bool isDead;
     public static bool immortality;
+    public static bool invisible;
+    public static float invisibleTimer;
 
     Animator animator;
     Transform cameraT;
@@ -61,11 +63,22 @@ public class CharacterControllerScript : MonoBehaviour
         health = 100;
         isDead = false;
         immortality = false;
+        invisible = false;
+        invisibleTimer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(invisible){
+            Debug.Log("Player invisibile");
+            invisibleTimer -= Time.deltaTime*1;
+            if(invisibleTimer<=0){
+                ShowMessage.id=5;
+                Debug.Log("Player visibile");
+                invisible = false;
+            }
+        }
 
         bool running = Input.GetKey(KeyCode.LeftShift);
 
