@@ -10,6 +10,7 @@ public class GunScript : MonoBehaviour
     public Animator anim;
     public Animator animHeadShot;
     public AudioSource gunfire;
+    public AudioSource reload_sound;
     public GameObject bulletTex;
     public static int nColpi = 14;
     public static bool armaScarica = false;
@@ -105,7 +106,6 @@ public class GunScript : MonoBehaviour
 
     void Reload()
     {
-        //animazione reload
 
         if (armaScarica)
         {
@@ -130,10 +130,12 @@ public class GunScript : MonoBehaviour
 
     IEnumerator OnAnimationComplete(string name)
     {
-        float pepega = 2.0f;
+
+        float reload_waittime = 2.0f;
         anim.SetBool("reloading", true);
+        reload_sound.Play();        //reload Sound
         controller.setReloadingWalkSpeed();
-        yield return new WaitForSeconds(pepega);
+        yield return new WaitForSeconds(reload_waittime);
         anim.SetBool("reloading", false);
         controller.setStandardWalkSpeed();
         Reload();
