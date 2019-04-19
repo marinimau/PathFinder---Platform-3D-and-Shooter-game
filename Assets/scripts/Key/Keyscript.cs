@@ -18,6 +18,14 @@ public class Keyscript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+            if (other.gameObject.tag.Equals("Player"))
+            {
+
+               
+                Debug.Log("collectible");
+                Destroy(gameObject);
+            }
+
+        
     }
 }
