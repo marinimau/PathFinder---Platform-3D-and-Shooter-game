@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AllowToUseKnife : MonoBehaviour
 {
-
+    public GameObject enemy;
     bool allowKnife;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class AllowToUseKnife : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.isDead)
         {
             allowKnife = true;
             ShowMessage.id = 1;

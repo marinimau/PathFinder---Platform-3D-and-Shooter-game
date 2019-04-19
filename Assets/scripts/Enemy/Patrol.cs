@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,7 @@ public class Patrol : MonoBehaviour
     private int randomSpots;
 
     private float waitTime;
-    public float startWaitTime=20;
+    public float startWaitTime = 20;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
@@ -24,8 +25,12 @@ public class Patrol : MonoBehaviour
     public bool isFiring;
     public float fireTimer;
 
-    public float cadenzaFuoco=1f;
+    public float life;
+    public bool isDead;
 
+    public float cadenzaFuoco = 1f;
+
+    public GameObject zonaLama;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +47,13 @@ public class Patrol : MonoBehaviour
         navMesh.updateRotation = false;
         isLamabile = false;
         isFiring = false;
+        isDead = false;
+
+        life = 100f;
+
+        zonaLama = gameObject.transform.GetChild(0).gameObject;
+
+
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         anim.SetBool("isWalking", true);
@@ -56,11 +68,15 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(!EnemySight.player_contact)
+        if(isDead){
+            kill();
+        }
+
+        if (!EnemySight.player_contact)
         {
-                /*------------------------
-                 *  se il nemico non ci vede
-                 * -----------------------*/
+            /*------------------------
+             *  se il nemico non ci vede
+             * -----------------------*/
 
 
             if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
@@ -74,9 +90,12 @@ public class Patrol : MonoBehaviour
                      *  vai alla prossima posizione
                      * -----------------------*/
                     //randomSpots =(Random.Range(0, moveSpots.Length);
-                    if (moveSpots.Length == 0) {
+                    if (moveSpots.Length == 0)
+                    {
                         randomSpots = 0;
-                    } else {
+                    }
+                    else
+                    {
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
                     waitTime = startWaitTime;
@@ -93,7 +112,9 @@ public class Patrol : MonoBehaviour
                     //qua deve guardarsi attorno
                 }
 
-            } else{
+            }
+            else
+            {
                 /*------------------------
                  *  cambio di posizione
                  * -----------------------*/
@@ -107,7 +128,9 @@ public class Patrol : MonoBehaviour
                 //navMesh.transform.LookAt(moveSpots[randomSpots].position);
             }
 
-        } else {
+        }
+        else
+        {
 
             /*------------------------
              *  se siamo stati visti dal nemico
@@ -115,17 +138,18 @@ public class Patrol : MonoBehaviour
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
             navMesh.stoppingDistance = 10;
-            if(navMesh.remainingDistance<50){
+            if (navMesh.remainingDistance < 50)
+            {
                 //se è abbastanza vicino spara
                 fireOnPlayer();
 
             }
         }
 
-        if (animEnemy.GetBool("isHeadHit") == true)
-            navMesh.enabled = false;
-            //navMesh.speed = 0;
-        
+        if (animEnemy.GetBool("isHeadHit") == true){
+            decrLife(100);
+        }
+
     }
 
     void fireOnPlayer()
@@ -133,7 +157,8 @@ public class Patrol : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if(!isFiring){
+        if (!isFiring)
+        {
             isFiring = true;
             fireTimer = 1f;
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
@@ -148,10 +173,42 @@ public class Patrol : MonoBehaviour
                 }
             }
         }
-        fireTimer -= Time.deltaTime*cadenzaFuoco;
-        if(fireTimer<=0){
+        fireTimer -= Time.deltaTime * cadenzaFuoco;
+        if (fireTimer <= 0)
+        {
             isFiring = false;
         }
+    }
+
+    public void decrLife(int damage)
+    {
+        if (life - damage > 0)
+        {
+            life -= damage;
+        }
+        else
+        {
+            life = 0;
+            isDead = true;
+        }
+
+    }
+
+    public void incLife(int cura)
+    {
+        if (life + cura <= 100)
+        {
+            life += cura;
+        }
+        else
+        {
+            life = 100;
+        }
+    }
+
+    public void kill(){
+        Destroy(zonaLama);
+        navMesh.enabled = false;
     }
 
 }
