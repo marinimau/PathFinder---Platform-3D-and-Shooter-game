@@ -14,7 +14,7 @@ public class GunScript : MonoBehaviour
     public GameObject bulletTex;
     public static int nColpi = 14;
     public static bool armaScarica = false;
-    
+
     public GameObject player;
     Animation animation;
     CharacterControllerScript controller;
@@ -34,23 +34,18 @@ public class GunScript : MonoBehaviour
             armaScarica = true;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && armaScarica == false)
         {
-            if (!armaScarica)
-            {
-                nColpi = Shoot();
-            }
-            else
-            {
-                Click();
-            }
-
+            nColpi = Shoot();
+        }
+        else
+        {
+            Click();
         }
 
         if (Input.GetKey(KeyCode.R))
         {
-            anim.SetBool("reloading", true);
-            StartCoroutine(OnAnimationComplete("reload_static"));
+            StartCoroutine(OnAnimationComplete());
 
         }
     }
@@ -62,12 +57,12 @@ public class GunScript : MonoBehaviour
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.forward, out hit, range))
         {
-                gunfire.Play();
-                Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
-                animHeadShot = hit.transform.GetComponentInParent<Animator>();
-                
-                Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
-            
+            gunfire.Play();
+            Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
+            animHeadShot = hit.transform.GetComponentInParent<Animator>();
+
+            Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
+
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
                 navMesh.enabled = false;
@@ -128,10 +123,11 @@ public class GunScript : MonoBehaviour
         return armaScarica;
     }
 
-    IEnumerator OnAnimationComplete(string name)
+    IEnumerator OnAnimationComplete()
     {
 
         float reload_waittime = 2.0f;
+        armaScarica = true;
         anim.SetBool("reloading", true);
         reload_sound.Play();        //reload Sound
         controller.setReloadingWalkSpeed();
