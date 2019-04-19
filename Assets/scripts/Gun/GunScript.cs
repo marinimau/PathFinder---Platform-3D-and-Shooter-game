@@ -73,6 +73,7 @@ public class GunScript : MonoBehaviour
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
             {
                 Debug.Log("Hai colpito il corpo");
+                
             }
             else    //Se non colpisci un nemico
             {

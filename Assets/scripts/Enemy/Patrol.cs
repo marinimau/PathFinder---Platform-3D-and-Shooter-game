@@ -39,7 +39,6 @@ public class Patrol : MonoBehaviour
          *  inizializzo la navmesh
          * -----------------------*/
         navMesh = GetComponent<NavMeshAgent>();
-        anim = player.GetComponent<Animator>();
         animEnemy = transform.GetComponent<Animator>();
         navMesh.speed = speed;
         navMesh.autoBraking = false;
@@ -56,7 +55,8 @@ public class Patrol : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
-        anim.SetBool("isWalking", true);
+        animEnemy.SetBool("isWalking", true);
+        animEnemy.SetFloat("speedPercentage", 1);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
@@ -67,6 +67,10 @@ public class Patrol : MonoBehaviour
     private void Update()
     {
         navMesh.speed = speed;
+        if (life == 0)
+            isDead = true;
+        if (speed == 0)
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
@@ -74,6 +78,7 @@ public class Patrol : MonoBehaviour
     {
         if(isDead){
             kill();
+
         }
 
         if (!EnemySight.player_contact)
@@ -112,7 +117,7 @@ public class Patrol : MonoBehaviour
                      *  aspetta nel waypoint
                      * -----------------------*/
                     waitTime -= Time.deltaTime;
-                    anim.SetBool("isWalking", false);
+                    animEnemy.SetBool("isWalking", false);
                     //qua deve guardarsi attorno
                 }
 
@@ -194,7 +199,7 @@ public class Patrol : MonoBehaviour
         else
         {
             life = 0;
-            isDead = true;
+            animEnemy.SetBool("isDead", true);
         }
 
     }
@@ -212,6 +217,9 @@ public class Patrol : MonoBehaviour
     }
 
     public void kill(){
+        ShowMessage.id = 0;
+        speed = 0;
+        animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
         navMesh.enabled = false;
     }
@@ -220,5 +228,7 @@ public class Patrol : MonoBehaviour
     {
         this.speed = 0;
     }
+
+
 
 }
