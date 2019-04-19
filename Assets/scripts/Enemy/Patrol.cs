@@ -166,9 +166,9 @@ public class Patrol : MonoBehaviour
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player")
+                if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
                 {
-                    CharacterControllerScript.decrHealth(25);
+                    CharacterControllerScript.decrHealth(5);
                     Debug.Log("Player hit");
                 }
             }
