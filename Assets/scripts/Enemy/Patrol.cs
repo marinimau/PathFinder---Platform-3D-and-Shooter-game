@@ -135,7 +135,7 @@ public class Patrol : MonoBehaviour
             /*------------------------
              *  se siamo stati visti dal nemico
              * -----------------------*/
-            navMesh.destination = player.transform.position;
+            //navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
             navMesh.stoppingDistance = 10;
             if (navMesh.remainingDistance < 50)
