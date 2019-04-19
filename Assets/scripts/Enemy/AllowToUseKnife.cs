@@ -10,18 +10,21 @@ public class AllowToUseKnife : MonoBehaviour
     public GameObject player;
     Animator anim;
     CharacterControllerScript controller;
+    Patrol enemyController;
     // Start is called before the first frame update
     void Start()
     {
         anim = player.GetComponent<Animator>();
         allowKnife = false;
         controller = player.GetComponent<CharacterControllerScript>();
+        enemyController = enemy.GetComponent<Patrol>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(allowKnife){
+        if (allowKnife)
+        {
             if (Input.GetKeyDown(KeyCode.V))
             {
                 StartCoroutine(OnAnimationComplete());
@@ -58,13 +61,14 @@ public class AllowToUseKnife : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-
+        enemyController.setSpeed();
         float knife_waittime = 2.0f;
         anim.SetBool("stabbing", true);
         knife.SetActive(true);
         controller.standStill();
         yield return new WaitForSeconds(knife_waittime);
         anim.SetBool("stabbing", false);
+        enemyController.kill();
         knife.SetActive(false);
         controller.setStandardWalkSpeed();
         yield return true;

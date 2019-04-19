@@ -62,7 +62,11 @@ public class Patrol : MonoBehaviour
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
+    }
 
+    private void Update()
+    {
+        navMesh.speed = speed;
     }
 
     // Update is called once per frame
@@ -159,6 +163,7 @@ public class Patrol : MonoBehaviour
         fucile.y += 0.5f;
         if (!isFiring)
         {
+
             isFiring = true;
             fireTimer = 1f;
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
@@ -209,6 +214,11 @@ public class Patrol : MonoBehaviour
     public void kill(){
         Destroy(zonaLama);
         navMesh.enabled = false;
+    }
+
+    public void setSpeed()
+    {
+        this.speed = 0;
     }
 
 }

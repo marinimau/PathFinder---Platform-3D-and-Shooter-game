@@ -8,7 +8,7 @@ public class CharacterControllerScript : MonoBehaviour
     
     public float WaitTime = 0.5f;
     float standard_walkspeed = 2;
-    float reloading_walkspeed = 0.18f;
+    float reloading_walkspeed = 0.25f;
     public float walkSpeed = 2;
     public float runSpeed = 6;
     public float gravity = -12;

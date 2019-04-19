@@ -125,7 +125,6 @@ public class GunScript : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-
         float reload_waittime = 2.0f;
         armaScarica = true;
         anim.SetBool("reloading", true);
