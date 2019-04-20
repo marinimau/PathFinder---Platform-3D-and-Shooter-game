@@ -15,6 +15,8 @@ public class Patrol : MonoBehaviour
     private bool setWait;
     public float startWaitTime = 1;
 
+    public AudioSource gun_sound;
+
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
@@ -26,7 +28,7 @@ public class Patrol : MonoBehaviour
     public float fireTimer;
 
     public float life;
-    public bool isDead;
+    public bool isDead_enemy;
 
     public ParticleSystem fuoco;
 
@@ -52,7 +54,7 @@ public class Patrol : MonoBehaviour
         navMesh.updateRotation = false;
         isLamabile = false;
         isFiring = false;
-        isDead = false;
+        isDead_enemy = false;
         //fuoco.enableEmission = false;
         life = 100f;
 
@@ -73,7 +75,7 @@ public class Patrol : MonoBehaviour
     {
         navMesh.speed = speed;
         if (life == 0)
-            isDead = true;
+            isDead_enemy = true;
         if (speed == 0)
             animEnemy.SetFloat("speedPercentage", 0);
         else
@@ -83,7 +85,7 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isDead){
+        if(isDead_enemy){
             kill();
         }
 
@@ -172,7 +174,7 @@ public class Patrol : MonoBehaviour
         }
 
         if (animEnemy.GetBool("isHeadHit") == true){
-            isDead = true;
+            isDead_enemy = true;
 
         }
 
@@ -186,11 +188,11 @@ public class Patrol : MonoBehaviour
         if (!isFiring)
         {
             isFiring = true;
-            fireTimer = 1f;
+            fireTimer = Random.Range(0,4);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                //fuoco.Play();
+                gun_sound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
@@ -240,16 +242,16 @@ public class Patrol : MonoBehaviour
         if(animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
-        Destroy(navMesh);
         navMesh.enabled = false;
-        Destroy(this);
+        Destroy(navMesh);
+        Destroy(this.GetComponent<Patrol>());
 
     }
 
     public void setSpeed()
     {
         this.speed = 0;
-        isDead = true;
+        isDead_enemy = true;
     }
 
 }

@@ -17,7 +17,7 @@ public class Visuale_Ravvicinata : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy.isDead)
+        if (enemy.isDead_enemy)
         {
             Destroy(gameObject);
             Debug.Log("Cono piccolo distrutto");
