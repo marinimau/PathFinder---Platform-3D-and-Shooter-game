@@ -12,13 +12,14 @@ public class EnemySight : MonoBehaviour
     public static bool player_contact;
     public static bool player_contact_deactivated; //flag per ricreare i waypoint se il player riersce a sfiggire
 
+    public Patrol enemy;
+
     // Start is called before the first frame update
     void Start()
     {
         player_contact = false;
         player_contact_deactivated = false;
-
-
+        enemy = GetComponentInParent<Patrol>();
     }
 
     // Update is called once per frame
@@ -26,6 +27,10 @@ public class EnemySight : MonoBehaviour
     {
         if(player_contact){
             Show_stealth_status.icon = 2;
+        }
+
+        if(enemy.isDead){
+            Destroy(gameObject);
         }
     }
 
