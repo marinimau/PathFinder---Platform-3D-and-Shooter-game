@@ -13,16 +13,18 @@ public class GunScript : MonoBehaviour
     public AudioSource reload_sound;
     public GameObject bulletTex;
     public static int nColpi = 14;
-    public static bool armaScarica = false;
+    public static bool armaScarica;
 
     public GameObject player;
     Animation animation;
     CharacterControllerScript controller;
     public ParticleSystem bloodEffect;
+    public GameObject light;
 
 
     private void Start()
     {
+        armaScarica = false;
         anim = player.GetComponent<Animator>();
         controller = player.GetComponent<CharacterControllerScript>();
     }
@@ -34,16 +36,18 @@ public class GunScript : MonoBehaviour
             armaScarica = true;
         }
 
-        if (Input.GetButtonDown("Fire1") && armaScarica == false)
-        {
-            nColpi = Shoot();
+        if (Input.GetButtonDown("Fire1") && !CharacterControllerScript.isDead){
+            if(!armaScarica){
+                nColpi = Shoot();
+            }
+            else
+            {
+                Click();
+            }
         }
-        else
-        {
-            Click();
-        }
+       
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && !CharacterControllerScript.isDead)
         {
             StartCoroutine(OnAnimationComplete());
 
@@ -62,6 +66,14 @@ public class GunScript : MonoBehaviour
             animHeadShot = hit.transform.GetComponentInParent<Animator>();
 
             Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
+
+            //light point
+            if (hit.transform.tag.Equals("LightPoint"))
+            {
+                Debug.Log("colpito punto luce");
+                light = hit.collider.gameObject;
+                Destroy(light);
+            }
 
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
