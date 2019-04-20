@@ -50,6 +50,9 @@ public class CharacterControllerScript : MonoBehaviour
 
     float targetSpeed;
     public static Boolean fire = false;
+    public Renderer mesh;
+    public Material materialMesh;
+    public Material invisibleMaterial;
 
 
 
@@ -65,20 +68,34 @@ public class CharacterControllerScript : MonoBehaviour
         immortality = false;
         invisible = false;
         invisibleTimer = 0;
+        //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        materialMesh = mesh.material;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if(invisible){
+            if(mesh.material==materialMesh){
+                mesh.material = invisibleMaterial;
+            }
             Debug.Log("Player invisibile");
-            invisibleTimer -= Time.deltaTime*1;
+            invisibleTimer -= Time.deltaTime*0.1f;
             if(invisibleTimer<=0){
                 ShowMessage.id=5;
                 Debug.Log("Player visibile");
                 invisible = false;
+                
+            }
+        } else {
+            if (mesh.material != materialMesh)
+            {
+                mesh.material = materialMesh;
             }
         }
+
 
         bool running = Input.GetKey(KeyCode.LeftShift);
 

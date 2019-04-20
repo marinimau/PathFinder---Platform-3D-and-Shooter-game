@@ -66,10 +66,10 @@ public class AllowToUseKnife : MonoBehaviour
         anim.SetBool("stabbing", true);
         knife.SetActive(true);
         controller.standStill();
-        yield return new WaitForSeconds(knife_waittime);
         anim.SetBool("stabbing", false);
+        yield return new WaitForSeconds(knife_waittime);
+        enemyController.kill();
         knife.SetActive(false);
-        enemyController.decrLife(100);
         controller.setStandardWalkSpeed();
         yield return true;
     }

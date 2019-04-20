@@ -12,7 +12,8 @@ public class Patrol : MonoBehaviour
     private int randomSpots;
 
     private float waitTime;
-    public float startWaitTime = 20;
+    private bool setWait;
+    public float startWaitTime = 1;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
@@ -31,6 +32,8 @@ public class Patrol : MonoBehaviour
     public float cadenzaFuoco = 1f;
 
     public GameObject zonaLama;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +88,12 @@ public class Patrol : MonoBehaviour
             /*------------------------
              *  se il nemico non ci vede
              * -----------------------*/
+            if(EnemySight.player_contact_deactivated){
+                //se il player è sfuggito
+                navMesh.SetDestination(moveSpots[randomSpots].position);
+                waitTime = 0;
+                EnemySight.player_contact_deactivated = false;
+            }
 
 
             if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
@@ -92,6 +101,11 @@ public class Patrol : MonoBehaviour
                 /*------------------------
                  *  se è in posizione
                  * -----------------------*/
+                if(!setWait){
+                    setWait = true;
+                    waitTime = startWaitTime;
+                }
+
                 if (waitTime <= 0)
                 {
                     /*------------------------
@@ -106,8 +120,8 @@ public class Patrol : MonoBehaviour
                     {
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
-                    waitTime = startWaitTime;
                     navMesh.SetDestination(moveSpots[randomSpots].position);
+                    setWait = false;
 
                 }
                 else
@@ -115,7 +129,7 @@ public class Patrol : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    waitTime -= Time.deltaTime;
+                    waitTime -= Time.deltaTime*0.01f;
                     animEnemy.SetBool("isWalking", false);
                     //qua deve guardarsi attorno
                 }
@@ -132,7 +146,6 @@ public class Patrol : MonoBehaviour
                 {
                     transform.rotation = Quaternion.LookRotation(navMesh.velocity.normalized);
                 }
-
                 //navMesh.transform.LookAt(moveSpots[randomSpots].position);
             }
 
@@ -145,7 +158,7 @@ public class Patrol : MonoBehaviour
              * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position);
-            navMesh.stoppingDistance = 20;
+            navMesh.stoppingDistance = 10;
             if (navMesh.remainingDistance < 50)
             {
                 //se è abbastanza vicino spara
