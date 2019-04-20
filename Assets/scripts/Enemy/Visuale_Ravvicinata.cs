@@ -21,7 +21,7 @@ public class Visuale_Ravvicinata : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player") && !EnemySight.player_contact && anim.GetBool("isHeadHit") == false)
+        if (other.gameObject.tag.Equals("Player") && !EnemySight.player_contact && !CharacterControllerScript.invisible)
         {
             EnemySight.player_contact = true;
             Show_stealth_status.icon = 2;

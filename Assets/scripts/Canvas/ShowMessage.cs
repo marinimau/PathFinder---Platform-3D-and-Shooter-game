@@ -39,6 +39,16 @@ public class ShowMessage : MonoBehaviour
                     isShowing = true;
                     showTimer = 1f;
                     break;
+                case 4:
+                    message.text = "Invisibilità attiva";
+                    isShowing = true;
+                    showTimer = 1f;
+                    break;
+                case 5:
+                    message.text = "Sei di nuovo visibile";
+                    isShowing = true;
+                    showTimer = 1f;
+                    break;
             }
         } else{
             showTimer -= Time.deltaTime*1;

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
+    
     public float WaitTime = 0.5f;
     float standard_walkspeed = 2;
-    float reloading_walkspeed = 0.18f;
+    float reloading_walkspeed = 0.25f;
     public float walkSpeed = 2;
     public float runSpeed = 6;
     public float gravity = -12;
@@ -36,10 +37,16 @@ public class CharacterControllerScript : MonoBehaviour
     public static int health;
     public static bool isDead;
     public static bool immortality;
+    public static bool invisible;
+    public static float invisibleTimer;
 
     Animator animator;
     Transform cameraT;
     CharacterController controller;
+
+    //danni da caduta
+    public bool bigJump;
+    public float jumpTimeStart; 
 
     public Vector2 pitchMinMax = new Vector2(-40, 85);
     float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
@@ -47,6 +54,9 @@ public class CharacterControllerScript : MonoBehaviour
 
     float targetSpeed;
     public static Boolean fire = false;
+    public Renderer mesh;
+    public Material materialMesh;
+    public Material invisibleMaterial;
 
 
 
@@ -60,12 +70,38 @@ public class CharacterControllerScript : MonoBehaviour
         health = 100;
         isDead = false;
         immortality = false;
+        invisible = false;
+        invisibleTimer = 0;
+        bigJump = false;
+        //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        materialMesh = mesh.material;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        if(invisible){
+            if(mesh.material==materialMesh){
+                mesh.material = invisibleMaterial;
+            }
+            Debug.Log("Player invisibile");
+            invisibleTimer -= Time.deltaTime*0.1f;
+            if(invisibleTimer<=0){
+                ShowMessage.id=5;
+                Debug.Log("Player visibile");
+                invisible = false;
+                
+            }
+        } else {
+            if (mesh.material != materialMesh)
+            {
+                mesh.material = materialMesh;
+            }
+        }
+
+
         bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -157,6 +193,7 @@ public class CharacterControllerScript : MonoBehaviour
     }
 
 
+
     void Move(Vector2 inputDir, bool running)
     {
         gravity = -12;
@@ -197,8 +234,24 @@ public class CharacterControllerScript : MonoBehaviour
             if (airTime > 0.3f && isJumping == false)
             {
                 animator.SetBool("airTime", true);
+                if(!bigJump){
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }  
+
             }
 
+
+        }
+
+        if(controller.isGrounded && bigJump){
+            bigJump = false;
+            if(Time.time-timerJump>=0){
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                int quantityOfDamage = (int)((Time.time - timerJump) * 55);
+                decrHealth(quantityOfDamage);
+            }
         }
 
     }
@@ -324,6 +377,12 @@ public class CharacterControllerScript : MonoBehaviour
     public void setStandardWalkSpeed()
     {
         this.walkSpeed = standard_walkspeed;
+        animator.SetFloat("speedPercentage", 0f);
+    }
+
+    public void standStill()
+    {
+        this.walkSpeed = 0.0f;
     }
 
     public static void decrHealth(int damage){

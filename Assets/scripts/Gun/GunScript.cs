@@ -13,16 +13,18 @@ public class GunScript : MonoBehaviour
     public AudioSource reload_sound;
     public GameObject bulletTex;
     public static int nColpi = 14;
-    public static bool armaScarica = false;
-    
+    public static bool armaScarica;
+
     public GameObject player;
     Animation animation;
     CharacterControllerScript controller;
     public ParticleSystem bloodEffect;
+    public GameObject light;
 
 
     private void Start()
     {
+        armaScarica = false;
         anim = player.GetComponent<Animator>();
         controller = player.GetComponent<CharacterControllerScript>();
     }
@@ -34,23 +36,20 @@ public class GunScript : MonoBehaviour
             armaScarica = true;
         }
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (!armaScarica)
-            {
+        if (Input.GetButtonDown("Fire1") && !CharacterControllerScript.isDead){
+            if(!armaScarica){
                 nColpi = Shoot();
             }
             else
             {
                 Click();
             }
-
         }
+       
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && !CharacterControllerScript.isDead)
         {
-            anim.SetBool("reloading", true);
-            StartCoroutine(OnAnimationComplete("reload_static"));
+            StartCoroutine(OnAnimationComplete());
 
         }
     }
@@ -62,12 +61,20 @@ public class GunScript : MonoBehaviour
 
         if (Physics.Raycast(pistol.transform.position, pistol.transform.forward, out hit, range))
         {
-                gunfire.Play();
-                Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
-                animHeadShot = hit.transform.GetComponentInParent<Animator>();
-                
-                Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
-            
+            gunfire.Play();
+            Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
+            animHeadShot = hit.transform.GetComponentInParent<Animator>();
+
+            Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
+
+            //light point
+            if (hit.transform.tag.Equals("LightPoint"))
+            {
+                Debug.Log("colpito punto luce");
+                light = hit.collider.gameObject;
+                Destroy(light);
+            }
+
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
                 navMesh.enabled = false;
@@ -78,6 +85,7 @@ public class GunScript : MonoBehaviour
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
             {
                 Debug.Log("Hai colpito il corpo");
+                
             }
             else    //Se non colpisci un nemico
             {
@@ -128,10 +136,10 @@ public class GunScript : MonoBehaviour
         return armaScarica;
     }
 
-    IEnumerator OnAnimationComplete(string name)
+    IEnumerator OnAnimationComplete()
     {
-
         float reload_waittime = 2.0f;
+        armaScarica = true;
         anim.SetBool("reloading", true);
         reload_sound.Play();        //reload Sound
         controller.setReloadingWalkSpeed();

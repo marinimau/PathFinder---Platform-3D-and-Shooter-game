@@ -12,7 +12,8 @@ public class Patrol : MonoBehaviour
     private int randomSpots;
 
     private float waitTime;
-    public float startWaitTime = 20;
+    private bool setWait;
+    public float startWaitTime = 1;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
@@ -30,6 +31,8 @@ public class Patrol : MonoBehaviour
     public float cadenzaFuoco = 1f;
 
     public GameObject zonaLama;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -55,12 +58,21 @@ public class Patrol : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         animEnemy.SetBool("isWalking", true);
+        animEnemy.SetFloat("speedPercentage", 1);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
+    }
 
+    private void Update()
+    {
+        navMesh.speed = speed;
+        if (life == 0)
+            isDead = true;
+        if (speed == 0)
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
@@ -75,6 +87,12 @@ public class Patrol : MonoBehaviour
             /*------------------------
              *  se il nemico non ci vede
              * -----------------------*/
+            if(EnemySight.player_contact_deactivated){
+                //se il player è sfuggito
+                navMesh.SetDestination(moveSpots[randomSpots].position);
+                waitTime = 0;
+                EnemySight.player_contact_deactivated = false;
+            }
 
 
             if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
@@ -82,6 +100,11 @@ public class Patrol : MonoBehaviour
                 /*------------------------
                  *  se è in posizione
                  * -----------------------*/
+                if(!setWait){
+                    setWait = true;
+                    waitTime = startWaitTime;
+                }
+
                 if (waitTime <= 0)
                 {
                     /*------------------------
@@ -96,8 +119,8 @@ public class Patrol : MonoBehaviour
                     {
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
-                    waitTime = startWaitTime;
                     navMesh.SetDestination(moveSpots[randomSpots].position);
+                    setWait = false;
 
                 }
                 else
@@ -105,7 +128,7 @@ public class Patrol : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    waitTime -= Time.deltaTime;
+                    waitTime -= Time.deltaTime*0.01f;
                     animEnemy.SetBool("isWalking", false);
                     //qua deve guardarsi attorno
                 }
@@ -122,7 +145,6 @@ public class Patrol : MonoBehaviour
                 {
                     transform.rotation = Quaternion.LookRotation(navMesh.velocity.normalized);
                 }
-
                 //navMesh.transform.LookAt(moveSpots[randomSpots].position);
             }
 
@@ -157,6 +179,7 @@ public class Patrol : MonoBehaviour
         fucile.y += 0.5f;
         if (!isFiring)
         {
+
             isFiring = true;
             fireTimer = 1f;
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
@@ -187,7 +210,7 @@ public class Patrol : MonoBehaviour
         else
         {
             life = 0;
-            isDead = true;
+            animEnemy.SetBool("isDead", true);
         }
 
     }
@@ -205,8 +228,18 @@ public class Patrol : MonoBehaviour
     }
 
     public void kill(){
+        ShowMessage.id = 0;
+        speed = 0;
+        animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
         navMesh.enabled = false;
     }
+
+    public void setSpeed()
+    {
+        this.speed = 0;
+    }
+
+
 
 }
