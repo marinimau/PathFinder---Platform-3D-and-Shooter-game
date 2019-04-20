@@ -44,6 +44,10 @@ public class CharacterControllerScript : MonoBehaviour
     Transform cameraT;
     CharacterController controller;
 
+    //danni da caduta
+    public bool bigJump;
+    public float jumpTimeStart; 
+
     public Vector2 pitchMinMax = new Vector2(-40, 85);
     float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
     public Boolean flag = false;
@@ -68,6 +72,7 @@ public class CharacterControllerScript : MonoBehaviour
         immortality = false;
         invisible = false;
         invisibleTimer = 0;
+        bigJump = false;
         //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
         materialMesh = mesh.material;
@@ -229,8 +234,24 @@ public class CharacterControllerScript : MonoBehaviour
             if (airTime > 0.3f && isJumping == false)
             {
                 animator.SetBool("airTime", true);
+                if(!bigJump){
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }  
+
             }
 
+
+        }
+
+        if(controller.isGrounded && bigJump){
+            bigJump = false;
+            if(Time.time-timerJump>=0){
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                int quantityOfDamage = (int)((Time.time - timerJump) * 55);
+                decrHealth(quantityOfDamage);
+            }
         }
 
     }
