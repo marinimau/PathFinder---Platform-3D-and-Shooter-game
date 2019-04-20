@@ -36,7 +36,7 @@ public class GunScript : MonoBehaviour
             armaScarica = true;
         }
 
-        if (Input.GetButtonDown("Fire1")){
+        if (Input.GetButtonDown("Fire1") && !CharacterControllerScript.isDead){
             if(!armaScarica){
                 nColpi = Shoot();
             }
@@ -47,7 +47,7 @@ public class GunScript : MonoBehaviour
         }
        
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && !CharacterControllerScript.isDead)
         {
             StartCoroutine(OnAnimationComplete());
 
