@@ -31,6 +31,7 @@ public class EnemySight : MonoBehaviour
 
         if(enemy.isDead){
             Destroy(gameObject);
+            Debug.Log("Cono grande distrutto");
         }
     }
 

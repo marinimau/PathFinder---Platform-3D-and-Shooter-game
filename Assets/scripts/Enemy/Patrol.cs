@@ -172,7 +172,7 @@ public class Patrol : MonoBehaviour
         }
 
         if (animEnemy.GetBool("isHeadHit") == true){
-            kill();
+            isDead = true;
 
         }
 
@@ -190,7 +190,7 @@ public class Patrol : MonoBehaviour
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                fuoco.Play();
+                //fuoco.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
@@ -243,11 +243,13 @@ public class Patrol : MonoBehaviour
         Destroy(navMesh);
         navMesh.enabled = false;
         Destroy(this);
+
     }
 
     public void setSpeed()
     {
         this.speed = 0;
+        isDead = true;
     }
 
 }

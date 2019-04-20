@@ -20,6 +20,7 @@ public class Visuale_Ravvicinata : MonoBehaviour
         if (enemy.isDead)
         {
             Destroy(gameObject);
+            Debug.Log("Cono piccolo distrutto");
         }
 
     }
