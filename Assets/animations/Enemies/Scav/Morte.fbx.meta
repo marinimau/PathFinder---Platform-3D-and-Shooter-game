@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed6164af6feb7b74ba2242ff145770b7
+guid: 156e751458d6cad4f85134d23ed03e49
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -431,7 +431,7 @@ ModelImporter:
     4300016: Bottoms
     4300018: Shoes
     4300020: Tops
-    7400000: Rifle Idle
+    7400000: Death From The Back
     7400002: mixamo.com
     9500000: //RootNode
     13700000: Body
@@ -464,7 +464,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 1
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -477,7 +477,7 @@ ModelImporter:
       name: mixamo.com
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 231
+      lastFrame: 89
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

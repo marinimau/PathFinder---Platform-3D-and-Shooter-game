@@ -27,7 +27,11 @@ public class Patrol : MonoBehaviour
     public float life;
     public bool isDead;
 
+    public ParticleSystem fuoco;
+
     public float cadenzaFuoco = 1f;
+
+    public ParticleSystem blood;
 
     public GameObject zonaLama;
 
@@ -46,21 +50,31 @@ public class Patrol : MonoBehaviour
         isLamabile = false;
         isFiring = false;
         isDead = false;
-
+        //fuoco.enableEmission = false;
         life = 100f;
 
         zonaLama = gameObject.transform.GetChild(0).gameObject;
 
-
         player = GameObject.FindGameObjectWithTag("Player");
         animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         animEnemy.SetBool("isWalking", true);
+        animEnemy.SetFloat("speedPercentage", 1);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
+    }
 
+    private void Update()
+    {
+        navMesh.speed = speed;
+        if (life == 0)
+            isDead = true;
+        if (speed == 0)
+            animEnemy.SetFloat("speedPercentage", 0);
+        else
+            animEnemy.SetFloat("speedPercentage", 1);
     }
 
     // Update is called once per frame
@@ -145,7 +159,8 @@ public class Patrol : MonoBehaviour
         }
 
         if (animEnemy.GetBool("isHeadHit") == true){
-            decrLife(100);
+            kill();
+
         }
 
     }
@@ -161,6 +176,8 @@ public class Patrol : MonoBehaviour
             fireTimer = 1f;
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
+                animEnemy.SetBool("isShooting", true);
+                fuoco.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
@@ -187,7 +204,7 @@ public class Patrol : MonoBehaviour
         else
         {
             life = 0;
-            isDead = true;
+            kill();
         }
 
     }
@@ -205,8 +222,19 @@ public class Patrol : MonoBehaviour
     }
 
     public void kill(){
+        ShowMessage.id = 0;
+        speed = 0;
+        if(animEnemy.GetBool("isHeadHit") == false)
+            animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
+        Destroy(navMesh);
         navMesh.enabled = false;
+        Destroy(this);
+    }
+
+    public void setSpeed()
+    {
+        this.speed = 0;
     }
 
 }

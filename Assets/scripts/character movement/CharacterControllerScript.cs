@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
+    
     public float WaitTime = 0.5f;
     float standard_walkspeed = 2;
-    float reloading_walkspeed = 0.18f;
+    float reloading_walkspeed = 0.25f;
     public float walkSpeed = 2;
     public float runSpeed = 6;
     public float gravity = -12;
@@ -65,7 +66,7 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
         bool running = Input.GetKey(KeyCode.LeftShift);
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -155,6 +156,7 @@ public class CharacterControllerScript : MonoBehaviour
             fire = true;
         }
     }
+
 
 
     void Move(Vector2 inputDir, bool running)
@@ -324,6 +326,12 @@ public class CharacterControllerScript : MonoBehaviour
     public void setStandardWalkSpeed()
     {
         this.walkSpeed = standard_walkspeed;
+        animator.SetFloat("speedPercentage", 0f);
+    }
+
+    public void standStill()
+    {
+        this.walkSpeed = 0.0f;
     }
 
     public static void decrHealth(int damage){

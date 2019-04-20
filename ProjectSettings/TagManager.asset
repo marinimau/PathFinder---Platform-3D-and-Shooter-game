@@ -10,6 +10,7 @@ TagManager:
   - ZonaLama
   - Head
   - Body
+  - Coltello
   layers:
   - Default
   - TransparentFX
