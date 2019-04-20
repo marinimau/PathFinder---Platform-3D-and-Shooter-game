@@ -226,20 +226,16 @@ public class CharacterControllerScript : MonoBehaviour
         {
             airTime += Time.deltaTime;
 
-            if (airTime > 1.2f && isJumping == true)
-            {
-                animator.SetBool("airTime", true);
-            }
 
-            if (airTime > 0.3f && isJumping == false)
+            if((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
             {
                 animator.SetBool("airTime", true);
-                if(!bigJump){
+                if (!bigJump)
+                {
                     Debug.Log("caduta");
                     bigJump = true;
                     timerJump = Time.time;
-                }  
-
+                }
             }
 
 
