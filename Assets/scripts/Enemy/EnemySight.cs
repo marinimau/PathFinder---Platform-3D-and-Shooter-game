@@ -59,7 +59,7 @@ public class EnemySight : MonoBehaviour
     private void controlloContatto(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player") && !player_contact && !CharacterControllerScript.invisible)
+        if (other.gameObject.tag.Equals("Player") && !enemy.isDead  && !player_contact && !CharacterControllerScript.invisible)
         {
             if (Show_stealth_status.icon == 0)
             {

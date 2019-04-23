@@ -35,7 +35,7 @@ public class AllowToUseKnife : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.isDead)
+        if (other.gameObject.tag.Equals("Player") && !enemyController.isDead && !CharacterControllerScript.isDead)
         {
             allowKnife = true;
             ShowMessage.id = 1;

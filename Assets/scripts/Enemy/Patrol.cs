@@ -27,12 +27,15 @@ public class Patrol : MonoBehaviour
 
     public float life;
     public bool isDead;
+    public bool killOk;
 
     public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
 
     public ParticleSystem blood;
+
+    public AudioSource enemyFireSound;
 
     public GameObject zonaLama;
 
@@ -53,6 +56,7 @@ public class Patrol : MonoBehaviour
         isLamabile = false;
         isFiring = false;
         isDead = false;
+        killOk = false;
         //fuoco.enableEmission = false;
         life = 100f;
 
@@ -83,7 +87,7 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isDead){
+        if(isDead && !killOk){
             kill();
         }
 
@@ -186,11 +190,12 @@ public class Patrol : MonoBehaviour
         if (!isFiring)
         {
             isFiring = true;
-            fireTimer = 1f;
+            fireTimer = Random.Range(0,5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                fuoco.Play();
+                //fuoco.Play();
+                enemyFireSound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
@@ -234,14 +239,19 @@ public class Patrol : MonoBehaviour
         }
     }
 
-    public void kill(){
+    public void kill()
+    {
         ShowMessage.id = 0;
         speed = 0;
-        if(animEnemy.GetBool("isHeadHit") == false)
+        if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
         Destroy(navMesh);
         navMesh.enabled = false;
+        if(!isDead){
+            isDead = true;
+            killOk = true;
+        }
         Destroy(this);
     }
 
