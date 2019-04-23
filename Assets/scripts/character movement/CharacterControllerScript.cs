@@ -248,6 +248,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
 
 
+
         }
 
         if(controller.isGrounded && bigJump){
