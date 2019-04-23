@@ -92,6 +92,7 @@ public class Patrol : MonoBehaviour
             kill();
         }
 
+
         if (!EnemySight.player_contact)
         {
             /*------------------------
@@ -102,7 +103,8 @@ public class Patrol : MonoBehaviour
                 //se il player è sfuggito
                 navMesh.SetDestination(moveSpots[randomSpots].position);
                 waitTime = 0;
-                EnemySight.player_contact_deactivated = false;
+                //EnemySight.player_contact_deactivated = false;
+                animEnemy.SetBool("isShooting", false);
             }
 
 
@@ -191,7 +193,7 @@ public class Patrol : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if (!isFiring)
+        if (!isFiring && EnemySight.player_contact)
         {
             isFiring = true;
             fireTimer = Random.Range(0, 5);

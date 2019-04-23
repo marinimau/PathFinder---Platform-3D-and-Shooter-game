@@ -58,7 +58,7 @@ public class CharacterControllerScript : MonoBehaviour
     public Material materialMesh;
     public Material invisibleMaterial;
 
-    bool gameOver = false;
+    public static bool gameOver = false;
 
 
 
@@ -186,6 +186,8 @@ public class CharacterControllerScript : MonoBehaviour
                 health = 0;
                 gameOver = true;
                 animator.SetBool("dead", true);
+                EnemySight.player_contact_deactivated = true;
+                EnemySight.player_contact = false;
             }
             
         }
