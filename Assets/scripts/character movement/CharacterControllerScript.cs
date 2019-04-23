@@ -58,6 +58,8 @@ public class CharacterControllerScript : MonoBehaviour
     public Material materialMesh;
     public Material invisibleMaterial;
 
+    bool gameOver = false;
+
 
 
     // Start is called before the first frame update
@@ -178,7 +180,14 @@ public class CharacterControllerScript : MonoBehaviour
 
         } else{
             //Il player è morto
-            Debug.Log("Player Ucciso");
+            if(gameOver == false)
+            {
+                Debug.Log("Sono morto una volta");
+                health = 0;
+                gameOver = true;
+                animator.SetBool("dead", true);
+            }
+            
         }
 
     }
