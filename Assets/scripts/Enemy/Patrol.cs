@@ -15,6 +15,8 @@ public class Patrol : MonoBehaviour
     private bool setWait;
     public float startWaitTime = 1;
 
+    public AudioSource gun_sound;
+
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
@@ -77,7 +79,7 @@ public class Patrol : MonoBehaviour
     {
         navMesh.speed = speed;
         if (life == 0)
-            isDead = true;
+            isDead_enemy = true;
         if (speed == 0)
             animEnemy.SetFloat("speedPercentage", 0);
         else
@@ -176,7 +178,7 @@ public class Patrol : MonoBehaviour
         }
 
         if (animEnemy.GetBool("isHeadHit") == true){
-            kill();
+            isDead_enemy = true;
 
         }
 
@@ -246,7 +248,6 @@ public class Patrol : MonoBehaviour
         if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
-        Destroy(navMesh);
         navMesh.enabled = false;
         if(!isDead){
             isDead = true;
@@ -258,6 +259,7 @@ public class Patrol : MonoBehaviour
     public void setSpeed()
     {
         this.speed = 0;
+        isDead_enemy = true;
     }
 
 }

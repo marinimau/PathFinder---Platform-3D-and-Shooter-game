@@ -29,8 +29,9 @@ public class EnemySight : MonoBehaviour
             Show_stealth_status.icon = 2;
         }
 
-        if(enemy.isDead){
+        if(enemy.isDead_enemy){
             Destroy(gameObject);
+            Debug.Log("Cono grande distrutto");
         }
     }
 
