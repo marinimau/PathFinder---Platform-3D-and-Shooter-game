@@ -21,6 +21,7 @@ public class Patrol : MonoBehaviour
     private Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
+    public ParticleSystem blood;
 
     public bool isFiring;
     public float fireTimer;
@@ -32,8 +33,6 @@ public class Patrol : MonoBehaviour
     public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
-
-    public ParticleSystem blood;
 
     public AudioSource enemyFireSound;
 
@@ -182,6 +181,7 @@ public class Patrol : MonoBehaviour
 
         if (animEnemy.GetBool("isHeadHit") == true)
         {
+            blood.Play();
             kill();
 
         }
@@ -207,8 +207,10 @@ public class Patrol : MonoBehaviour
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
                 {
-                    CharacterControllerScript.decrHealth(5);
+                    CharacterControllerScript.decrHealth(16);
+                    CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
+
                 }
             }
         }

@@ -52,6 +52,8 @@ public class CharacterControllerScript : MonoBehaviour
     float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
     public Boolean flag = false;
 
+    public static ParticleSystem PlayerBlood;
+
     float targetSpeed;
     public static Boolean fire = false;
     public Renderer mesh;
@@ -69,6 +71,7 @@ public class CharacterControllerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
+        PlayerBlood = GetComponentInChildren<ParticleSystem>();
         health = 100;
         isDead = false;
         immortality = false;
