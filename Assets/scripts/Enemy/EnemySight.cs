@@ -25,13 +25,14 @@ public class EnemySight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player_contact){
+        if (player_contact)
+        {
             Show_stealth_status.icon = 2;
         }
 
-        if(enemy.isDead_enemy){
+        if (enemy.isDead)
+        {
             Destroy(gameObject);
-            Debug.Log("Cono grande distrutto");
         }
     }
 
@@ -60,7 +61,7 @@ public class EnemySight : MonoBehaviour
     private void controlloContatto(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player") && !enemy.isDead  && !player_contact && !CharacterControllerScript.invisible)
+        if (other.gameObject.tag.Equals("Player") && !enemy.isDead && !player_contact && !CharacterControllerScript.invisible)
         {
             if (Show_stealth_status.icon == 0)
             {

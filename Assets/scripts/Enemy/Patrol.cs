@@ -15,8 +15,6 @@ public class Patrol : MonoBehaviour
     private bool setWait;
     public float startWaitTime = 1;
 
-    public AudioSource gun_sound;
-
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
@@ -79,7 +77,7 @@ public class Patrol : MonoBehaviour
     {
         navMesh.speed = speed;
         if (life == 0)
-            isDead_enemy = true;
+            isDead = true;
         if (speed == 0)
             animEnemy.SetFloat("speedPercentage", 0);
         else
@@ -89,7 +87,8 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isDead && !killOk){
+        if (isDead && !killOk)
+        {
             kill();
         }
 
@@ -98,7 +97,8 @@ public class Patrol : MonoBehaviour
             /*------------------------
              *  se il nemico non ci vede
              * -----------------------*/
-            if(EnemySight.player_contact_deactivated){
+            if (EnemySight.player_contact_deactivated)
+            {
                 //se il player è sfuggito
                 navMesh.SetDestination(moveSpots[randomSpots].position);
                 waitTime = 0;
@@ -111,7 +111,8 @@ public class Patrol : MonoBehaviour
                 /*------------------------
                  *  se è in posizione
                  * -----------------------*/
-                if(!setWait){
+                if (!setWait)
+                {
                     setWait = true;
                     waitTime = startWaitTime;
                 }
@@ -139,7 +140,7 @@ public class Patrol : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    waitTime -= Time.deltaTime*0.01f;
+                    waitTime -= Time.deltaTime * 0.01f;
                     animEnemy.SetBool("isWalking", false);
                     //qua deve guardarsi attorno
                 }
@@ -167,7 +168,7 @@ public class Patrol : MonoBehaviour
              *  se siamo stati visti dal nemico
              * -----------------------*/
             navMesh.destination = player.transform.position;
-            transform.LookAt(player.transform.position + (new Vector3(0 , 1f, 0)));
+            transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             navMesh.stoppingDistance = 10;
             if (navMesh.remainingDistance < 50)
             {
@@ -177,8 +178,9 @@ public class Patrol : MonoBehaviour
             }
         }
 
-        if (animEnemy.GetBool("isHeadHit") == true){
-            isDead_enemy = true;
+        if (animEnemy.GetBool("isHeadHit") == true)
+        {
+            kill();
 
         }
 
@@ -192,7 +194,7 @@ public class Patrol : MonoBehaviour
         if (!isFiring)
         {
             isFiring = true;
-            fireTimer = Random.Range(0,5);
+            fireTimer = Random.Range(0, 5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
@@ -248,8 +250,10 @@ public class Patrol : MonoBehaviour
         if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
+        Destroy(navMesh);
         navMesh.enabled = false;
-        if(!isDead){
+        if (!isDead)
+        {
             isDead = true;
             killOk = true;
         }
@@ -259,7 +263,6 @@ public class Patrol : MonoBehaviour
     public void setSpeed()
     {
         this.speed = 0;
-        isDead_enemy = true;
     }
 
 }
