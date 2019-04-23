@@ -262,6 +262,7 @@ public class CharacterControllerScript : MonoBehaviour
                 Debug.Log("tempo di salto " + (Time.time - timerJump));
                 int quantityOfDamage = (int)((Time.time - timerJump) * 55);
                 decrHealth(quantityOfDamage);
+                Talk.id = 1;
             }
         }
 

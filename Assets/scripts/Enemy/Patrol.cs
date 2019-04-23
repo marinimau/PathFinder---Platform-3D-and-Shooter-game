@@ -210,6 +210,7 @@ public class Patrol : MonoBehaviour
                     CharacterControllerScript.decrHealth(16);
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
+                    Talk.id = 2;
 
                 }
             }

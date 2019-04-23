@@ -79,7 +79,8 @@ public class GunScript : MonoBehaviour
             {
                 navMesh.enabled = false;
                 animHeadShot.SetBool("isHeadHit", true);
-                bloodEffect.Play();
+                //bloodEffect.Play();
+                Talk.id = 4;
                 Debug.Log("HEADSHOT!");
             }
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
@@ -110,11 +111,13 @@ public class GunScript : MonoBehaviour
     {
         //riproduci suono arma scarica
         Debug.Log("arma scarica");
+        Talk.id = 3;
     }
 
     void Reload()
     {
 
+        Talk.id = 0;
         if (armaScarica)
         {
             //ricarico a arma scarica
