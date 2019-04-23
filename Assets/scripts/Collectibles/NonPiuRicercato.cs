@@ -23,6 +23,7 @@ public class NonPiuRicercato : MonoBehaviour
         {
             //riprodurre un suono che ci dia un feedback quando entriamo
             EnemySight.player_contact = false;
+            EnemySight.player_contact_deactivated = true;
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
             Destroy(gameObject);
