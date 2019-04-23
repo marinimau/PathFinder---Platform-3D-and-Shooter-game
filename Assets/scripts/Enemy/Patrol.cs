@@ -190,7 +190,7 @@ public class Patrol : MonoBehaviour
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                fuoco.Play();
+                //fuoco.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
