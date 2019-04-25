@@ -23,6 +23,8 @@ public class Patrol : MonoBehaviour
     public GameObject enemy;
     public ParticleSystem blood;
 
+    public ParticleSystem fire;
+
     public bool isFiring;
     public float fireTimer;
 
@@ -30,13 +32,15 @@ public class Patrol : MonoBehaviour
     public bool isDead;
     public bool killOk;
 
-    public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
 
     public AudioSource enemyFireSound;
 
     public GameObject zonaLama;
+
+    public AudioSource hitSound;
+
 
 
 
@@ -200,7 +204,8 @@ public class Patrol : MonoBehaviour
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                //fuoco.Play();
+                fire.enableEmission = true;
+                fire.Play();
                 enemyFireSound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);

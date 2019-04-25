@@ -33,6 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     float airTime;
     bool isJumping;
     float staticJumpBuff;
+    private float bigJumpTime;
 
     public static int health;
     public static bool isDead;
@@ -260,9 +261,13 @@ public class CharacterControllerScript : MonoBehaviour
             bigJump = false;
             if(Time.time-timerJump>=0){
                 Debug.Log("tempo di salto " + (Time.time - timerJump));
-                int quantityOfDamage = (int)((Time.time - timerJump) * 55);
-                decrHealth(quantityOfDamage);
-                Talk.id = 1;
+                bigJumpTime = (float)((Time.time - timerJump));
+                if(bigJumpTime>0.6){
+                    int quantityOfDamage = (int)(bigJumpTime * 40.0);
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
             }
         }
 
@@ -330,6 +335,51 @@ public class CharacterControllerScript : MonoBehaviour
             //animator.SetBool("airTime", false);
             isJumping = false;
         }
+
+        if (!controller.isGrounded)
+        {
+            airTime += Time.deltaTime;
+
+
+            if ((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
+            {
+                animator.SetBool("airTime", true);
+                if (!bigJump)
+                {
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }
+            }
+
+
+
+        }
+
+        if (controller.isGrounded && bigJump)
+        {
+            bigJump = false;
+            if (Time.time - timerJump >= 0)
+            {
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                bigJumpTime = (float)((Time.time - timerJump));
+                if (bigJumpTime > 0.4 || Input.GetKey(KeyCode.LeftShift))
+                {
+                    int quantityOfDamage;
+                    if (Input.GetKey(KeyCode.LeftShift)){
+                        quantityOfDamage = (int)(bigJumpTime * 150.0);
+                    } else {
+                        quantityOfDamage = (int)(bigJumpTime * 50.0);
+                    }
+
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
+            }
+        }
+
+
 
     }
 

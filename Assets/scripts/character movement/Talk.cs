@@ -9,6 +9,7 @@ public class Talk : MonoBehaviour
     public AudioSource colpito;
     public AudioSource enemyDown;
     public AudioSource outOfAmmo;
+    public AudioSource beep;
 
     public static int id;
 
@@ -38,6 +39,9 @@ public class Talk : MonoBehaviour
                     break;
                 case 4:
                     enemyDown.Play();
+                    break;
+                case 5:
+                    beep.Play();
                     break;
             }
 
