@@ -85,10 +85,10 @@ public class Patrol : MonoBehaviour
     {
         if (life == 0)
             isDead = true;
-        if (speed <= 0.2f)
-            animEnemy.SetFloat("speedPercentage", 0);
-        else
+        if (navMesh.velocity != Vector3.zero)
             animEnemy.SetFloat("speedPercentage", 1);
+        else
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
@@ -232,7 +232,6 @@ public class Patrol : MonoBehaviour
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
                     Talk.id = 2;
-
                 }
             }
         }
@@ -283,12 +282,16 @@ public class Patrol : MonoBehaviour
             isDead = true;
             killOk = true;
         }
+
         Destroy(this);
     }
 
-    public void setSpeed()
+
+    public void stopEnemy()
     {
-        this.speed = 0;
+        this.speed = 0f;
+        navMesh.isStopped = true;
+        animEnemy.SetFloat("speedPercentage", 0.1f);
     }
 
 }

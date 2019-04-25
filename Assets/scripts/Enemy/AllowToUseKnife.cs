@@ -61,7 +61,7 @@ public class AllowToUseKnife : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-        enemyController.setSpeed();
+        enemyController.stopEnemy();
         float knife_waittime = 1.00f;
         anim.SetBool("stabbing", true);
         knife.SetActive(true);
