@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Medikit : MonoBehaviour
 {
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +21,6 @@ public class Medikit : MonoBehaviour
     {
         CharacterControllerScript.incHealth(30);
         Destroy(gameObject);
+        Talk.id = 5;
     }
 }

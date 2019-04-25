@@ -22,6 +22,9 @@ public class Patrol : MonoBehaviour
     public bool isLamabile;
     public GameObject enemy;
     public ParticleSystem blood;
+    public ParticleSystem bloodBody;
+
+    public ParticleSystem fire;
 
     public bool isFiring;
     public float fireTimer;
@@ -30,13 +33,17 @@ public class Patrol : MonoBehaviour
     public bool isDead;
     public bool killOk;
 
-    public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
 
     public AudioSource enemyFireSound;
 
     public GameObject zonaLama;
+
+    public AudioSource hitSound;
+
+    public bool bodyHit;
+
 
 
 
@@ -69,6 +76,8 @@ public class Patrol : MonoBehaviour
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
+
+        bodyHit = false;
 
     }
 
@@ -186,6 +195,17 @@ public class Patrol : MonoBehaviour
 
         }
 
+        if (bodyHit)
+        {
+            bloodBody.Play();
+            if(life>0){
+                decrLife(50);
+                hitSound.Play();
+            }
+            bodyHit = false;
+
+        }
+
     }
 
     void fireOnPlayer()
@@ -200,7 +220,8 @@ public class Patrol : MonoBehaviour
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                //fuoco.Play();
+                fire.enableEmission = true;
+                fire.Play();
                 enemyFireSound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
