@@ -22,6 +22,7 @@ public class Patrol : MonoBehaviour
     public bool isLamabile;
     public GameObject enemy;
     public ParticleSystem blood;
+    public ParticleSystem bloodBody;
 
     public ParticleSystem fire;
 
@@ -40,6 +41,8 @@ public class Patrol : MonoBehaviour
     public GameObject zonaLama;
 
     public AudioSource hitSound;
+
+    public bool bodyHit;
 
 
 
@@ -73,6 +76,8 @@ public class Patrol : MonoBehaviour
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
+
+        bodyHit = false;
 
     }
 
@@ -187,6 +192,17 @@ public class Patrol : MonoBehaviour
         {
             blood.Play();
             kill();
+
+        }
+
+        if (bodyHit)
+        {
+            bloodBody.Play();
+            if(life>0){
+                decrLife(50);
+                hitSound.Play();
+            }
+            bodyHit = false;
 
         }
 
