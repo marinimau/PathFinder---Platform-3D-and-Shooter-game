@@ -27,6 +27,7 @@ public class immortale : MonoBehaviour
             Debug.Log("powerUp");
             Destroy(gameObject);
             ShowMessage.id = 3;
+            Talk.id = 5;
         }
 
     }

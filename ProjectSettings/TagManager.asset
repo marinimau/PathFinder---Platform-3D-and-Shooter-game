@@ -12,6 +12,7 @@ TagManager:
   - Body
   - Coltello
   - LightPoint
+  - PlayerBLOOD
   layers:
   - Default
   - TransparentFX

@@ -21,7 +21,7 @@ public class Keyscript : MonoBehaviour
             if (other.gameObject.tag.Equals("Player"))
             {
 
-               
+                Talk.id = 5;
                 Debug.Log("collectible");
                 Destroy(gameObject);
             }

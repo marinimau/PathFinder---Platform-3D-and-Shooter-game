@@ -20,7 +20,7 @@ public class GunScript : MonoBehaviour
     CharacterControllerScript controller;
     public ParticleSystem bloodEffect;
     public GameObject light;
-
+    private Patrol enemy;
 
     private void Start()
     {
@@ -64,6 +64,7 @@ public class GunScript : MonoBehaviour
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
             animHeadShot = hit.transform.GetComponentInParent<Animator>();
+            enemy= hit.transform.GetComponentInParent<Patrol>();
 
             Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
 
@@ -79,13 +80,14 @@ public class GunScript : MonoBehaviour
             {
                 navMesh.enabled = false;
                 animHeadShot.SetBool("isHeadHit", true);
-                bloodEffect.Play();
+                Talk.id = 4;
                 Debug.Log("HEADSHOT!");
             }
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
             {
                 Debug.Log("Hai colpito il corpo");
-                
+                enemy.bodyHit = true;
+
             }
             else    //Se non colpisci un nemico
             {
@@ -110,11 +112,13 @@ public class GunScript : MonoBehaviour
     {
         //riproduci suono arma scarica
         Debug.Log("arma scarica");
+        Talk.id = 3;
     }
 
     void Reload()
     {
 
+        Talk.id = 0;
         if (armaScarica)
         {
             //ricarico a arma scarica
