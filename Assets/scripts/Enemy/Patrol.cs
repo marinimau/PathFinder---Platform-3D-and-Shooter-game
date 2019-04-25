@@ -74,10 +74,9 @@ public class Patrol : MonoBehaviour
 
     private void Update()
     {
-        navMesh.speed = speed;
         if (life == 0)
             isDead = true;
-        if (speed == 0)
+        if (speed <= 0.2f)
             animEnemy.SetFloat("speedPercentage", 0);
         else
             animEnemy.SetFloat("speedPercentage", 1);
@@ -143,6 +142,7 @@ public class Patrol : MonoBehaviour
                      * -----------------------*/
                     waitTime -= Time.deltaTime * 0.01f;
                     animEnemy.SetBool("isWalking", false);
+                    animEnemy.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
                 }
 
