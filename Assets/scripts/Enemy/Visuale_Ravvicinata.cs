@@ -22,9 +22,9 @@ public class Visuale_Ravvicinata : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.gameOver && !enemy.isDead && !EnemySight.player_contact && !CharacterControllerScript.invisible)
+        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.gameOver && !enemy.isDead && !CharacterControllerScript.player_contact && !CharacterControllerScript.invisible)
         {
-            EnemySight.player_contact = true;
+            CharacterControllerScript.player_contact = true;
             Show_stealth_status.icon = 2;
             Debug.Log(" player dentro il cono piccolo");
         }

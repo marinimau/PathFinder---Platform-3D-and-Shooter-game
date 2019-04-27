@@ -45,6 +45,9 @@ public class CharacterControllerScript : MonoBehaviour
     Transform cameraT;
     CharacterController controller;
 
+    public static bool player_contact;
+    public static bool player_contact_deactivated;
+
     //danni da caduta
     public bool bigJump;
     public float jumpTimeStart; 
@@ -82,6 +85,8 @@ public class CharacterControllerScript : MonoBehaviour
         //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
         materialMesh = mesh.material;
+        player_contact = false;
+        player_contact_deactivated = false;
 
     }
 
@@ -190,8 +195,8 @@ public class CharacterControllerScript : MonoBehaviour
                 health = 0;
                 gameOver = true;
                 animator.SetBool("dead", true);
-                EnemySight.player_contact_deactivated = true;
-                EnemySight.player_contact = false;
+                player_contact_deactivated = true;
+                player_contact = false;
             }
             
         }
@@ -269,6 +274,10 @@ public class CharacterControllerScript : MonoBehaviour
                 }
 
             }
+            else{
+                Talk.id = 6;
+            }
+
         }
 
     }
