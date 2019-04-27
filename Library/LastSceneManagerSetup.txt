@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Playground.unity
+- path: Assets/Scenes/Scav_test(rick).unity
   isLoaded: 1
   isActive: 1

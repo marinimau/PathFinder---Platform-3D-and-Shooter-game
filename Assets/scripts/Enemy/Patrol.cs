@@ -83,13 +83,12 @@ public class Patrol : MonoBehaviour
 
     private void Update()
     {
-        navMesh.speed = speed;
         if (life == 0)
             isDead = true;
-        if (speed == 0)
-            animEnemy.SetFloat("speedPercentage", 0);
-        else
+        if (navMesh.velocity != Vector3.zero)
             animEnemy.SetFloat("speedPercentage", 1);
+        else
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
@@ -101,17 +100,16 @@ public class Patrol : MonoBehaviour
         }
 
 
-        if (!EnemySight.player_contact)
+        if (!CharacterControllerScript.player_contact)
         {
             /*------------------------
              *  se il nemico non ci vede
              * -----------------------*/
-            if (EnemySight.player_contact_deactivated)
+            if (CharacterControllerScript.player_contact_deactivated)
             {
                 //se il player è sfuggito
                 navMesh.SetDestination(moveSpots[randomSpots].position);
                 waitTime = 0;
-                //EnemySight.player_contact_deactivated = false;
                 animEnemy.SetBool("isShooting", false);
             }
 
@@ -152,6 +150,7 @@ public class Patrol : MonoBehaviour
                      * -----------------------*/
                     waitTime -= Time.deltaTime * 0.01f;
                     animEnemy.SetBool("isWalking", false);
+                    animEnemy.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
                 }
 
@@ -213,7 +212,7 @@ public class Patrol : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if (!isFiring && EnemySight.player_contact)
+        if (!isFiring && CharacterControllerScript.player_contact)
         {
             isFiring = true;
             fireTimer = Random.Range(0, 5);
@@ -232,7 +231,6 @@ public class Patrol : MonoBehaviour
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
                     Talk.id = 2;
-
                 }
             }
         }
@@ -283,12 +281,16 @@ public class Patrol : MonoBehaviour
             isDead = true;
             killOk = true;
         }
+
         Destroy(this);
     }
 
-    public void setSpeed()
+
+    public void stopEnemy()
     {
-        this.speed = 0;
+        this.speed = 0f;
+        navMesh.isStopped = true;
+        animEnemy.SetFloat("speedPercentage", 0.1f);
     }
 
 }
