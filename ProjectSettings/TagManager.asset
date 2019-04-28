@@ -13,6 +13,8 @@ TagManager:
   - Coltello
   - LightPoint
   - PlayerBLOOD
+  - HeadSniper
+  - BodySniper
   layers:
   - Default
   - TransparentFX

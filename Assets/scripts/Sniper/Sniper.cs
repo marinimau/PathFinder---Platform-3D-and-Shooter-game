@@ -7,9 +7,6 @@ using UnityEngine.AI;
 
 public class Sniper : MonoBehaviour
 {
-    public float speed = 1;
-    public Transform[] moveSpots;
-    private int randomSpots;
 
     private float waitTime;
     private bool setWait;
@@ -56,7 +53,7 @@ public class Sniper : MonoBehaviour
          * -----------------------*/
         navMesh = GetComponent<NavMeshAgent>();
         animEnemy = transform.GetComponent<Animator>();
-        navMesh.speed = speed;
+        navMesh.speed = 0;
         navMesh.autoBraking = false;
         waitTime = startWaitTime;
         navMesh.updateRotation = false;
@@ -73,10 +70,6 @@ public class Sniper : MonoBehaviour
         //animEnemy = navMesh.gameObject.GetComponentInChildren<Animator>();
         //animEnemy.SetBool("isWalking", true);
         //animEnemy.SetFloat("speedPercentage", 1);
-        /*------------------------
-         *  seleziono a caso il primo punto del giro di pattuglia
-         * -----------------------*/
-        randomSpots = Random.Range(0, moveSpots.Length);
 
         bodyHit = false;
         headHit = false;
@@ -149,17 +142,19 @@ public class Sniper : MonoBehaviour
             fireTimer = Random.Range(0, 5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
-                //animEnemy.SetBool("isShooting", true);
+                animEnemy.SetBool("firing", true);
                 //fire.enableEmission = true;
                
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
+                if (hit.collider.gameObject.tag == "Player")
                 {
-                    //fire.Play();
                     sniperFireSound.Play();
                     Debug.Log("Enemy Fire");
-                    CharacterControllerScript.decrHealth(100);
+                    if(!CharacterControllerScript.immortality){
+                        CharacterControllerScript.decrHealth(100);
+                        ShowMessage.id = 7;
+                    }
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit by sniper");
                     Talk.id = 2;
@@ -202,27 +197,27 @@ public class Sniper : MonoBehaviour
     public void kill()
     {
         ShowMessage.id = 0;
-        speed = 0;
-        if (animEnemy.GetBool("isHeadHit") == false)
-            animEnemy.SetBool("isDead", true);
-        Destroy(zonaLama);
-        Destroy(navMesh);
+
         navMesh.enabled = false;
+
         if (!isDead)
         {
             isDead = true;
             killOk = true;
         }
 
-        Destroy(this);
+        animEnemy.SetBool("die", true);
+        headHit = false;
+        
     }
 
 
     public void stopEnemy()
     {
-        this.speed = 0f;
+        /*
         navMesh.isStopped = true;
         animEnemy.SetFloat("speedPercentage", 0.1f);
+        */
     }
 
 }
