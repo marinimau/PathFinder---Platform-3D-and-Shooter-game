@@ -21,6 +21,7 @@ public class GunScript : MonoBehaviour
     public ParticleSystem bloodEffect;
     public GameObject light;
     private Patrol enemy;
+    private Sniper sniper;
 
     private void Start()
     {
@@ -64,7 +65,6 @@ public class GunScript : MonoBehaviour
             gunfire.Play();
             Debug.DrawRay(pistol.transform.position, pistol.transform.forward * 10, Color.green);
             animHeadShot = hit.transform.GetComponentInParent<Animator>();
-            enemy= hit.transform.GetComponentInParent<Patrol>();
 
             Behaviour navMesh = hit.transform.GetComponentInParent<Behaviour>();
 
@@ -78,6 +78,7 @@ public class GunScript : MonoBehaviour
 
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
+                enemy = hit.transform.GetComponentInParent<Patrol>();
                 navMesh.enabled = false;
                 animHeadShot.SetBool("isHeadHit", true);
                 Talk.id = 4;
@@ -85,8 +86,24 @@ public class GunScript : MonoBehaviour
             }
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
             {
+                enemy = hit.transform.GetComponentInParent<Patrol>();
                 Debug.Log("Hai colpito il corpo");
                 enemy.bodyHit = true;
+
+            }
+            if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
+            {
+                sniper = hit.transform.GetComponentInParent<Sniper>();
+                navMesh.enabled = false;
+                sniper.headHit = true;
+                Talk.id = 4;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodySniper"))  //Se non viene colpito un nemico nel corpo
+            {
+                sniper = hit.transform.GetComponentInParent<Sniper>();
+                Debug.Log("Hai colpito il corpo");
+                sniper.bodyHit = true;
 
             }
             else    //Se non colpisci un nemico
