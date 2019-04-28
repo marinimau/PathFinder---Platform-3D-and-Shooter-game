@@ -147,12 +147,14 @@ public class Sniper : MonoBehaviour
                
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
+                if (hit.collider.gameObject.tag == "Player")
                 {
                     //fire.Play();
                     sniperFireSound.Play();
                     Debug.Log("Enemy Fire");
-                    CharacterControllerScript.decrHealth(100);
+                    if(!CharacterControllerScript.immortality){
+                        CharacterControllerScript.decrHealth(100);
+                    }
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit by sniper");
                     Talk.id = 2;
