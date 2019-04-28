@@ -38,6 +38,7 @@ public class CharacterControllerScript : MonoBehaviour
     public static int health;
     public static bool isDead;
     public static bool immortality;
+    public static float immortalityTimer;
     public static bool invisible;
     public static float invisibleTimer;
 
@@ -79,6 +80,7 @@ public class CharacterControllerScript : MonoBehaviour
         health = 100;
         isDead = false;
         immortality = false;
+        immortalityTimer = 0;
         invisible = false;
         invisibleTimer = 0;
         bigJump = false;
@@ -87,6 +89,7 @@ public class CharacterControllerScript : MonoBehaviour
         materialMesh = mesh.material;
         player_contact = false;
         player_contact_deactivated = false;
+
 
     }
 
@@ -109,6 +112,16 @@ public class CharacterControllerScript : MonoBehaviour
             if (mesh.material != materialMesh)
             {
                 mesh.material = materialMesh;
+            }
+        }
+
+        if(immortality){
+            immortalityTimer -= Time.deltaTime * 0.1f;
+            if (immortalityTimer <= 0)
+            {
+                ShowMessage.id = 6;
+                Debug.Log("Player MORTALE");
+                immortality = false;
             }
         }
 

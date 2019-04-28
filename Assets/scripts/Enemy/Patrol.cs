@@ -229,6 +229,9 @@ public class Patrol : MonoBehaviour
                 {
                     if(!CharacterControllerScript.immortality){
                         CharacterControllerScript.decrHealth(16);
+                        if(CharacterControllerScript.isDead){
+                            ShowMessage.id = 8;
+                        }
                     }
                     CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
