@@ -142,7 +142,7 @@ public class Sniper : MonoBehaviour
             fireTimer = Random.Range(0, 5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
-                //animEnemy.SetBool("isShooting", true);
+                animEnemy.SetBool("firing", true);
                 //fire.enableEmission = true;
                
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
@@ -195,18 +195,18 @@ public class Sniper : MonoBehaviour
     public void kill()
     {
         ShowMessage.id = 0;
-        if (animEnemy.GetBool("isHeadHit") == false)
-            animEnemy.SetBool("isDead", true);
-        Destroy(zonaLama);
-        Destroy(navMesh);
+
         navMesh.enabled = false;
+
         if (!isDead)
         {
             isDead = true;
             killOk = true;
         }
 
-        Destroy(this);
+        animEnemy.SetBool("die", true);
+        headHit = false;
+        
     }
 
 
