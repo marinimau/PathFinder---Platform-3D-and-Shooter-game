@@ -47,6 +47,7 @@ public class CharacterControllerScript : MonoBehaviour
     CharacterController controller;
 
     public static bool player_contact;
+    public static bool boss_contact;
     public static bool player_contact_deactivated;
 
     //danni da caduta
@@ -88,6 +89,7 @@ public class CharacterControllerScript : MonoBehaviour
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
         materialMesh = mesh.material;
         player_contact = false;
+        boss_contact = false;
         player_contact_deactivated = false;
 
 

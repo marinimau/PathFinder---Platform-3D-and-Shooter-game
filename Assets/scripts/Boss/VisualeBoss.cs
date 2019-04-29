@@ -20,6 +20,7 @@ public class VisualeBoss : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player")){
             BossLife.show = true;
+            CharacterControllerScript.boss_contact = true;
         }
             
     }
