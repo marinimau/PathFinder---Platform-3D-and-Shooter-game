@@ -22,7 +22,7 @@ public class Boss : MonoBehaviour
     public bool isFiring;
     public float fireTimer;
 
-    public float life;
+    public static float life;
     public bool isDead;
     public bool killOk;
 
@@ -140,7 +140,7 @@ public class Boss : MonoBehaviour
             blood.Play();
             if (life > 0)
             {
-                decrLife(6);
+                decrLife(12);
                 hitSound.Play();
             }
             headHit = false;
@@ -152,7 +152,7 @@ public class Boss : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                decrLife(3);
+                decrLife(5);
                 hitSound.Play();
             }
             bodyHit = false;

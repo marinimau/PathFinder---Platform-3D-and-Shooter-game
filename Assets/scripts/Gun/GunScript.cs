@@ -22,6 +22,7 @@ public class GunScript : MonoBehaviour
     public GameObject light;
     private Patrol enemy;
     private Sniper sniper;
+    private Boss boss;
 
     private void Start()
     {
@@ -91,7 +92,7 @@ public class GunScript : MonoBehaviour
                 enemy.bodyHit = true;
 
             }
-            if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
+            else if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
             {
                 sniper = hit.transform.GetComponentInParent<Sniper>();
                 navMesh.enabled = false;
@@ -104,6 +105,20 @@ public class GunScript : MonoBehaviour
                 sniper = hit.transform.GetComponentInParent<Sniper>();
                 Debug.Log("Hai colpito il corpo");
                 sniper.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadBoss"))   //Se viene colpito un nemico in testa
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                navMesh.enabled = false;
+                boss.headHit = true;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodyBoss"))  //Se non viene colpito un nemico nel corpo
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                Debug.Log("Hai colpito il corpo");
+                boss.bodyHit = true;
 
             }
             else    //Se non colpisci un nemico
