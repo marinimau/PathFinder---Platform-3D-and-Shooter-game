@@ -19,6 +19,8 @@ public class BossLife : MonoBehaviour
     {
         if(show){
             canvas.enabled = true;
+        } else{
+            canvas.enabled = false;
         }
     }
 }

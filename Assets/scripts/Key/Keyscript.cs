@@ -22,6 +22,7 @@ public class Keyscript : MonoBehaviour
             {
 
                 Talk.id = 5;
+                CharacterControllerScript.key = true;
                 Debug.Log("collectible");
                 Destroy(gameObject);
             }

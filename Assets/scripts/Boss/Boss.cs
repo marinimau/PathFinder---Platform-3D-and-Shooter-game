@@ -243,6 +243,7 @@ public class Boss : MonoBehaviour
 
     public void kill()
     {
+        BossLife.show = false;
         ShowMessage.id = 0;
         speed = 0;
         if (animBoss.GetBool("isHeadHit") == false)
@@ -254,8 +255,8 @@ public class Boss : MonoBehaviour
             isDead = true;
             killOk = true;
         }
-
         Destroy(this);
+
     }
 
     IEnumerator OnAnimationComplete()

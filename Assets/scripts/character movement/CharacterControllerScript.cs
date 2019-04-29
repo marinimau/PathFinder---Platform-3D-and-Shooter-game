@@ -68,6 +68,8 @@ public class CharacterControllerScript : MonoBehaviour
 
     public static bool gameOver = false;
 
+    public static bool key;
+
 
 
     // Start is called before the first frame update
@@ -91,6 +93,7 @@ public class CharacterControllerScript : MonoBehaviour
         player_contact = false;
         boss_contact = false;
         player_contact_deactivated = false;
+        key = false;
 
 
     }
