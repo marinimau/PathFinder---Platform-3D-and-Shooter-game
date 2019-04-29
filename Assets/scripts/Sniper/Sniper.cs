@@ -106,7 +106,9 @@ public class Sniper : MonoBehaviour
              * -----------------------*/
             transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             //spara
-            fireOnPlayer();
+            if(!isDead){
+                fireOnPlayer();
+            }
 
         }
 

@@ -14156,7 +14156,7 @@ GameObject:
   - component: {fileID: 240073495}
   - component: {fileID: 240073496}
   m_Layer: 2
-  m_Name: Suono_arma_1
+  m_Name: SuonoArmaBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14186,7 +14186,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 88277ee3283ef45c8b2b935883538268, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5aa6a038602ca4f5a9bfb0ff04c7975d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -14194,7 +14194,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 47
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -14232,7 +14232,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.42
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -24690,36 +24690,6 @@ Transform:
   - {fileID: 1558860914}
   m_Father: {fileID: 163535166}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &534226501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 534226502}
-  m_Layer: 0
-  m_Name: Boss
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &534226502
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534226501}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.41, y: 8.56, z: 21.49}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &535304139
 GameObject:
@@ -58458,7 +58428,7 @@ Transform:
   - {fileID: 610272810}
   - {fileID: 647471268}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -0.029000001, y: 86.716, z: 0.064}
 --- !u!114 &1045829281
 MonoBehaviour:
@@ -58477,8 +58447,8 @@ MonoBehaviour:
   navMesh: {fileID: 0}
   player: {fileID: 0}
   boss: {fileID: 0}
-  blood: {fileID: 0}
-  bloodBody: {fileID: 0}
+  blood: {fileID: 2083109530}
+  bloodBody: {fileID: 647471270}
   fire: {fileID: 0}
   isFiring: 0
   fireTimer: 0
@@ -58486,8 +58456,8 @@ MonoBehaviour:
   isDead: 0
   killOk: 0
   cadenzaFuoco: 1
-  bossFireSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  bossFireSound: {fileID: 240073496}
+  hitSound: {fileID: 610272811}
   bodyHit: 0
   headHit: 0
   setPlayerContact: 0
@@ -93270,7 +93240,7 @@ Transform:
   - {fileID: 1557197611}
   - {fileID: 2026450246}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1601069970
 GameObject:

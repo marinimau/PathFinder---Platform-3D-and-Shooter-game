@@ -8,8 +8,7 @@ using UnityEngine.AI;
 public class Boss : MonoBehaviour
 {
     public float speed = 0;
-
-
+    
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
@@ -31,13 +30,16 @@ public class Boss : MonoBehaviour
     public float cadenzaFuoco = 1f;
 
     public AudioSource bossFireSound;
-
+    public AudioSource reloadSound;
     public AudioSource hitSound;
 
     public bool bodyHit;
     public bool headHit;
 
     public bool setPlayerContact;
+
+    private int nColpi;
+    private int nColpiStart;
 
 
 
@@ -59,6 +61,8 @@ public class Boss : MonoBehaviour
         //fuoco.enableEmission = false;
         life = 100f;
         setPlayerContact = false;
+        nColpiStart = 8;
+        nColpi = 8;
 
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -162,44 +166,52 @@ public class Boss : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if (!isFiring && CharacterControllerScript.player_contact)
-        {
-            isFiring = true;
-            fireTimer = Random.Range(0, 5);
-            if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
+        if(nColpi>0){
+            if (!isFiring && CharacterControllerScript.player_contact)
             {
-                //animBoss.SetBool("isShooting", true);
-                //fire.enableEmission = true;
-                //fire.Play();
-
-                //bossFireSound.Play();
-
-                //animazione recoil
-
-                Debug.Log("Enemy Fire");
-                Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
-                Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player")
+                isFiring = true;
+                fireTimer = Random.Range(0, 5);
+                if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
                 {
-                    if (!CharacterControllerScript.immortality)
+                    //animBoss.SetBool("isShooting", true);
+                    //fire.enableEmission = true;
+                    //fire.Play();
+
+                    bossFireSound.Play();
+                    nColpi--;
+
+                    //animazione recoil
+
+                    Debug.Log("Enemy Fire");
+                    Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
+                    Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
+                    if (hit.collider.gameObject.tag == "Player")
                     {
-                        CharacterControllerScript.decrHealth(16);
-                        if (CharacterControllerScript.isDead)
+                        if (!CharacterControllerScript.immortality)
                         {
-                            ShowMessage.id = 10;
+                            CharacterControllerScript.decrHealth(6);
+                            if (CharacterControllerScript.isDead)
+                            {
+                                ShowMessage.id = 10;
+                            }
                         }
+                        CharacterControllerScript.PlayerBlood.Play();
+                        Debug.Log("Player hit");
+                        Talk.id = 2;
                     }
-                    CharacterControllerScript.PlayerBlood.Play();
-                    Debug.Log("Player hit");
-                    Talk.id = 2;
                 }
             }
+
+            fireTimer -= Time.deltaTime * cadenzaFuoco;
+            if (fireTimer <= 0)
+            {
+                isFiring = false;
+            }
+        } else {
+            //reload
         }
-        fireTimer -= Time.deltaTime * cadenzaFuoco;
-        if (fireTimer <= 0)
-        {
-            isFiring = false;
-        }
+
+
     }
 
     public void decrLife(int damage)
@@ -243,6 +255,21 @@ public class Boss : MonoBehaviour
         }
 
         Destroy(this);
+    }
+
+    IEnumerator OnAnimationComplete()
+    {
+        float reload_waittime = 2.0f;
+
+        //animBoss.SetBool("reloading", true);
+
+        reloadSound.Play();        //reload Sound
+        navMesh.speed = 0;
+        yield return new WaitForSeconds(reload_waittime);
+        animBoss.SetBool("reloading", false);
+        navMesh.speed = 2;
+        nColpi = nColpiStart;
+        yield return true;
     }
 
 
