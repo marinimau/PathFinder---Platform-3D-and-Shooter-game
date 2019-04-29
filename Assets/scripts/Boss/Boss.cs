@@ -170,7 +170,7 @@ public class Boss : MonoBehaviour
             if (!isFiring && CharacterControllerScript.player_contact)
             {
                 isFiring = true;
-                fireTimer = Random.Range(0, 5);
+                fireTimer = Random.Range(0, 2);
                 if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
                 {
                     //animBoss.SetBool("isShooting", true);
@@ -189,7 +189,7 @@ public class Boss : MonoBehaviour
                     {
                         if (!CharacterControllerScript.immortality)
                         {
-                            CharacterControllerScript.decrHealth(6);
+                            CharacterControllerScript.decrHealth(4);
                             if (CharacterControllerScript.isDead)
                             {
                                 ShowMessage.id = 10;
@@ -209,6 +209,7 @@ public class Boss : MonoBehaviour
             }
         } else {
             //reload
+            StartCoroutine(OnAnimationComplete());
         }
 
 
@@ -259,14 +260,14 @@ public class Boss : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-        float reload_waittime = 2.0f;
+        float reload_waittime = 4.0f;
 
         //animBoss.SetBool("reloading", true);
 
         reloadSound.Play();        //reload Sound
         navMesh.speed = 0;
         yield return new WaitForSeconds(reload_waittime);
-        animBoss.SetBool("reloading", false);
+        //animBoss.SetBool("reloading", false);
         navMesh.speed = 2;
         nColpi = nColpiStart;
         yield return true;
