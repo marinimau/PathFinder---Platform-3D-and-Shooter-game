@@ -170,8 +170,10 @@ public class Boss : MonoBehaviour
             {
                 //animBoss.SetBool("isShooting", true);
                 //fire.enableEmission = true;
-                fire.Play();
-                bossFireSound.Play();
+                //fire.Play();
+
+                //bossFireSound.Play();
+
                 //animazione recoil
 
                 Debug.Log("Enemy Fire");
