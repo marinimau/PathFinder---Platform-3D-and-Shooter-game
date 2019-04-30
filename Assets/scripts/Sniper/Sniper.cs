@@ -211,7 +211,6 @@ public class Sniper : MonoBehaviour
         animEnemy.SetBool("die", true);
         headHit = false;
         Destroy(navMesh);
-        Destroy(transform);
         
     }
 
