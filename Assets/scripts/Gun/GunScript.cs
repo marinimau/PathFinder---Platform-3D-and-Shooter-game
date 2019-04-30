@@ -125,7 +125,7 @@ public class GunScript : MonoBehaviour
             else if (hit.transform.tag.Equals("HeadBoris"))   //Se viene colpito un nemico in testa
             {
                 boris = hit.transform.GetComponentInParent<Boris>();
-                navMesh.enabled = false;
+                //navMesh.enabled = false;
                 boris.headHit = true;
                 Debug.Log("HEADSHOT!");
             }

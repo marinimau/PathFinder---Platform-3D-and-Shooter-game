@@ -215,6 +215,7 @@ public class Boris : MonoBehaviour
             else
             {
                 //   animBoris.SetBool("isWalking", true);
+                animBoris.speed = 1;
                 animBoris.SetBool("isPunching", false);
                 animBoris.SetBool("isKicking", false);
                 animBoris.SetFloat("speedPercentageC", 1);
@@ -224,7 +225,11 @@ public class Boris : MonoBehaviour
         if (headHit)
         {
             blood.Play();
-            kill();
+            if (life > 0)
+            {
+                decrLife(100);
+            }
+            headHit = false;
 
         }
 
@@ -248,6 +253,7 @@ public class Boris : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.3f;
+        animBoris.speed = 2;
         if (!isPunching && CharacterControllerScript.player_contact)
         {
             isPunching = true;
@@ -288,6 +294,7 @@ public class Boris : MonoBehaviour
             isPunching = false;
             animBoris.SetBool("isPunching", false);
             animBoris.SetBool("isKicking", false);
+            animBoris.speed = 1;
         }
     }
 
@@ -319,21 +326,23 @@ public class Boris : MonoBehaviour
 
     public void kill()
     {
+        animBoris.speed = 1;
         ShowMessage.id = 0;
-        speed = 0;
+        //speed = 0;
 
-        animBoris.SetBool("isDead", true);
-        Destroy(zonaLama);
-        Destroy(navMesh);
+
+        //Destroy(zonaLama);
+        //Destroy(navMesh);
         navMesh.enabled = false;
         if (!isDead)
         {
             isDead = true;
             killOk = true;
         }
-
+        animBoris.SetBool("isDead", true);
         Destroy(navMesh);
-        Destroy(transform);
+        Destroy(this);
+        //Destroy(transform);
     }
 
 
