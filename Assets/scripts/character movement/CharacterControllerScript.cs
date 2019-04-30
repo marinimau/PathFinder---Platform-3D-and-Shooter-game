@@ -80,7 +80,7 @@ public class CharacterControllerScript : MonoBehaviour
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         PlayerBlood = GetComponentInChildren<ParticleSystem>();
-        health = 100;
+        health = 1000000;
         isDead = false;
         immortality = false;
         immortalityTimer = 0;

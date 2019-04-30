@@ -31,7 +31,7 @@ public class Boris : MonoBehaviour
     public float life;
     public bool isDead;
     public bool killOk;
-   
+
 
     public AudioSource borisPunchSound;
 
@@ -85,12 +85,26 @@ public class Boris : MonoBehaviour
     {
         if (life == 0)
             isDead = true;
-        if (navMesh.velocity != Vector3.zero){
-            animBoris.SetFloat("speedPercentage", 1);
-        }
-        else{
-            animBoris.SetFloat("speedPercentage", 0);
-        }
+        if (CharacterControllerScript.player_contact)
+            if (navMesh.velocity != Vector3.zero)
+            {
+                animBoris.SetFloat("speedPercentageC", 1);
+            }
+            else
+            {
+                //animBoris.SetFloat("speedPercentageC", 0);
+            }
+        else
+            if (navMesh.velocity != Vector3.zero)
+            {
+                animBoris.SetFloat("speedPercentage", 1);
+            }
+            else
+            {
+                animBoris.SetFloat("speedPercentage", 0);
+            }
+
+
 
     }
 
@@ -180,21 +194,26 @@ public class Boris : MonoBehaviour
             /*------------------------
              *  se siamo stati visti dal nemico
              * -----------------------*/
-            animBoris.SetBool("playerContact", false);
+            animBoris.SetBool("playerContact", true);
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
-            navMesh.stoppingDistance = 0.5f;
+            navMesh.stoppingDistance = 1f;
             navMesh.speed = 4;
-            if (navMesh.remainingDistance < 0.6)
+            if (navMesh.remainingDistance < 1.5f)
             {
                 //se è abbastanza vicino picchia
                 punchOnPlayer();
 
             }
-            if(navMesh.speed==0){
+            if (navMesh.speed == 0 || navMesh.remainingDistance >= 1.5f)
+            {
+                animBoris.SetBool("isWalking", false);
+                animBoris.SetFloat("speedPercentageC", 0);
+            }
+            else
+            {
                 animBoris.SetBool("isWalking", true);
-            } else{
-                animBoris.SetBool("isWalking", true);
+                animBoris.SetFloat("speedPercentageC", 1);
             }
         }
 
@@ -224,18 +243,20 @@ public class Boris : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
-        fucile.y += 0.5f;
+        fucile.y += 0.3f;
         if (!isPunching && CharacterControllerScript.player_contact)
         {
             isPunching = true;
-            punchTimer = Random.Range(0, 5);
+            punchTimer = Random.Range(0, 1.5f);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
-                //animBoris.SetBool("isShooting", true);
-                //borisPunchSound.Play();
-                if(Random.Range(0,2)%2==0){
+                borisPunchSound.Play();
+                if (Random.Range(0, 2) % 2 == 0)
+                {
                     animBoris.SetBool("isPunching", true);
-                } else {
+                }
+                else
+                {
                     animBoris.SetBool("isKicking", true);
                 }
                 Debug.Log("Boris punch");
@@ -245,7 +266,7 @@ public class Boris : MonoBehaviour
                 {
                     if (!CharacterControllerScript.immortality)
                     {
-                        CharacterControllerScript.decrHealth(16);
+                        CharacterControllerScript.decrHealth(6);
                         if (CharacterControllerScript.isDead)
                         {
                             ShowMessage.id = 8;
