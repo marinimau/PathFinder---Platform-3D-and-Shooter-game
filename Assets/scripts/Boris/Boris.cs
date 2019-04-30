@@ -205,14 +205,18 @@ public class Boris : MonoBehaviour
                 punchOnPlayer();
 
             }
-            if (navMesh.speed == 0 || navMesh.remainingDistance >= 1.5f)
+            if (navMesh.speed == 0 || navMesh.remainingDistance < 1.5f)
             {
-                animBoris.SetBool("isWalking", false);
+            //    animBoris.SetBool("isWalking", false);
+
+
                 animBoris.SetFloat("speedPercentageC", 0);
             }
             else
             {
-                animBoris.SetBool("isWalking", true);
+                //   animBoris.SetBool("isWalking", true);
+                animBoris.SetBool("isPunching", false);
+                animBoris.SetBool("isKicking", false);
                 animBoris.SetFloat("speedPercentageC", 1);
             }
         }
