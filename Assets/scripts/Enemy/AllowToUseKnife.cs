@@ -35,7 +35,7 @@ public class AllowToUseKnife : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.isDead)
+        if (other.gameObject.tag.Equals("Player") && !enemyController.isDead && !CharacterControllerScript.isDead)
         {
             allowKnife = true;
             ShowMessage.id = 1;
@@ -61,15 +61,16 @@ public class AllowToUseKnife : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-        enemyController.setSpeed();
-        float knife_waittime = 1.24f;
+        enemyController.stopEnemy();
+        Talk.id = 7;
+        float knife_waittime = 1.00f;
         anim.SetBool("stabbing", true);
         knife.SetActive(true);
         controller.standStill();
         yield return new WaitForSeconds(knife_waittime);
         anim.SetBool("stabbing", false);
-        enemyController.kill();
         knife.SetActive(false);
+        enemyController.kill();
         controller.setStandardWalkSpeed();
         yield return true;
     }

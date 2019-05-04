@@ -49,9 +49,34 @@ public class ShowMessage : MonoBehaviour
                     isShowing = true;
                     showTimer = 1f;
                     break;
+                case 6:
+                    message.text = "Sei di nuovo un mortale";
+                    isShowing = true;
+                    showTimer = 1f;
+                    break;
+                case 7:
+                    message.text = "Missione fallita. Sei stato ucciso da un cecchino";
+                    isShowing = true;
+                    showTimer = 25f;
+                    break;
+                case 8:
+                    message.text = "Sei morto";
+                    isShowing = true;
+                    showTimer = 25f;
+                    break;
+                case 9:
+                    message.text = "Missione compiuta";
+                    isShowing = true;
+                    showTimer = 25f;
+                    break;
+                case 10:
+                    message.text = "Missione fallita. Il boss ti ha ucciso";
+                    isShowing = true;
+                    showTimer = 25f;
+                    break;
             }
         } else{
-            showTimer -= Time.deltaTime*1;
+            showTimer -= Time.deltaTime*0.7f;
             if(showTimer<=0){
                 isShowing = false;
                 id = 0;

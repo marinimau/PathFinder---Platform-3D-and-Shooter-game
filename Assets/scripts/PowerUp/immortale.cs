@@ -24,9 +24,11 @@ public class immortale : MonoBehaviour
 
             //riprodurre un suono che ci dia un feedback quando entriamo
             CharacterControllerScript.immortality = true;
+            CharacterControllerScript.immortalityTimer = 1;
             Debug.Log("powerUp");
             Destroy(gameObject);
             ShowMessage.id = 3;
+            Talk.id = 5;
         }
 
     }

@@ -20,7 +20,10 @@ public class GunScript : MonoBehaviour
     CharacterControllerScript controller;
     public ParticleSystem bloodEffect;
     public GameObject light;
-
+    private Patrol enemy;
+    private Sniper sniper;
+    private Boss boss;
+    private Boris boris;
 
     private void Start()
     {
@@ -77,15 +80,61 @@ public class GunScript : MonoBehaviour
 
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa
             {
+                enemy = hit.transform.GetComponentInParent<Patrol>();
                 navMesh.enabled = false;
                 animHeadShot.SetBool("isHeadHit", true);
-                bloodEffect.Play();
+                Talk.id = 4;
                 Debug.Log("HEADSHOT!");
             }
             else if (hit.transform.tag.Equals("Body"))  //Se non viene colpito un nemico nel corpo
             {
+                enemy = hit.transform.GetComponentInParent<Patrol>();
                 Debug.Log("Hai colpito il corpo");
-                
+                enemy.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
+            {
+                sniper = hit.transform.GetComponentInParent<Sniper>();
+                navMesh.enabled = false;
+                sniper.headHit = true;
+                Talk.id = 4;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodySniper"))  //Se non viene colpito un nemico nel corpo
+            {
+                sniper = hit.transform.GetComponentInParent<Sniper>();
+                Debug.Log("Hai colpito il corpo");
+                sniper.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadBoss"))   //Se viene colpito un nemico in testa
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                navMesh.enabled = false;
+                boss.headHit = true;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodyBoss"))  //Se non viene colpito un nemico nel corpo
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                Debug.Log("Hai colpito il corpo");
+                boss.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadBoris"))   //Se viene colpito un nemico in testa
+            {
+                boris = hit.transform.GetComponentInParent<Boris>();
+                //navMesh.enabled = false;
+                boris.headHit = true;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodyBoris"))  //Se non viene colpito un nemico nel corpo
+            {
+                boris = hit.transform.GetComponentInParent<Boris>();
+                Debug.Log("Hai colpito il corpo");
+                boris.bodyHit = true;
+
             }
             else    //Se non colpisci un nemico
             {
@@ -110,11 +159,13 @@ public class GunScript : MonoBehaviour
     {
         //riproduci suono arma scarica
         Debug.Log("arma scarica");
+        Talk.id = 3;
     }
 
     void Reload()
     {
 
+        Talk.id = 0;
         if (armaScarica)
         {
             //ricarico a arma scarica

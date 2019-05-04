@@ -21,7 +21,8 @@ public class Keyscript : MonoBehaviour
             if (other.gameObject.tag.Equals("Player"))
             {
 
-               
+                Talk.id = 5;
+                CharacterControllerScript.key = true;
                 Debug.Log("collectible");
                 Destroy(gameObject);
             }

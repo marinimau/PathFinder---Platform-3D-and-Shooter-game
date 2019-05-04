@@ -9,27 +9,27 @@ using UnityEngine;
 public class EnemySight : MonoBehaviour
 {
 
-    public static bool player_contact;
-    public static bool player_contact_deactivated; //flag per ricreare i waypoint se il player riersce a sfiggire
 
     public Patrol enemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        player_contact = false;
-        player_contact_deactivated = false;
+        CharacterControllerScript.player_contact = false;
+        CharacterControllerScript.player_contact_deactivated = false;
         enemy = GetComponentInParent<Patrol>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(player_contact){
+        if (CharacterControllerScript.player_contact)
+        {
             Show_stealth_status.icon = 2;
         }
 
-        if(enemy.isDead){
+        if (enemy.isDead)
+        {
             Destroy(gameObject);
         }
     }
@@ -47,10 +47,10 @@ public class EnemySight : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag.Equals("Player") && !player_contact)
+        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.player_contact)
         {
-            player_contact = false;
-            Debug.Log(" player_contact " + player_contact);
+            CharacterControllerScript.player_contact = false;
+            Debug.Log(" player_contact " + CharacterControllerScript.player_contact);
 
         }
 
@@ -59,7 +59,7 @@ public class EnemySight : MonoBehaviour
     private void controlloContatto(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player") && !player_contact && !CharacterControllerScript.invisible)
+        if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.gameOver && !enemy.isDead && !CharacterControllerScript.player_contact && !CharacterControllerScript.invisible)
         {
             if (Show_stealth_status.icon == 0)
             {
@@ -67,9 +67,9 @@ public class EnemySight : MonoBehaviour
             }
             else
             {
-                player_contact = true;
+                CharacterControllerScript.player_contact = true;
                 //è per forza nella stessa luce che interseca il cono perchè il controllo lo facciamo quando il player è già nel cono
-                Debug.Log(" player dentro illuminato, player_contact: " + player_contact);
+                Debug.Log(" player dentro illuminato, player_contact: " + CharacterControllerScript.player_contact);
             }
 
 

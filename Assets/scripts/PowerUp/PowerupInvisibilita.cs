@@ -30,6 +30,7 @@ public class PowerupInvisibilita : MonoBehaviour
                 CharacterControllerScript.invisible = true;
                 CharacterControllerScript.invisibleTimer = 1;
                 gameObject.SetActive(false);
+                Talk.id = 5;
             }
         }
 

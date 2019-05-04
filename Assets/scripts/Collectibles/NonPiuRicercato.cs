@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NonPiuRicercato : MonoBehaviour
 {
+
+    public ParticleSystem smoke;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +24,14 @@ public class NonPiuRicercato : MonoBehaviour
         if (other.gameObject.tag.Equals("Player"))
         {
             //riprodurre un suono che ci dia un feedback quando entriamo
-            EnemySight.player_contact = false;
+            CharacterControllerScript.player_contact = false;
+            CharacterControllerScript.player_contact_deactivated = true;
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
+            smoke.Play();
             Destroy(gameObject);
             ShowMessage.id = 2;
+            Talk.id = 5;
         }
 
     }

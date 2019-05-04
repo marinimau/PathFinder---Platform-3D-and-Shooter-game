@@ -12,6 +12,13 @@ TagManager:
   - Body
   - Coltello
   - LightPoint
+  - PlayerBLOOD
+  - HeadSniper
+  - BodySniper
+  - BodyBoss
+  - HeadBoss
+  - BodyBoris
+  - HeadBoris
   layers:
   - Default
   - TransparentFX

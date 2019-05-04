@@ -33,16 +33,22 @@ public class CharacterControllerScript : MonoBehaviour
     float airTime;
     bool isJumping;
     float staticJumpBuff;
+    private float bigJumpTime;
 
     public static int health;
     public static bool isDead;
     public static bool immortality;
+    public static float immortalityTimer;
     public static bool invisible;
     public static float invisibleTimer;
 
     Animator animator;
     Transform cameraT;
     CharacterController controller;
+
+    public static bool player_contact;
+    public static bool boss_contact;
+    public static bool player_contact_deactivated;
 
     //danni da caduta
     public bool bigJump;
@@ -52,11 +58,17 @@ public class CharacterControllerScript : MonoBehaviour
     float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
     public Boolean flag = false;
 
+    public static ParticleSystem PlayerBlood;
+
     float targetSpeed;
     public static Boolean fire = false;
     public Renderer mesh;
     public Material materialMesh;
     public Material invisibleMaterial;
+
+    public static bool gameOver = false;
+
+    public static bool key;
 
 
 
@@ -67,15 +79,22 @@ public class CharacterControllerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
-        health = 100;
+        PlayerBlood = GetComponentInChildren<ParticleSystem>();
+        health = 1000000;
         isDead = false;
         immortality = false;
+        immortalityTimer = 0;
         invisible = false;
         invisibleTimer = 0;
         bigJump = false;
         //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
         materialMesh = mesh.material;
+        player_contact = false;
+        boss_contact = false;
+        player_contact_deactivated = false;
+        key = false;
+
 
     }
 
@@ -98,6 +117,16 @@ public class CharacterControllerScript : MonoBehaviour
             if (mesh.material != materialMesh)
             {
                 mesh.material = materialMesh;
+            }
+        }
+
+        if(immortality){
+            immortalityTimer -= Time.deltaTime * 0.1f;
+            if (immortalityTimer <= 0)
+            {
+                ShowMessage.id = 6;
+                Debug.Log("Player MORTALE");
+                immortality = false;
             }
         }
 
@@ -178,7 +207,16 @@ public class CharacterControllerScript : MonoBehaviour
 
         } else{
             //Il player è morto
-            Debug.Log("Player Ucciso");
+            if(gameOver == false)
+            {
+                Debug.Log("Sono morto una volta");
+                health = 0;
+                gameOver = true;
+                animator.SetBool("dead", true);
+                player_contact_deactivated = true;
+                player_contact = false;
+            }
+            
         }
 
     }
@@ -239,15 +277,25 @@ public class CharacterControllerScript : MonoBehaviour
             }
 
 
+
         }
 
         if(controller.isGrounded && bigJump){
             bigJump = false;
             if(Time.time-timerJump>=0){
                 Debug.Log("tempo di salto " + (Time.time - timerJump));
-                int quantityOfDamage = (int)((Time.time - timerJump) * 55);
-                decrHealth(quantityOfDamage);
+                bigJumpTime = (float)((Time.time - timerJump));
+                if(bigJumpTime>0.6){
+                    int quantityOfDamage = (int)(bigJumpTime * 40.0);
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
             }
+            else{
+                Talk.id = 6;
+            }
+
         }
 
     }
@@ -314,6 +362,51 @@ public class CharacterControllerScript : MonoBehaviour
             //animator.SetBool("airTime", false);
             isJumping = false;
         }
+
+        if (!controller.isGrounded)
+        {
+            airTime += Time.deltaTime;
+
+
+            if ((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
+            {
+                animator.SetBool("airTime", true);
+                if (!bigJump)
+                {
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }
+            }
+
+
+
+        }
+
+        if (controller.isGrounded && bigJump)
+        {
+            bigJump = false;
+            if (Time.time - timerJump >= 0)
+            {
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                bigJumpTime = (float)((Time.time - timerJump));
+                if (bigJumpTime > 0.4 || Input.GetKey(KeyCode.LeftShift))
+                {
+                    int quantityOfDamage;
+                    if (Input.GetKey(KeyCode.LeftShift)){
+                        quantityOfDamage = (int)(bigJumpTime * 150.0);
+                    } else {
+                        quantityOfDamage = (int)(bigJumpTime * 50.0);
+                    }
+
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
+            }
+        }
+
+
 
     }
 

@@ -21,20 +21,29 @@ public class Patrol : MonoBehaviour
     private Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
+    public ParticleSystem blood;
+    public ParticleSystem bloodBody;
+
+    public ParticleSystem fire;
 
     public bool isFiring;
     public float fireTimer;
 
     public float life;
     public bool isDead;
+    public bool killOk;
 
-    public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
 
-    public ParticleSystem blood;
+    public AudioSource enemyFireSound;
 
     public GameObject zonaLama;
+
+    public AudioSource hitSound;
+
+    public bool bodyHit;
+
 
 
 
@@ -53,6 +62,7 @@ public class Patrol : MonoBehaviour
         isLamabile = false;
         isFiring = false;
         isDead = false;
+        killOk = false;
         //fuoco.enableEmission = false;
         life = 100f;
 
@@ -67,36 +77,40 @@ public class Patrol : MonoBehaviour
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
+        bodyHit = false;
+
     }
 
     private void Update()
     {
-        navMesh.speed = speed;
         if (life == 0)
             isDead = true;
-        if (speed == 0)
-            animEnemy.SetFloat("speedPercentage", 0);
-        else
+        if (navMesh.velocity != Vector3.zero)
             animEnemy.SetFloat("speedPercentage", 1);
+        else
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isDead){
+        if (isDead && !killOk)
+        {
             kill();
         }
 
-        if (!EnemySight.player_contact)
+
+        if (!CharacterControllerScript.player_contact)
         {
             /*------------------------
              *  se il nemico non ci vede
              * -----------------------*/
-            if(EnemySight.player_contact_deactivated){
+            if (CharacterControllerScript.player_contact_deactivated)
+            {
                 //se il player è sfuggito
                 navMesh.SetDestination(moveSpots[randomSpots].position);
                 waitTime = 0;
-                EnemySight.player_contact_deactivated = false;
+                animEnemy.SetBool("isShooting", false);
             }
 
 
@@ -105,7 +119,8 @@ public class Patrol : MonoBehaviour
                 /*------------------------
                  *  se è in posizione
                  * -----------------------*/
-                if(!setWait){
+                if (!setWait)
+                {
                     setWait = true;
                     waitTime = startWaitTime;
                 }
@@ -133,8 +148,9 @@ public class Patrol : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    waitTime -= Time.deltaTime*0.01f;
+                    waitTime -= Time.deltaTime * 0.01f;
                     animEnemy.SetBool("isWalking", false);
+                    animEnemy.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
                 }
 
@@ -161,7 +177,7 @@ public class Patrol : MonoBehaviour
              *  se siamo stati visti dal nemico
              * -----------------------*/
             navMesh.destination = player.transform.position;
-            transform.LookAt(player.transform.position + (new Vector3(0 , 1f, 0)));
+            transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             navMesh.stoppingDistance = 10;
             if (navMesh.remainingDistance < 50)
             {
@@ -171,8 +187,22 @@ public class Patrol : MonoBehaviour
             }
         }
 
-        if (animEnemy.GetBool("isHeadHit") == true){
+        if (animEnemy.GetBool("isHeadHit") == true)
+        {
+            blood.Play();
             kill();
+
+        }
+
+        if (bodyHit)
+        {
+            bloodBody.Play();
+            if(life>0){
+                decrLife(50);
+                CharacterControllerScript.player_contact = true;
+                hitSound.Play();
+            }
+            bodyHit = false;
 
         }
 
@@ -183,21 +213,30 @@ public class Patrol : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if (!isFiring)
+        if (!isFiring && CharacterControllerScript.player_contact)
         {
             isFiring = true;
-            fireTimer = 1f;
+            fireTimer = Random.Range(0, 5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                //fuoco.Play();
+                fire.enableEmission = true;
+                fire.Play();
+                enemyFireSound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
+                if (hit.collider.gameObject.tag == "Player")
                 {
-                    CharacterControllerScript.decrHealth(5);
+                    if(!CharacterControllerScript.immortality){
+                        CharacterControllerScript.decrHealth(16);
+                        if(CharacterControllerScript.isDead){
+                            ShowMessage.id = 8;
+                        }
+                    }
+                    CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
+                    Talk.id = 2;
                 }
             }
         }
@@ -234,20 +273,30 @@ public class Patrol : MonoBehaviour
         }
     }
 
-    public void kill(){
+    public void kill()
+    {
         ShowMessage.id = 0;
         speed = 0;
-        if(animEnemy.GetBool("isHeadHit") == false)
+        if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
         Destroy(zonaLama);
         Destroy(navMesh);
         navMesh.enabled = false;
+        if (!isDead)
+        {
+            isDead = true;
+            killOk = true;
+        }
+
         Destroy(this);
     }
 
-    public void setSpeed()
+
+    public void stopEnemy()
     {
-        this.speed = 0;
+        this.speed = 0f;
+        navMesh.isStopped = true;
+        animEnemy.SetFloat("speedPercentage", 0.1f);
     }
 
 }
