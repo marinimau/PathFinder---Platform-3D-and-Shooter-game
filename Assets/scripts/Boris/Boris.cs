@@ -260,7 +260,6 @@ public class Boris : MonoBehaviour
             punchTimer = Random.Range(0, 1.5f);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
-                borisPunchSound.Play();
                 if (Random.Range(0, 2) % 2 == 0)
                 {
                     animBoris.SetBool("isPunching", true);
@@ -274,6 +273,7 @@ public class Boris : MonoBehaviour
                 Debug.Log("Boris colpisce: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.tag == "Player")
                 {
+                    borisPunchSound.Play();
                     if (!CharacterControllerScript.immortality)
                     {
                         CharacterControllerScript.decrHealth(6);

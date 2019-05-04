@@ -194,8 +194,10 @@ public class GunScript : MonoBehaviour
         anim.SetBool("reloading", true);
         reload_sound.Play();        //reload Sound
         controller.setReloadingWalkSpeed();
+        controller.isReloading = true;
         yield return new WaitForSeconds(reload_waittime);
         anim.SetBool("reloading", false);
+        controller.isReloading = false;
         controller.setStandardWalkSpeed();
         Reload();
         yield return true;
