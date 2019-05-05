@@ -6,7 +6,7 @@ public class PlayerPrefsCharacterSaver : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.K))
             SaveCharacter(characterData, 0);
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -18,7 +18,8 @@ public class PlayerPrefsCharacterSaver : MonoBehaviour
         /*PlayerPrefs.SetString("characterName_CharacterSlot" + characterSlot, data.characterName);
         PlayerPrefs.SetFloat("power_CharacterSlot" + characterSlot, data.power);
         PlayerPrefs.SetInt("bullets_CharacterSlot" + characterSlot, data.bullets);*/
-        PlayerPrefs.SetInt("bullets_CharacterSlot" + characterSlot, data.bullets);
+        PlayerPrefs.SetInt("bullets_CharacterSlot" + characterSlot, GunScript.nColpi);
+        PlayerPrefs.SetInt("health_CharacterSlot" + characterSlot, data.salute);
         PlayerPrefs.Save();
     }
 
@@ -29,8 +30,8 @@ public class PlayerPrefsCharacterSaver : MonoBehaviour
         loadedCharacter.power = PlayerPrefs.GetFloat("power_CharacterSlot" + characterSlot);
         loadedCharacter.bullets = PlayerPrefs.GetInt("bullets_CharacterSlot" + characterSlot);*/
 
-        loadedCharacter.bullets = PlayerPrefs.GetInt("bullets_CharacterSlot" + characterSlot);
-
+        //loadedCharacter.bullets = PlayerPrefs.GetInt("bullets_CharacterSlot" + characterSlot);
+        loadedCharacter.salute = PlayerPrefs.GetInt("health_CharacterSlot" + characterSlot);
         return loadedCharacter;
     }
 }

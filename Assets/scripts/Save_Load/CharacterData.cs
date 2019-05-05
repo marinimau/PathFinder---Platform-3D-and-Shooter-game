@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour
 {
-        public string characterName;
-        public float power;
-        public int bullets;
+    //CharacterControllerScript player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
+
+    public int salute = CharacterControllerScript.health;
+
+    /*public string characterName;
+    public float power;*/
 }
