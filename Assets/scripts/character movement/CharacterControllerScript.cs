@@ -42,11 +42,14 @@ public class CharacterControllerScript : MonoBehaviour
     public static bool invisible;
     public static float invisibleTimer;
 
+    public bool isReloading;
+
     Animator animator;
     Transform cameraT;
     CharacterController controller;
 
     public static bool player_contact;
+    public static bool boss_contact;
     public static bool player_contact_deactivated;
 
     //danni da caduta
@@ -67,6 +70,8 @@ public class CharacterControllerScript : MonoBehaviour
 
     public static bool gameOver = false;
 
+    public static bool key;
+
 
 
     // Start is called before the first frame update
@@ -77,7 +82,7 @@ public class CharacterControllerScript : MonoBehaviour
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         PlayerBlood = GetComponentInChildren<ParticleSystem>();
-        health = 100;
+        health = 1000000;
         isDead = false;
         immortality = false;
         immortalityTimer = 0;
@@ -88,7 +93,10 @@ public class CharacterControllerScript : MonoBehaviour
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
         materialMesh = mesh.material;
         player_contact = false;
+        boss_contact = false;
         player_contact_deactivated = false;
+        key = false;
+        isReloading = false;
 
 
     }
@@ -236,7 +244,7 @@ public class CharacterControllerScript : MonoBehaviour
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
         }
 
-        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running && !isReloading) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
 
         velocityY += Time.deltaTime * gravity;      //velocità asse y calcolata a parte.
@@ -325,7 +333,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
 
         Vector3 moveDirection;
-        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running && !isReloading) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
 

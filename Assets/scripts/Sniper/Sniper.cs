@@ -91,10 +91,10 @@ public class Sniper : MonoBehaviour
         }
 
 
-        if (!CharacterControllerScript.player_contact)
+        if (!CharacterControllerScript.player_contact || isDead)
         {
           /*-------------------------
-           *  se il cecchino non ci vede si guarda attorno
+           *  se il cecchino non ci vede
            * -----------------------*/
 
         }
@@ -106,7 +106,9 @@ public class Sniper : MonoBehaviour
              * -----------------------*/
             transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             //spara
-            fireOnPlayer();
+            if(!isDead){
+                fireOnPlayer();
+            }
 
         }
 
@@ -208,6 +210,7 @@ public class Sniper : MonoBehaviour
 
         animEnemy.SetBool("die", true);
         headHit = false;
+        Destroy(navMesh);
         
     }
 

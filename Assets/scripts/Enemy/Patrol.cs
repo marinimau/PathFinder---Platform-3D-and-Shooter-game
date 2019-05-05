@@ -199,6 +199,7 @@ public class Patrol : MonoBehaviour
             bloodBody.Play();
             if(life>0){
                 decrLife(50);
+                CharacterControllerScript.player_contact = true;
                 hitSound.Play();
             }
             bodyHit = false;

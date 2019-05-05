@@ -22,6 +22,8 @@ public class GunScript : MonoBehaviour
     public GameObject light;
     private Patrol enemy;
     private Sniper sniper;
+    private Boss boss;
+    private Boris boris;
 
     private void Start()
     {
@@ -91,7 +93,7 @@ public class GunScript : MonoBehaviour
                 enemy.bodyHit = true;
 
             }
-            if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
+            else if (hit.transform.tag.Equals("HeadSniper"))   //Se viene colpito un nemico in testa
             {
                 sniper = hit.transform.GetComponentInParent<Sniper>();
                 navMesh.enabled = false;
@@ -104,6 +106,34 @@ public class GunScript : MonoBehaviour
                 sniper = hit.transform.GetComponentInParent<Sniper>();
                 Debug.Log("Hai colpito il corpo");
                 sniper.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadBoss"))   //Se viene colpito un nemico in testa
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                navMesh.enabled = false;
+                boss.headHit = true;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodyBoss"))  //Se non viene colpito un nemico nel corpo
+            {
+                boss = hit.transform.GetComponentInParent<Boss>();
+                Debug.Log("Hai colpito il corpo");
+                boss.bodyHit = true;
+
+            }
+            else if (hit.transform.tag.Equals("HeadBoris"))   //Se viene colpito un nemico in testa
+            {
+                boris = hit.transform.GetComponentInParent<Boris>();
+                //navMesh.enabled = false;
+                boris.headHit = true;
+                Debug.Log("HEADSHOT!");
+            }
+            else if (hit.transform.tag.Equals("BodyBoris"))  //Se non viene colpito un nemico nel corpo
+            {
+                boris = hit.transform.GetComponentInParent<Boris>();
+                Debug.Log("Hai colpito il corpo");
+                boris.bodyHit = true;
 
             }
             else    //Se non colpisci un nemico
@@ -164,8 +194,10 @@ public class GunScript : MonoBehaviour
         anim.SetBool("reloading", true);
         reload_sound.Play();        //reload Sound
         controller.setReloadingWalkSpeed();
+        controller.isReloading = true;
         yield return new WaitForSeconds(reload_waittime);
         anim.SetBool("reloading", false);
+        controller.isReloading = false;
         controller.setStandardWalkSpeed();
         Reload();
         yield return true;
