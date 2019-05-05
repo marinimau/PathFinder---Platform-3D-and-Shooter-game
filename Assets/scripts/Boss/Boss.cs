@@ -63,6 +63,7 @@ public class Boss : MonoBehaviour
         setPlayerContact = false;
         nColpiStart = 8;
         nColpi = 8;
+        animBoss.SetBool("isDead", true);
 
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -245,8 +246,7 @@ public class Boss : MonoBehaviour
         BossLife.show = false;
         ShowMessage.id = 0;
         speed = 0;
-        if (animBoss.GetBool("isHeadHit") == false)
-            animBoss.SetBool("isDead", true);
+        animBoss.SetBool("isDead", true);
         Destroy(navMesh);
         navMesh.enabled = false;
         if (!isDead)
@@ -262,7 +262,7 @@ public class Boss : MonoBehaviour
     {
         float reload_waittime = 4.0f;
 
-        //animBoss.SetBool("reloading", true);
+        animBoss.SetBool("isReloading", true);
 
         reloadSound.Play();        //reload Sound
         navMesh.speed = 0;
