@@ -63,13 +63,11 @@ public class Boss : MonoBehaviour
         setPlayerContact = false;
         nColpiStart = 8;
         nColpi = 8;
-        animBoss.SetBool("isDead", true);
 
 
         player = GameObject.FindGameObjectWithTag("Player");
-        //animBoss = navMesh.gameObject.GetComponentInChildren<Animator>();
-        //animBoss.SetBool("isWalking", true);
-        //animBoss.SetFloat("speedPercentage", 1);
+        animBoss = navMesh.gameObject.GetComponentInChildren<Animator>();
+        animBoss.SetFloat("speedPercentage", 0);
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
@@ -84,11 +82,11 @@ public class Boss : MonoBehaviour
         if (life == 0)
             isDead = true;
         if (navMesh.velocity != Vector3.zero){
-            //animBoss.SetFloat("speedPercentage", 1);
+            animBoss.SetFloat("speedPercentage", 2);
         }
        
         else {
-            // animBoss.SetFloat("speedPercentage", 0);
+            animBoss.SetFloat("speedPercentage", 0);
         }
 
     }
@@ -260,14 +258,14 @@ public class Boss : MonoBehaviour
 
     IEnumerator OnAnimationComplete()
     {
-        float reload_waittime = 4.0f;
+        float reload_waittime = 2.4f;
 
         animBoss.SetBool("isReloading", true);
 
         reloadSound.Play();        //reload Sound
         navMesh.speed = 0;
         yield return new WaitForSeconds(reload_waittime);
-        //animBoss.SetBool("reloading", false);
+        animBoss.SetBool("isReloading", false);
         navMesh.speed = 2;
         nColpi = nColpiStart;
         yield return true;

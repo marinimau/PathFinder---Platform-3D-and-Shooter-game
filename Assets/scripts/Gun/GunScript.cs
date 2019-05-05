@@ -111,7 +111,6 @@ public class GunScript : MonoBehaviour
             else if (hit.transform.tag.Equals("HeadBoss"))   //Se viene colpito un nemico in testa
             {
                 boss = hit.transform.GetComponentInParent<Boss>();
-                navMesh.enabled = false;
                 boss.headHit = true;
                 Debug.Log("HEADSHOT!");
             }
