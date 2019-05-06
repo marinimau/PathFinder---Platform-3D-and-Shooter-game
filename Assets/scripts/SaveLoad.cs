@@ -30,7 +30,7 @@ public class SaveLoad : MonoBehaviour
 
         SaveManager saver = new SaveManager();
         sceneName = SceneManager.GetActiveScene().name;
-        //sceneId = SceneManager.GetActiveScene().buildIndex;
+        sceneId = SceneManager.GetActiveScene().buildIndex;
 
         saver.levelSaved = sceneName;
         //saver.levelSaved = sceneId;
@@ -51,9 +51,9 @@ public class SaveLoad : MonoBehaviour
             SaveManager saver = (SaveManager)(binary.Deserialize(fStream));
             fStream.Close();
 
-            //SceneManager.LoadScene(saver.levelSaved);
+            SceneManager.LoadScene(saver.levelSaved);
 
-            this.gameObject.GetComponent<ChangeSceneAsync>().ChangeScene(saver.levelSaved);
+           //this.gameObject.GetComponent<ChangeSceneAsync>().ChangeScene(saver.levelSaved);
         }
     }
 }
