@@ -126,6 +126,10 @@ public class Sniper : MonoBehaviour
             {
                 decrLife(50);
                 hitSound.Play();
+                if (!CharacterControllerScript.player_contact)
+                {
+                    CharacterControllerScript.player_contact = true;
+                }
             }
             bodyHit = false;
 

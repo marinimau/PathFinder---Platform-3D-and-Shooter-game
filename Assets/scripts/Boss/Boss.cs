@@ -141,6 +141,10 @@ public class Boss : MonoBehaviour
             {
                 decrLife(12);
                 hitSound.Play();
+                if (!CharacterControllerScript.boss_contact)
+                {
+                    CharacterControllerScript.boss_contact = true;
+                }
             }
             headHit = false;
 
@@ -153,6 +157,9 @@ public class Boss : MonoBehaviour
             {
                 decrLife(5);
                 hitSound.Play();
+                if(!CharacterControllerScript.boss_contact){
+                    CharacterControllerScript.boss_contact = true;
+                }
             }
             bodyHit = false;
 
