@@ -27,13 +27,6 @@ public class Show_stealth_status : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isPaused)
-        {
-            canvas.enabled = true;
-        } else
-        {
-            canvas.enabled = false;
-        }
 
         switch (icon)
         {

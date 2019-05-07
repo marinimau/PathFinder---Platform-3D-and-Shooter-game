@@ -17,7 +17,7 @@ public class BossLife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(show){
+        if(show && !PauseMenu.isPaused){
             canvas.enabled = true;
         } else{
             canvas.enabled = false;
