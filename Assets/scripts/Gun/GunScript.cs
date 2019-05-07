@@ -34,27 +34,33 @@ public class GunScript : MonoBehaviour
 
     void Update()
     {
-        if (nColpi < 0)
+        if (!PauseMenu.isPaused)
         {
-            armaScarica = true;
-        }
-
-        if (Input.GetButtonDown("Fire1") && !CharacterControllerScript.isDead){
-            if(!armaScarica){
-                nColpi = Shoot();
-            }
-            else
+            if (nColpi < 0)
             {
-                Click();
+                armaScarica = true;
+            }
+
+            if (Input.GetButtonDown("Fire1") && !CharacterControllerScript.isDead)
+            {
+                if (!armaScarica)
+                {
+                    nColpi = Shoot();
+                }
+                else
+                {
+                    Click();
+                }
+            }
+
+
+            if (Input.GetKey(KeyCode.R) && !CharacterControllerScript.isDead)
+            {
+                StartCoroutine(OnAnimationComplete());
+
             }
         }
-       
-
-        if (Input.GetKey(KeyCode.R) && !CharacterControllerScript.isDead)
-        {
-            StartCoroutine(OnAnimationComplete());
-
-        }
+        
     }
 
     int Shoot()

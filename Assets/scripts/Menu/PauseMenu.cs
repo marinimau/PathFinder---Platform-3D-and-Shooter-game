@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] public GameObject cameraObj;
-    [SerializeField] private bool isPaused;
+    [SerializeField] public static bool isPaused;
     Animator CameraObject;
     public GameObject riprendiBtn;
     public GameObject salvaBtn;

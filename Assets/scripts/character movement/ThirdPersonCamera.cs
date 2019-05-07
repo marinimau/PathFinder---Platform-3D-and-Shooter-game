@@ -56,7 +56,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         }
 
-        if(flag_mira == false )
+        if (flag_mira == false)
         {
             currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw, 0f), ref rotationSmoothVelocity, rotationSmoothTime);
             transform.eulerAngles = currentRotation;
@@ -68,6 +68,6 @@ public class ThirdPersonCamera : MonoBehaviour
 
         }
 
-
     }
+        
 }

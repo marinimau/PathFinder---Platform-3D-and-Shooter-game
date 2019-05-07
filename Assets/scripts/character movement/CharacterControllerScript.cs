@@ -104,123 +104,136 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(invisible){
-            if(mesh.material==materialMesh){
-                mesh.material = invisibleMaterial;
-            }
-            Debug.Log("Player invisibile");
-            invisibleTimer -= Time.deltaTime*0.1f;
-            if(invisibleTimer<=0){
-                ShowMessage.id=5;
-                Debug.Log("Player visibile");
-                invisible = false;
-                
-            }
-        } else {
-            if (mesh.material != materialMesh)
+        if (!PauseMenu.isPaused)
+        {
+            if (invisible)
             {
-                mesh.material = materialMesh;
-            }
-        }
-
-        if(immortality){
-            immortalityTimer -= Time.deltaTime * 0.1f;
-            if (immortalityTimer <= 0)
-            {
-                ShowMessage.id = 6;
-                Debug.Log("Player MORTALE");
-                immortality = false;
-            }
-        }
-
-
-        bool running = Input.GetKey(KeyCode.LeftShift);
-
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        Vector2 inputDir = input.normalized;
-        if(!isDead){
-            if (Input.GetButton("Fire2"))
-            {
-                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+                if (mesh.material == materialMesh)
                 {
-                    animator.SetBool("jumpStatic", true);
-                    StartCoroutine("Jump_Static_Land", WaitTime);
+                    mesh.material = invisibleMaterial;
+                }
+                Debug.Log("Player invisibile");
+                invisibleTimer -= Time.deltaTime * 0.1f;
+                if (invisibleTimer <= 0)
+                {
+                    ShowMessage.id = 5;
+                    Debug.Log("Player visibile");
+                    invisible = false;
 
                 }
-                else
-                {
-                    if (Input.GetAxis("Jump") > 0)
-                    {
-                        JumpWhileAiming();
-                        animator.SetBool("Jumping", true);
-
-                    }
-                }
-                MoveWhileAiming(inputDir, running);
             }
             else
             {
-
-                if (flag)
+                if (mesh.material != materialMesh)
                 {
-                    transform.localEulerAngles = new Vector3(0, lastRotation, 0);
-                    flag = false;
+                    mesh.material = materialMesh;
                 }
+            }
 
-                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            if (immortality)
+            {
+                immortalityTimer -= Time.deltaTime * 0.1f;
+                if (immortalityTimer <= 0)
                 {
-                    animator.SetBool("jumpStatic", true);
-                    StartCoroutine("Jump_Static_Land", WaitTime);
+                    ShowMessage.id = 6;
+                    Debug.Log("Player MORTALE");
+                    immortality = false;
+                }
+            }
 
+
+            bool running = Input.GetKey(KeyCode.LeftShift);
+
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 inputDir = input.normalized;
+            if (!isDead)
+            {
+                if (Input.GetButton("Fire2"))
+                {
+                    if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+                    {
+                        animator.SetBool("jumpStatic", true);
+                        StartCoroutine("Jump_Static_Land", WaitTime);
+
+                    }
+                    else
+                    {
+                        if (Input.GetAxis("Jump") > 0)
+                        {
+                            JumpWhileAiming();
+                            animator.SetBool("Jumping", true);
+
+                        }
+                    }
+                    MoveWhileAiming(inputDir, running);
                 }
                 else
                 {
-                    if (Input.GetAxis("Jump") > 0)
+
+                    if (flag)
                     {
-                        Jump();
-                        animator.SetBool("Jumping", true);
+                        transform.localEulerAngles = new Vector3(0, lastRotation, 0);
+                        flag = false;
+                    }
+
+                    if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+                    {
+                        animator.SetBool("jumpStatic", true);
+                        StartCoroutine("Jump_Static_Land", WaitTime);
 
                     }
+                    else
+                    {
+                        if (Input.GetAxis("Jump") > 0)
+                        {
+                            Jump();
+                            animator.SetBool("Jumping", true);
+
+                        }
+                    }
+                    //input per movimento
+                    Move(inputDir, running);
                 }
-                //input per movimento
-                Move(inputDir, running);
-            }
 
 
-            if (Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
-            {
-                //AnimazioneSparo();
-                Recoil.recoilActive = true;
-            }
-
-            if (fire)
-            {
-                smooth += Time.deltaTime * 4F;
-                transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
-                if (smooth > 1)
+                if (Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
                 {
-                    fire = false;
+                    //AnimazioneSparo();
+                    Recoil.recoilActive = true;
                 }
+
+                if (fire)
+                {
+                    smooth += Time.deltaTime * 4F;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
+                    if (smooth > 1)
+                    {
+                        fire = false;
+                    }
+                }
+
+
+                //animator
+                float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
+                animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
+
             }
-
-
-            //animator
-            float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
-            animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
-
-        } else{
-            //Il player è morto
-            if(gameOver == false)
+            else
             {
-                Debug.Log("Sono morto una volta");
-                health = 0;
-                gameOver = true;
-                animator.SetBool("dead", true);
-                player_contact_deactivated = true;
-                player_contact = false;
+                //Il player è morto
+                if (gameOver == false)
+                {
+                    Debug.Log("Sono morto una volta");
+                    health = 0;
+                    gameOver = true;
+                    animator.SetBool("dead", true);
+                    player_contact_deactivated = true;
+                    player_contact = false;
+                }
+
             }
-            
         }
+        
 
     }
 
