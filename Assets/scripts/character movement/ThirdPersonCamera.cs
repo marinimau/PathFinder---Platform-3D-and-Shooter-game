@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     public bool lockCursor;
+    public Camera camera;
     public float mouseSensitivity = 10;
     public Transform target;
     public Transform target_aim;
@@ -25,16 +26,19 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Start()
     {
+        camera = GetComponent<Camera>();
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
+
 
         if (Input.GetButton("Fire2"))
         {
