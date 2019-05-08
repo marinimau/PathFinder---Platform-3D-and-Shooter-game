@@ -178,7 +178,7 @@ public class Boss : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
-        fucile.y += 0.5f;
+        fucile.y += 0.3f;
         if(nColpi>0){
             if (!isFiring && CharacterControllerScript.player_contact)
             {

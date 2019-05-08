@@ -4,28 +4,23 @@ using UnityEngine;
 
 public class chooseCamera : MonoBehaviour
 {
-    public Camera camPlayer;
-    public Camera camMenu;
+    public Camera playerCamera;
+    public ThirdPersonCamera cameraScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        camPlayer.enabled = true;
-        camMenu.enabled = false;
-
+        cameraScript = playerCamera.GetComponent<ThirdPersonCamera>();
+        cameraScript.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isPaused)
-        {
-            camPlayer.enabled = true;
-            camMenu.enabled = false;
-        }
-        else{
-            camPlayer.enabled = false;
-            camMenu.enabled = true;
+        if(!PauseMenu.isPaused){
+            cameraScript.enabled = true;
+        } else {
+            cameraScript.enabled = false;
         }
     }
 }
