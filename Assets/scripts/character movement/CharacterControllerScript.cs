@@ -82,7 +82,7 @@ public class CharacterControllerScript : MonoBehaviour
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         PlayerBlood = GetComponentInChildren<ParticleSystem>();
-        health = 1000000;
+        health = 100;
         isDead = false;
         immortality = false;
         immortalityTimer = 0;
@@ -229,6 +229,7 @@ public class CharacterControllerScript : MonoBehaviour
                     animator.SetBool("dead", true);
                     player_contact_deactivated = true;
                     player_contact = false;
+                    boss_contact = false;
                 }
 
             }

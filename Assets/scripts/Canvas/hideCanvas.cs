@@ -18,13 +18,31 @@ public class hideCanvas : MonoBehaviour
         {
             for(int i=0; i<canvas.Length; i++)
             {
-                canvas[i].enabled = false;
+                if(canvas[i]!=null)
+                    canvas[i].enabled = false;
             }
         } else
         {
             for (int i = 0; i < canvas.Length; i++)
             {
-                canvas[i].enabled = true;
+                if (canvas[i] != null){
+                    if(CharacterControllerScript.isDead){
+                        switch (canvas[i].tag)
+                        {
+                            case "Message":
+                                canvas[i].enabled = true;
+                                break;
+                            default:
+                                canvas[i].enabled = false;
+                                break;
+                        }
+                    } else {
+                        canvas[i].enabled = true;
+                    }
+
+
+                }
+                    
             }
         }
     }

@@ -19,7 +19,6 @@ public class VisualeBoss : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag.Equals("Player")){
-            BossLife.show = true;
             CharacterControllerScript.boss_contact = true;
         }
             

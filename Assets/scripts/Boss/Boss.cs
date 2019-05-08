@@ -89,6 +89,13 @@ public class Boss : MonoBehaviour
             animBoss.SetFloat("speedPercentage", 0);
         }
 
+        if(CharacterControllerScript.boss_contact){
+            BossLife.show = true;
+        }
+        else{
+            BossLife.show = false;
+        }
+
     }
 
     // Update is called once per frame
@@ -139,7 +146,7 @@ public class Boss : MonoBehaviour
             blood.Play();
             if (life > 0)
             {
-                decrLife(12);
+                decrLife(6);
                 hitSound.Play();
                 if (!CharacterControllerScript.boss_contact)
                 {
@@ -155,7 +162,7 @@ public class Boss : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                decrLife(5);
+                decrLife(2);
                 hitSound.Play();
                 if(!CharacterControllerScript.boss_contact){
                     CharacterControllerScript.boss_contact = true;
@@ -194,7 +201,7 @@ public class Boss : MonoBehaviour
                     {
                         if (!CharacterControllerScript.immortality)
                         {
-                            CharacterControllerScript.decrHealth(4);
+                            CharacterControllerScript.decrHealth(8);
                             if (CharacterControllerScript.isDead)
                             {
                                 ShowMessage.id = 10;
@@ -249,6 +256,7 @@ public class Boss : MonoBehaviour
     public void kill()
     {
         BossLife.show = false;
+        CharacterControllerScript.boss_contact = false;
         ShowMessage.id = 0;
         speed = 0;
         animBoss.SetBool("isDead", true);
