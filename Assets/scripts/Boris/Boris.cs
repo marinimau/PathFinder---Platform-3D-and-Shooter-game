@@ -289,13 +289,12 @@ public class Boris : MonoBehaviour
                         }
                     }
                     CharacterControllerScript.PlayerBlood.Play();
-                    Debug.Log("Player hit");
                     Talk.id = 2;
                 }
             }
         }
         punchTimer -= Time.deltaTime * cadenzaPunch;
-        if (punchTimer <= 0)
+        if (punchTimer <= 0 || CharacterControllerScript.isDead)
         {
             isPunching = false;
             animBoris.SetBool("isPunching", false);
