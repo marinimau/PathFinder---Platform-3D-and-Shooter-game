@@ -19,6 +19,8 @@ TagManager:
   - HeadBoss
   - BodyBoris
   - HeadBoris
+  - FxTemporaire
+  - Message
   layers:
   - Default
   - TransparentFX

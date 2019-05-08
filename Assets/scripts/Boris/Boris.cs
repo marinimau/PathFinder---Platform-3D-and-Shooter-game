@@ -13,7 +13,7 @@ public class Boris : MonoBehaviour
 
     private float waitTime;
     private bool setWait;
-    public float startWaitTime = 1;
+    public float startWaitTime = 0;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
@@ -57,6 +57,9 @@ public class Boris : MonoBehaviour
         navMesh.speed = speed;
         navMesh.autoBraking = false;
         waitTime = startWaitTime;
+        setWait = false;
+        navMesh.SetDestination(moveSpots[0].position);
+        navMesh.stoppingDistance = 0;
         navMesh.updateRotation = false;
         isLamabile = false;
         isPunching = false;
@@ -75,7 +78,7 @@ public class Boris : MonoBehaviour
         /*------------------------
          *  seleziono a caso il primo punto del giro di pattuglia
          * -----------------------*/
-        //randomSpots = Random.Range(0, moveSpots.Length);
+        randomSpots = Random.Range(0, moveSpots.Length);
 
         bodyHit = false;
 
@@ -120,19 +123,20 @@ public class Boris : MonoBehaviour
         if (!CharacterControllerScript.player_contact || isDead)
         {
             /*------------------------
-             *  se boris non ci vede
+             *  se boris non ci vede o è morto
              * -----------------------*/
             if (CharacterControllerScript.player_contact_deactivated)
             {
                 //se il player è sfuggito
-                //navMesh.SetDestination(moveSpots[randomSpots].position);
+                navMesh.SetDestination(moveSpots[randomSpots].position);
                 waitTime = 0;
                 animBoris.SetBool("playerContact", false);
             }
 
 
-            if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
+            if ((!navMesh.pathPending && navMesh.remainingDistance < 1f)|| isDead)
             {
+
                 /*------------------------
                  *  se è in posizione
                  * -----------------------*/
@@ -147,17 +151,19 @@ public class Boris : MonoBehaviour
                     /*------------------------
                      *  vai alla prossima posizione
                      * -----------------------*/
-                    //randomSpots =(Random.Range(0, moveSpots.Length);
+
+                    Debug.Log("ora qui");
                     if (moveSpots.Length == 0)
                     {
                         randomSpots = 0;
                     }
                     else
                     {
-                        //randomSpots = Random.Range(0, moveSpots.Length);
+                        randomSpots = Random.Range(0, moveSpots.Length);
                     }
-                    //navMesh.SetDestination(moveSpots[randomSpots].position);
+                    navMesh.SetDestination(moveSpots[randomSpots].position);
                     navMesh.speed = 1;
+                    animBoris.SetFloat("speedPercentage", 0);
                     setWait = false;
 
                 }
@@ -166,8 +172,9 @@ public class Boris : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    waitTime -= Time.deltaTime * 0.01f;
-                    animBoris.SetBool("isWalking", false);
+                    Debug.Log("wait_time"+waitTime);
+                    waitTime -= 0.001f;
+                    navMesh.speed = 0;
                     animBoris.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
                 }
@@ -178,8 +185,7 @@ public class Boris : MonoBehaviour
                 /*------------------------
                  *  cambio di posizione
                  * -----------------------*/
-
-                //navMesh.destination = moveSpots[randomSpots].position;
+                navMesh.destination = moveSpots[randomSpots].position;
                 if (navMesh.velocity.sqrMagnitude > Mathf.Epsilon)
                 {
                     transform.rotation = Quaternion.LookRotation(navMesh.velocity.normalized);
