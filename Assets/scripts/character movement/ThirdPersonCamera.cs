@@ -40,9 +40,8 @@ public class ThirdPersonCamera : MonoBehaviour
         if(!PauseMenu.isPaused){
             if (!lockCursor)
             {
+                lockCursor = true;
                 Start();
-                CharacterControllerScript.reset = true;
-
             }
         }
 
