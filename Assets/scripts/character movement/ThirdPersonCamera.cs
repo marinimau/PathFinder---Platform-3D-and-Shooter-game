@@ -39,7 +39,13 @@ public class ThirdPersonCamera : MonoBehaviour
     void LateUpdate()
     {
 
-        if(!PauseMenu.isPaused){
+        if (!lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            lockCursor = true;
+        }
+        if (!PauseMenu.isPaused){
             if (Input.GetButton("Fire2"))
             {
                 flag_mira = true;
@@ -71,6 +77,17 @@ public class ThirdPersonCamera : MonoBehaviour
 
 
             }
+        }
+
+        else{
+            /*se siamo in pausa*/
+            if (lockCursor)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+                lockCursor = false;
+            }
+
         }
 
 

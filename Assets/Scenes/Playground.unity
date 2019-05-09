@@ -32782,6 +32782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1475115818}
+  - component: {fileID: 1475115819}
   m_Layer: 5
   m_Name: Player e UI
   m_TagString: Untagged
@@ -32807,6 +32808,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1475115819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475115817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d871a2af2c94469825f19494681410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 1916609274}
+  cameraScript: {fileID: 0}
 --- !u!1 &1504272511
 GameObject:
   m_ObjectHideFlags: 0
@@ -35557,6 +35572,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1916609274 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6829524289634687938}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1924735413
 GameObject:
   m_ObjectHideFlags: 0
@@ -36574,6 +36595,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.064
       objectReference: {fileID: 0}
+    - target: {fileID: 4146212020347321905, guid: fd1d9a1cb3309423fb64407702fcd9fa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd1d9a1cb3309423fb64407702fcd9fa, type: 3}
 --- !u!1001 &4312999139005788303
@@ -37049,6 +37075,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6829524289938454843, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829524289938454842, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
         type: 3}
       propertyPath: m_Enabled
       value: 1
