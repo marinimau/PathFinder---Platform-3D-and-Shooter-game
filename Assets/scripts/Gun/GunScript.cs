@@ -20,6 +20,7 @@ public class GunScript : MonoBehaviour
     CharacterControllerScript controller;
     public ParticleSystem bloodEffect;
     public GameObject light;
+    public lightPointCollider lpc;
     private Patrol enemy;
     private Sniper sniper;
     private Boss boss;
@@ -81,7 +82,9 @@ public class GunScript : MonoBehaviour
             {
                 Debug.Log("colpito punto luce");
                 light = hit.collider.gameObject;
-                Destroy(light);
+                lpc = light.GetComponent<lightPointCollider>();
+                lpc.accesa = false;
+                
             }
 
             if (hit.transform.tag.Equals("Head"))   //Se viene colpito un nemico in testa

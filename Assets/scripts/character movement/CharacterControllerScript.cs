@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterControllerScript : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class CharacterControllerScript : MonoBehaviour
 
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
+    
+
+    private bool load=false;
+    private bool load_data = false;
 
     public float speedSmoothTime = 0.1f;
     float speedSmoothVelocity;
@@ -105,7 +110,6 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(reset){
             cameraT = Camera.main.transform;
             Cursor.lockState = CursorLockMode.Locked;
@@ -528,6 +532,13 @@ public class CharacterControllerScript : MonoBehaviour
 
     public void LoadPlayer()
     {
+        //SceneManager.LoadScene("playground", LoadSceneMode.Single);
+        loadDati();
+
+    }
+
+    public void loadDati()
+    {
         PlayerData playerData = Save.playerLoad();
 
         /*---------------------------------------
@@ -552,7 +563,7 @@ public class CharacterControllerScript : MonoBehaviour
         immortalityTimer = playerData.timer_immortale;
 
         //chiave
-        key =playerData.key;
+        key = playerData.key;
 
         //invisibilità
         invisible = playerData.invisibile;
@@ -572,6 +583,7 @@ public class CharacterControllerScript : MonoBehaviour
         gameOver = playerData.gameOver;
         //isDead
         isDead = playerData.isDead;
+        load_data = true;
 
     }
 }
