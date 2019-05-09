@@ -71,7 +71,7 @@ public class CharacterControllerScript : MonoBehaviour
     public static bool gameOver = false;
 
     public static bool key;
-
+    public static bool reset;
 
 
     // Start is called before the first frame update
@@ -97,6 +97,7 @@ public class CharacterControllerScript : MonoBehaviour
         player_contact_deactivated = false;
         key = false;
         isReloading = false;
+        reset = false;
 
 
     }
@@ -104,6 +105,14 @@ public class CharacterControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(reset){
+            cameraT = Camera.main.transform;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            reset = false;
+        }
+
         if (!PauseMenu.isPaused)
         {
             if (invisible)

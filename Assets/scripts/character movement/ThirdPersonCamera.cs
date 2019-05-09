@@ -35,16 +35,23 @@ public class ThirdPersonCamera : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if(!PauseMenu.isPaused){
+            if (!lockCursor)
+            {
+                Start();
+                CharacterControllerScript.reset = true;
+
+            }
+        }
+
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
 
-        if (!lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            lockCursor = true;
-        }
         if (!PauseMenu.isPaused){
             if (Input.GetButton("Fire2"))
             {
