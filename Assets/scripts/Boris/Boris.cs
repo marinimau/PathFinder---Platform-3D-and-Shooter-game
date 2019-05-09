@@ -152,7 +152,6 @@ public class Boris : MonoBehaviour
                      *  vai alla prossima posizione
                      * -----------------------*/
 
-                    Debug.Log("ora qui");
                     if (moveSpots.Length == 0)
                     {
                         randomSpots = 0;
@@ -172,7 +171,6 @@ public class Boris : MonoBehaviour
                     /*------------------------
                      *  aspetta nel waypoint
                      * -----------------------*/
-                    Debug.Log("wait_time"+waitTime);
                     waitTime -= 0.001f;
                     navMesh.speed = 0;
                     animBoris.SetFloat("speedPercentage", 0);

@@ -520,4 +520,58 @@ public class CharacterControllerScript : MonoBehaviour
             health = 100;
         }
     }
+
+    public  void SavePlayer()
+    {
+        Save.playerSave(this);
+    }
+
+    public void LoadPlayer()
+    {
+        PlayerData playerData = Save.playerLoad();
+
+        /*---------------------------------------
+         * 
+         *  setto gli attributi con i valori caricati
+         * 
+         * --------------------------------------*/
+        //resetto l'animator
+        animator.Rebind();
+
+        //health
+        health = playerData.health;
+        //nColpi
+        GunScript.nColpi = playerData.nColpi;
+
+        //posizione
+        Vector3 savedPosition = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        transform.position = savedPosition;
+
+        //immortalita
+        immortality = playerData.immortale;
+        immortalityTimer = playerData.timer_immortale;
+
+        //chiave
+        key =playerData.key;
+
+        //invisibilità
+        invisible = playerData.invisibile;
+        invisibleTimer = playerData.timer_invisibile;
+
+        //contatti
+        boss_contact = playerData.boss_contact;
+        player_contact_deactivated = playerData.player_contact_deactivated;
+        //se ero in una situazione di contatto ma quando carico non lo sono più
+        if (player_contact && !playerData.player_contact)
+        {
+            player_contact_deactivated = true;
+        }
+        player_contact = playerData.player_contact;
+
+        //game over
+        gameOver = playerData.gameOver;
+        //isDead
+        isDead = playerData.isDead;
+
+    }
 }
