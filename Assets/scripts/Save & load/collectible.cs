@@ -5,12 +5,17 @@ public class collectible : MonoBehaviour
 {
     public bool active;
     public bool loaded;
+    public bool moved;
+    public Vector3 oldPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         active = true;
         loaded = false;
+        moved = false;
+        oldPosition = transform.position;
+
     }
 
     // Update is called once per frame
@@ -18,14 +23,23 @@ public class collectible : MonoBehaviour
     {
         if (loaded && active)
         {
-            gameObject.SetActive(true);
             loaded = false;
             Debug.Log("collectible attivo");
         }
-        if(loaded && !active){
-            gameObject.SetActive(false);
+        if (loaded && !active)
+        {
             loaded = false;
             Debug.Log("collectible rimosso");
+        }
+        if (!active && !moved)
+        {
+            gameObject.transform.position = new Vector3(0, -100, 0);
+            moved = true;
+        }
+        if (active && transform.position != oldPosition)
+        {
+            transform.position = oldPosition;
+
         }
     }
 
@@ -42,6 +56,7 @@ public class collectible : MonoBehaviour
         //active
         active = collectible.active;
         loaded = true;
+        moved = false;
 
     }
 
