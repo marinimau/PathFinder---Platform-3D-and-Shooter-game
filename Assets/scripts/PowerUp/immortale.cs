@@ -30,7 +30,6 @@ public class immortale : MonoBehaviour
             c.active = false;
             Debug.Log("powerUp");
             //Destroy(gameObject);
-            gameObject.SetActive(false);
             ShowMessage.id = 3;
             Talk.id = 5;
         }

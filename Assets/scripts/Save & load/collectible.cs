@@ -20,10 +20,12 @@ public class collectible : MonoBehaviour
         {
             gameObject.SetActive(true);
             loaded = false;
+            Debug.Log("collectible attivo");
         }
         if(loaded && !active){
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
             loaded = false;
+            Debug.Log("collectible rimosso");
         }
     }
 

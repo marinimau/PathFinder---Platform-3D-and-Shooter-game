@@ -6,10 +6,11 @@ public class NonPiuRicercato : MonoBehaviour
 {
 
     public ParticleSystem smoke;
+    public collectible c;
     // Start is called before the first frame update
     void Start()
     {
-        
+        c = GetComponent<collectible>();
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class NonPiuRicercato : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag.Equals("Player") && c.active)
         {
             //riprodurre un suono che ci dia un feedback quando entriamo
             CharacterControllerScript.player_contact = false;
@@ -29,7 +30,8 @@ public class NonPiuRicercato : MonoBehaviour
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
             smoke.Play();
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            c.active = false;
             ShowMessage.id = 2;
             Talk.id = 5;
         }
