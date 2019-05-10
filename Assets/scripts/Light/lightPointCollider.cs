@@ -5,12 +5,12 @@ using UnityEngine;
 public class lightPointCollider : MonoBehaviour
 {
     public bool accesa;
-    private Light luce;
-    private bool prev;
+    public Light luce;
     // Start is called before the first frame update
     void Start()
     {
         accesa = true;
+        luce = GetComponentInChildren<Light>().GetComponentInParent<Light>();
     }
 
     // Update is called once per frame
@@ -18,11 +18,30 @@ public class lightPointCollider : MonoBehaviour
     {
         if (!accesa)
         {
-            gameObject.active = false;
+            luce.gameObject.SetActive(false);
         } else
         {
-            gameObject.active = true;
+            luce.gameObject.SetActive(true);
         }
+    }
+
+    public void SaveLight()
+    {
+        Save.lightSave(this);
+    }
+
+    public void LoadLight()
+    {
+        LightData lightData = Save.lightLoad();
+
+        /*---------------------------------------
+         * 
+         *  setto gli attributi con i valori caricati
+         * 
+         * --------------------------------------*/
+        //accesa
+        accesa = lightData.accesa;
+
     }
 
 
