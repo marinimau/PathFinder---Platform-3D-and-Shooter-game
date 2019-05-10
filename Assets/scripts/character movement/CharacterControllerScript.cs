@@ -528,6 +528,8 @@ public class CharacterControllerScript : MonoBehaviour
     public  void SavePlayer()
     {
         Save.playerSave(this);
+        Debug.Log("dati player salvati");
+        Debug.Log("position =(" + transform.position.x + "," + transform.position.y + "," + transform.position.z + ")");
     }
 
     public void LoadPlayer()
@@ -557,6 +559,8 @@ public class CharacterControllerScript : MonoBehaviour
         //posizione
         Vector3 savedPosition = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
         transform.position = savedPosition;
+        Debug.Log("position =(" + playerData.position[0] + "," + playerData.position[1] + "," + playerData.position[2]+")");
+        transform.SetPositionAndRotation(savedPosition, new Quaternion());
 
         //immortalita
         immortality = playerData.immortale;
@@ -584,6 +588,7 @@ public class CharacterControllerScript : MonoBehaviour
         //isDead
         isDead = playerData.isDead;
         load_data = true;
+        Debug.Log("dati player caricati");
 
     }
 }

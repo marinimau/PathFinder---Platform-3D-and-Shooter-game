@@ -7,13 +7,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class Save
 {
+     /*--------------------------------------------------------------*
+      * 
+      * Player
+      *
+      *--------------------------------------------------------------*/
     public static void playerSave(CharacterControllerScript characterControllerScipt)
     {
-        /*--------------------------------------------------------------*
-         * 
-         * Player
-         *
-         *--------------------------------------------------------------*/
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.fun";
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -43,13 +43,14 @@ public static class Save
         }
     }
 
+    /*--------------------------------------------------------------*
+     * 
+     * Lights
+     *
+     *--------------------------------------------------------------*/
+
     public static void lightSave(lightPointCollider lpc)
     {
-        /*--------------------------------------------------------------*
-         * 
-         * Lights
-         *
-         *--------------------------------------------------------------*/
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/light.fun";
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -70,6 +71,44 @@ public static class Save
             FileStream stream = new FileStream(path, FileMode.Open);
 
             LightData data = formatter.Deserialize(stream) as LightData;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.Log("Errore caricamento, File non trovato");
+            return null;
+        }
+    }
+
+    /*--------------------------------------------------------------*
+     * 
+     * Collectibles
+     *
+     *--------------------------------------------------------------*/
+
+    public static void collectibleSave(collectible cd)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/collectible.fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        CollectibleData collectibleData = new CollectibleData(cd);
+
+        formatter.Serialize(stream, collectibleData);
+        stream.Close();
+
+    }
+
+    public static CollectibleData collectibleLoad()
+    {
+        string path = Application.persistentDataPath + "/collectible.fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            CollectibleData data = formatter.Deserialize(stream) as CollectibleData;
             stream.Close();
             return data;
         }
