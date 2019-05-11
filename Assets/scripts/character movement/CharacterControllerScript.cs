@@ -528,8 +528,6 @@ public class CharacterControllerScript : MonoBehaviour
     public  void SavePlayer()
     {
         Save.playerSave(this);
-        Debug.Log("dati player salvati");
-        Debug.Log("position =(" + transform.position.x + "," + transform.position.y + "," + transform.position.z + ")");
     }
 
     public void LoadPlayer()
@@ -549,7 +547,7 @@ public class CharacterControllerScript : MonoBehaviour
          * 
          * --------------------------------------*/
         //resetto l'animator
-        animator.Rebind();
+        //animator.Rebind();
 
         //health
         health = playerData.health;
@@ -558,7 +556,8 @@ public class CharacterControllerScript : MonoBehaviour
 
         //posizione
         Vector3 savedPosition = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
-        transform.position = savedPosition;
+        //transform.position = savedPosition;
+        transform.Translate(savedPosition);
         Debug.Log("position =(" + playerData.position[0] + "," + playerData.position[1] + "," + playerData.position[2]+")");
         transform.SetPositionAndRotation(savedPosition, new Quaternion());
 
@@ -572,6 +571,7 @@ public class CharacterControllerScript : MonoBehaviour
         //invisibilità
         invisible = playerData.invisibile;
         invisibleTimer = playerData.timer_invisibile;
+        Debug.Log("qui");
 
         //contatti
         boss_contact = playerData.boss_contact;
