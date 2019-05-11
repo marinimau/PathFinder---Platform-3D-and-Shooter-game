@@ -15,30 +15,12 @@ public class lightPointCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!accesa)
+        if (accesa)
         {
-            gameObject.SetActive(false);
+            this.GetComponentInChildren<Light>().enabled = true;
+        } else
+        {
+            this.GetComponentInChildren<Light>().enabled = false;
         }
     }
-
-    public void SaveLight()
-    {
-        Save.lightSave(this);
-    }
-
-    public void LoadLight()
-    {
-        LightData lightData = Save.lightLoad();
-
-        /*---------------------------------------
-         * 
-         *  setto gli attributi con i valori caricati
-         * 
-         * --------------------------------------*/
-        //accesa
-        accesa = lightData.accesa;
-
-    }
-
-
 }

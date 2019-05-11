@@ -49,7 +49,7 @@ public class CharacterControllerScript : MonoBehaviour
 
     public bool isReloading;
 
-    Animator animator;
+    public Animator animator;
     Transform cameraT;
     CharacterController controller;
 
@@ -523,75 +523,5 @@ public class CharacterControllerScript : MonoBehaviour
         {
             health = 100;
         }
-    }
-
-    public  void SavePlayer()
-    {
-        Save.playerSave(this);
-    }
-
-    public void LoadPlayer()
-    {
-        //SceneManager.LoadScene("playground", LoadSceneMode.Single);
-        loadDati();
-
-    }
-
-    public void loadDati()
-    {
-        PlayerData playerData = Save.playerLoad();
-
-        /*---------------------------------------
-         * 
-         *  setto gli attributi con i valori caricati
-         * 
-         * --------------------------------------*/
-        //resetto l'animator
-        //animator.Rebind();
-
-        //health
-        health = playerData.health;
-        //nColpi
-        GunScript.nColpi = playerData.nColpi;
-
-        //posizione
-        Vector3 savedPosition = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
-        //transform.position = savedPosition;
-        transform.Translate(savedPosition);
-        Debug.Log("position =(" + playerData.position[0] + "," + playerData.position[1] + "," + playerData.position[2]+")");
-        transform.SetPositionAndRotation(savedPosition, new Quaternion());
-
-        //immortalita
-        immortality = playerData.immortale;
-        immortalityTimer = playerData.timer_immortale;
-
-        //chiave
-        key = playerData.key;
-
-        //invisibilità
-        invisible = playerData.invisibile;
-        invisibleTimer = playerData.timer_invisibile;
-        Debug.Log("qui");
-
-        //contatti
-        boss_contact = playerData.boss_contact;
-        //se ero in una situazione di contatto ma quando carico non lo sono più
-        if (player_contact && !playerData.player_contact)
-        {
-            player_contact_deactivated = true;
-        } else
-        {
-            player_contact_deactivated = playerData.player_contact_deactivated;
-        }
-        player_contact = playerData.player_contact;
-
-
-        //game over
-        gameOver = playerData.gameOver;
-        //isDead
-        isDead = playerData.isDead;
-        load_data = true;
-        Debug.Log("dati player caricati");
-
     }
 }

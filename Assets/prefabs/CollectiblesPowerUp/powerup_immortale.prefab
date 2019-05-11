@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 986073286431277316}
   m_Layer: 2
   m_Name: powerup_immortale
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,6 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   loaded: 0
+  moved: 0
+  oldPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &986073286129300004
 PrefabInstance:
   m_ObjectHideFlags: 0

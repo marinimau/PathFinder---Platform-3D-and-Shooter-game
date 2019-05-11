@@ -22,6 +22,7 @@ TagManager:
   - FxTemporaire
   - Message
   - Player&UI
+  - Collectible
   layers:
   - Default
   - TransparentFX

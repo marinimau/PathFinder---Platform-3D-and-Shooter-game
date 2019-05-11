@@ -12,7 +12,7 @@ public static class Save
       * Player
       *
       *--------------------------------------------------------------*/
-    public static void playerSave(CharacterControllerScript characterControllerScipt)
+    private static void playerSave(CharacterControllerScript characterControllerScipt)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.fun";
@@ -24,35 +24,16 @@ public static class Save
         stream.Close();
 
     }
-
-    public static PlayerData playerLoad()
-    {
-        string path = Application.persistentDataPath + "/player.fun";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
-            stream.Close();
-            return data;
-        } else
-        {
-            Debug.Log("Errore caricamento, File non trovato");
-            return null;
-        }
-    }
-
     /*--------------------------------------------------------------*
      * 
      * Lights
      *
      *--------------------------------------------------------------*/
 
-    public static void lightSave(lightPointCollider lpc)
+    private static void lightSave(lightPointCollider lpc, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/light.fun";
+        string path = Application.persistentDataPath + "/light"+i+".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         LightData lightData = new LightData(lpc);
@@ -62,35 +43,16 @@ public static class Save
 
     }
 
-    public static LightData lightLoad()
-    {
-        string path = Application.persistentDataPath + "/light.fun";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            LightData data = formatter.Deserialize(stream) as LightData;
-            stream.Close();
-            return data;
-        }
-        else
-        {
-            Debug.Log("Errore caricamento, File non trovato");
-            return null;
-        }
-    }
-
     /*--------------------------------------------------------------*
      * 
      * Collectibles
      *
      *--------------------------------------------------------------*/
 
-    public static void collectibleSave(collectible cd)
+    private static void collectibleSave(collectible cd, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/collectible.fun";
+        string path = Application.persistentDataPath + "/collectible"+i+".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         CollectibleData collectibleData = new CollectibleData(cd);
@@ -100,22 +62,66 @@ public static class Save
 
     }
 
-    public static CollectibleData collectibleLoad()
-    {
-        string path = Application.persistentDataPath + "/collectible.fun";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
 
-            CollectibleData data = formatter.Deserialize(stream) as CollectibleData;
-            stream.Close();
-            return data;
-        }
-        else
+
+
+
+
+    /*--------------------------------------------------------------*
+     *
+     *
+     * 
+     *
+     *
+     * 
+     * DO_SAVE_ALL
+     *
+     * 
+     * 
+     * 
+     * 
+     * 
+     *--------------------------------------------------------------*/
+
+    public static void doSaveAll()
+    {
+
+       /*--------------------------------------------------------------*
+        * 
+        * Player
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        CharacterControllerScript cs = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
+
+        /*li salvo*/
+        playerSave(cs);
+
+
+        /*--------------------------------------------------------------*
+        * 
+        * Luci
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] light = GameObject.FindGameObjectsWithTag("LightPoint");
+
+        for(int i=0; i<light.Length; i++)
         {
-            Debug.Log("Errore caricamento, File non trovato");
-            return null;
+            lightSave(light[i].GetComponent<lightPointCollider>(), i);
+        }
+
+        /*--------------------------------------------------------------*
+        * 
+        * collectible
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] collectibles = GameObject.FindGameObjectsWithTag("Collectible");
+
+        for (int i = 0; i < collectibles.Length; i++)
+        {
+            collectibleSave(collectibles[i].GetComponent<collectible>(), i);
         }
     }
 
