@@ -10,7 +10,8 @@ public class resetScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ccs = player.GetComponent<CharacterControllerScript>();
+        player = GameObject.FindGameObjectWithTag("Player&UI");
+        ccs = player.GetComponentInChildren<CharacterControllerScript>();
     }
 
     // Update is called once per frame
@@ -22,6 +23,9 @@ public class resetScene : MonoBehaviour
     public void Reset()
     {
         SceneManager.LoadScene("playground", LoadSceneMode.Single);
+        player = GameObject.FindGameObjectWithTag("Player&UI");
+        ccs = player.GetComponentInChildren<CharacterControllerScript>();
         ccs.LoadPlayer();
+        Debug.Log("Qui");
     }
 }
