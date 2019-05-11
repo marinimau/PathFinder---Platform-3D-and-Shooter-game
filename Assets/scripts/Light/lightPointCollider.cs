@@ -10,7 +10,6 @@ public class lightPointCollider : MonoBehaviour
     void Start()
     {
         accesa = true;
-        luce = GetComponentInChildren<Light>().GetComponentInParent<Light>();
     }
 
     // Update is called once per frame
@@ -18,10 +17,7 @@ public class lightPointCollider : MonoBehaviour
     {
         if (!accesa)
         {
-            luce.gameObject.SetActive(false);
-        } else
-        {
-            luce.gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 

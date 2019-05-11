@@ -23,7 +23,6 @@ public class Medikit : MonoBehaviour
         if (other.gameObject.tag.Equals("Player") && c.active)
         {
             CharacterControllerScript.incHealth(30);
-            //Destroy(gameObject);
             Talk.id = 5;
             c.active = false;
         }

@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8384861612555723748}
   - component: {fileID: 3550626169460946317}
+  - component: {fileID: 6496875087821856509}
   m_Layer: 0
   m_Name: NonPiuRicercatoIntero
   m_TagString: Untagged
@@ -137,6 +138,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   loaded: 0
+  moved: 0
+  oldPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &6496875087821856509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384861612555723749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2afd6a955dcb24d15a1975f9f644134d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoke: {fileID: 8384861613676012933}
+  c: {fileID: 0}
 --- !u!1 &8384861612901823473
 GameObject:
   m_ObjectHideFlags: 0
@@ -4827,7 +4844,6 @@ GameObject:
   - component: {fileID: 8384861613461329037}
   - component: {fileID: 8384861613461329038}
   - component: {fileID: 8384861613461329039}
-  - component: {fileID: 8384861613461329032}
   m_Layer: 2
   m_Name: collectible_non_ricercato
   m_TagString: Untagged
@@ -4909,19 +4925,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8384861613461329032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8384861613461329034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2afd6a955dcb24d15a1975f9f644134d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoke: {fileID: 8384861613676012933}
 --- !u!1 &8384861613676012934
 GameObject:
   m_ObjectHideFlags: 0

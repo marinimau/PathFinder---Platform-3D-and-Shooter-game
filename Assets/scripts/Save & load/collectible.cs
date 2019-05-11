@@ -12,8 +12,6 @@ public class collectible : MonoBehaviour
     void Start()
     {
         active = true;
-        loaded = false;
-        moved = false;
         oldPosition = transform.position;
 
     }
@@ -21,25 +19,9 @@ public class collectible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (loaded && active)
+        if (!active)
         {
-            loaded = false;
-            Debug.Log("collectible attivo");
-        }
-        if (loaded && !active)
-        {
-            loaded = false;
-            Debug.Log("collectible rimosso");
-        }
-        if (!active && !moved)
-        {
-            gameObject.transform.position = new Vector3(0, -100, 0);
-            moved = true;
-        }
-        if (active && transform.position != oldPosition)
-        {
-            transform.position = oldPosition;
-
+            gameObject.SetActive(false);
         }
     }
 
@@ -50,13 +32,10 @@ public class collectible : MonoBehaviour
 
     public void LoadCollectible()
     {
-        //SceneManager.LoadScene("playground", LoadSceneMode.Single);
         CollectibleData collectible = Save.collectibleLoad();
 
         //active
         active = collectible.active;
-        loaded = true;
-        moved = false;
 
     }
 

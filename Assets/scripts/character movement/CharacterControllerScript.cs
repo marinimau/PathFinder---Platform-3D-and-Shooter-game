@@ -575,13 +575,16 @@ public class CharacterControllerScript : MonoBehaviour
 
         //contatti
         boss_contact = playerData.boss_contact;
-        player_contact_deactivated = playerData.player_contact_deactivated;
         //se ero in una situazione di contatto ma quando carico non lo sono più
         if (player_contact && !playerData.player_contact)
         {
             player_contact_deactivated = true;
+        } else
+        {
+            player_contact_deactivated = playerData.player_contact_deactivated;
         }
         player_contact = playerData.player_contact;
+
 
         //game over
         gameOver = playerData.gameOver;
