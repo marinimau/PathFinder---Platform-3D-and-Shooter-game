@@ -12,11 +12,11 @@ public class resetScene : MonoBehaviour
     public GameObject[] light;
     lightPointCollider[] lpc;
 
-    bool loaded;
+    bool unloaded;
     // Start is called before the first frame update
     void Start()
     {
-        this.loaded = true;
+        this.unloaded = false;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class resetScene : MonoBehaviour
     public void Reset()
     {
         SceneManager.LoadScene("playground", LoadSceneMode.Single);
-        this.loaded = false;
+        this.unloaded = true;
     }
 
 
@@ -46,7 +46,7 @@ public class resetScene : MonoBehaviour
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        if (!this.loaded)
+        if (!this.unloaded)
         {
             /*player*/
             player = GameObject.FindGameObjectWithTag("Player&UI");
@@ -61,7 +61,7 @@ public class resetScene : MonoBehaviour
                 Debug.Log("luce [" + i + "] stato: " + light[i].GetComponent<lightPointCollider>().accesa);
             }
             Debug.Log("fine reset");
-            this.loaded = true;
+            this.unloaded = false;
         }
     }
 }

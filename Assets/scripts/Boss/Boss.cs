@@ -38,7 +38,7 @@ public class Boss : MonoBehaviour
 
     public bool setPlayerContact;
 
-    private int nColpi;
+    public int nColpi;
     private int nColpiStart;
 
 
