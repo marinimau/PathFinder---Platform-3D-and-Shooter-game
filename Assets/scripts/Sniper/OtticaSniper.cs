@@ -27,11 +27,6 @@ public class OtticaSniper : MonoBehaviour
         {
             Show_stealth_status.icon = 2;
         }
-
-        if (sniper.isDead)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void OnTriggerEnter(Collider other)

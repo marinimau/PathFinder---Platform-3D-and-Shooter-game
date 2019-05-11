@@ -62,6 +62,25 @@ public static class Save
 
     }
 
+    /*--------------------------------------------------------------*
+     * 
+     * Sniper
+     *
+     *--------------------------------------------------------------*/
+
+    private static void sniperSave(Sniper sniper, int i)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/sniper" + i + ".fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SniperData sniperData = new SniperData(sniper);
+
+        formatter.Serialize(stream, sniperData);
+        stream.Close();
+
+    }
+
 
 
 
@@ -122,6 +141,19 @@ public static class Save
         for (int i = 0; i < collectibles.Length; i++)
         {
             collectibleSave(collectibles[i].GetComponent<collectible>(), i);
+        }
+
+        /*--------------------------------------------------------------*
+        * 
+        * sniper
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] snipers = GameObject.FindGameObjectsWithTag("Sniper");
+
+        for (int i = 0; i < snipers.Length; i++)
+        {
+            sniperSave(snipers[i].GetComponent<Sniper>(), i);
         }
     }
 

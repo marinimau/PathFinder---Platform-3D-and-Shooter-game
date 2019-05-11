@@ -23,6 +23,7 @@ TagManager:
   - Message
   - Player&UI
   - Collectible
+  - Sniper
   layers:
   - Default
   - TransparentFX

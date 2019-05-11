@@ -15,7 +15,7 @@ public class Sniper : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-    private Animator animEnemy;
+    public Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
     public ParticleSystem blood;
@@ -204,7 +204,7 @@ public class Sniper : MonoBehaviour
     {
         ShowMessage.id = 0;
 
-        navMesh.enabled = false;
+        //navMesh.enabled = false;
 
         if (!isDead)
         {
@@ -214,7 +214,7 @@ public class Sniper : MonoBehaviour
 
         animEnemy.SetBool("die", true);
         headHit = false;
-        Destroy(navMesh);
+        //Destroy(navMesh);
         
     }
 

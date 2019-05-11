@@ -79,6 +79,30 @@ public static class Load
         }
     }
 
+    /*--------------------------------------------------------------*
+     * 
+     * Sniper
+     *
+     *--------------------------------------------------------------*/
+    public static SniperData sniperLoad(int i)
+    {
+        string path = Application.persistentDataPath + "/sniper" + i + ".fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            SniperData data = formatter.Deserialize(stream) as SniperData;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.Log("Errore caricamento, File non trovato");
+            return null;
+        }
+    }
+
 
 
 
@@ -148,10 +172,7 @@ public static class Load
         //game over
         CharacterControllerScript.gameOver = playerData.gameOver;
         //isDead
-        if (CharacterControllerScript.isDead && !playerData.isDead)
-        {
-            cs.animator.Rebind();
-        }
+        cs.animator.Rebind();
         CharacterControllerScript.isDead = playerData.isDead;
 
 
@@ -183,6 +204,23 @@ public static class Load
         {
             collectibleData = collectibleLoad(i);
             collectibles[i].GetComponent<collectible>().active = collectibleData.active;
+        }
+
+        /*--------------------------------------------------------------*
+         * 
+         * sniper
+         *
+         *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] snipers = GameObject.FindGameObjectsWithTag("Sniper");
+        SniperData sniperData;
+
+        for (int i = 0; i < snipers.Length; i++)
+        {
+            sniperData = sniperLoad(i);
+            snipers[i].GetComponent<Sniper>().isDead = sniperData.isDead;
+            snipers[i].GetComponent<Sniper>().life = sniperData.life;
+            snipers[i].GetComponent<Sniper>().animEnemy.Rebind();
         }
     }
 
