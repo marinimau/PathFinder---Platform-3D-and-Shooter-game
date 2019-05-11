@@ -21,6 +21,7 @@ TagManager:
   - HeadBoris
   - FxTemporaire
   - Message
+  - Player&UI
   layers:
   - Default
   - TransparentFX

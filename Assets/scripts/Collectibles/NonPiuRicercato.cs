@@ -30,8 +30,8 @@ public class NonPiuRicercato : MonoBehaviour
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
             smoke.Play();
-            //Destroy(gameObject);
             c.active = false;
+            //Destroy(gameObject);
             ShowMessage.id = 2;
             Talk.id = 5;
         }

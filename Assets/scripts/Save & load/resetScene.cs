@@ -26,6 +26,6 @@ public class resetScene : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player&UI");
         ccs = player.GetComponentInChildren<CharacterControllerScript>();
         ccs.LoadPlayer();
-        Debug.Log("Qui");
+        Debug.Log("fine reset");
     }
 }
