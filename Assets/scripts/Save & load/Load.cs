@@ -129,6 +129,30 @@ public static class Load
     }
 
 
+    /*--------------------------------------------------------------*
+     * 
+     * Patrol
+     *
+     *--------------------------------------------------------------*/
+    public static PatrolData patrolLoad(int i)
+    {
+        string path = Application.persistentDataPath + "/patrol" + i + ".fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            PatrolData data = formatter.Deserialize(stream) as PatrolData;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.Log("Errore caricamento, File non trovato");
+            return null;
+        }
+    }
+
 
     /*--------------------------------------------------------------*
      *
@@ -263,6 +287,29 @@ public static class Load
             boris[i].GetComponentInChildren<Boris>().life = borisData.life;
             boris[i].GetComponentInChildren<Boris>().transform.position=new Vector3(borisData.position[0], borisData.position[1], borisData.position[2]);
             boris[i].GetComponentInChildren<Boris>().animBoris.Rebind();
+        }
+
+        /*--------------------------------------------------------------*
+        * 
+        * patrols
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] patrols = GameObject.FindGameObjectsWithTag("Patrol");
+        PatrolData patrolData;
+
+        for (int i = 0; i < patrols.Length; i++)
+        {
+            patrolData = patrolLoad(i);
+            patrols[i].GetComponentInChildren<Patrol>().isDead = patrolData.isDead;
+            patrols[i].GetComponentInChildren<Patrol>().life = patrolData.life;
+            patrols[i].GetComponentInChildren<Patrol>().transform.position = new Vector3(patrolData.position[0], patrolData.position[1], patrolData.position[2]);
+            patrols[i].GetComponentInChildren<Patrol>().animEnemy.Rebind();
+            if (!patrolData.isDead)
+            {
+                patrols[i].GetComponentInChildren<Patrol>().navMesh.isStopped = false;
+            }
+            
         }
     }
 

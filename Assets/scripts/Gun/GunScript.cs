@@ -91,7 +91,7 @@ public class GunScript : MonoBehaviour
             {
                 enemy = hit.transform.GetComponentInParent<Patrol>();
                 navMesh.enabled = false;
-                animHeadShot.SetBool("isHeadHit", true);
+                enemy.headHit = true;
                 Talk.id = 4;
                 Debug.Log("HEADSHOT!");
             }

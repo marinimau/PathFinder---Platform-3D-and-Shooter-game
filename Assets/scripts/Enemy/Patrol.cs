@@ -18,7 +18,7 @@ public class Patrol : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-    private Animator animEnemy;
+    public Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
     public ParticleSystem blood;
@@ -43,6 +43,7 @@ public class Patrol : MonoBehaviour
     public AudioSource hitSound;
 
     public bool bodyHit;
+    public bool headHit;
 
 
 
@@ -79,6 +80,7 @@ public class Patrol : MonoBehaviour
 
 
         bodyHit = false;
+        headHit = false;
 
     }
 
@@ -100,12 +102,12 @@ public class Patrol : MonoBehaviour
             kill();
         }
 
-
-        if (!CharacterControllerScript.player_contact)
+        
+        if (!CharacterControllerScript.player_contact || isDead)
         {
             /*------------------------
-             *  se il nemico non ci vede
-             * -----------------------*/
+                *  se il nemico non ci vede
+                * -----------------------*/
             if (CharacterControllerScript.player_contact_deactivated)
             {
                 //se il player è sfuggito
@@ -115,11 +117,11 @@ public class Patrol : MonoBehaviour
             }
 
 
-            if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
+            if ((!navMesh.pathPending && navMesh.remainingDistance < 0.5f) || isDead)
             {
                 /*------------------------
-                 *  se è in posizione
-                 * -----------------------*/
+                *  se è in posizione
+                * -----------------------*/
                 if (!setWait)
                 {
                     setWait = true;
@@ -129,8 +131,8 @@ public class Patrol : MonoBehaviour
                 if (waitTime <= 0)
                 {
                     /*------------------------
-                     *  vai alla prossima posizione
-                     * -----------------------*/
+                    *  vai alla prossima posizione
+                    * -----------------------*/
                     //randomSpots =(Random.Range(0, moveSpots.Length);
                     if (moveSpots.Length == 0)
                     {
@@ -141,15 +143,18 @@ public class Patrol : MonoBehaviour
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
                     navMesh.SetDestination(moveSpots[randomSpots].position);
+                    navMesh.speed = 1;
+                    animEnemy.SetBool("isWalking", true);
                     setWait = false;
 
                 }
                 else
                 {
                     /*------------------------
-                     *  aspetta nel waypoint
-                     * -----------------------*/
+                        *  aspetta nel waypoint
+                        * -----------------------*/
                     waitTime -= Time.deltaTime * 0.01f;
+                    navMesh.speed = 0;
                     animEnemy.SetBool("isWalking", false);
                     animEnemy.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
@@ -158,9 +163,9 @@ public class Patrol : MonoBehaviour
             }
             else
             {
-                /*------------------------
-                 *  cambio di posizione
-                 * -----------------------*/
+               /*------------------------
+                *  cambio di posizione
+                * -----------------------*/
 
                 navMesh.destination = moveSpots[randomSpots].position;
                 if (navMesh.velocity.sqrMagnitude > Mathf.Epsilon)
@@ -175,8 +180,8 @@ public class Patrol : MonoBehaviour
         {
 
             /*------------------------
-             *  se siamo stati visti dal nemico
-             * -----------------------*/
+            *  se siamo stati visti dal nemico
+            * -----------------------*/
             navMesh.destination = player.transform.position;
             transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             navMesh.stoppingDistance = 10;
@@ -188,17 +193,23 @@ public class Patrol : MonoBehaviour
             }
         }
 
-        if (animEnemy.GetBool("isHeadHit") == true)
+        if (headHit)
         {
+            animEnemy.SetBool("isHeadHit", true);
             blood.Play();
-            kill();
+            if (life > 0)
+            {
+                decrLife(100);
+            }
+            headHit = false;
 
         }
 
         if (bodyHit)
         {
             bloodBody.Play();
-            if(life>0){
+            if (life > 0)
+            {
                 decrLife(50);
                 CharacterControllerScript.player_contact = true;
                 hitSound.Play();
@@ -206,7 +217,6 @@ public class Patrol : MonoBehaviour
             bodyHit = false;
 
         }
-
     }
 
     void fireOnPlayer()
@@ -277,19 +287,14 @@ public class Patrol : MonoBehaviour
     public void kill()
     {
         ShowMessage.id = 0;
-        speed = 0;
+        navMesh.isStopped = true;
         if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
-        Destroy(zonaLama);
-        Destroy(navMesh);
-        navMesh.enabled = false;
         if (!isDead)
         {
             isDead = true;
             killOk = true;
         }
-
-        Destroy(this);
     }
 
 

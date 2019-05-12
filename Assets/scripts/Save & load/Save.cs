@@ -100,6 +100,25 @@ public static class Save
 
     }
 
+    /*--------------------------------------------------------------*
+    * 
+    * Patrol
+    *
+    *--------------------------------------------------------------*/
+
+    private static void patrolSave(Patrol patrol, int i)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/patrol" + i + ".fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        PatrolData patrolData = new PatrolData(patrol);
+
+        formatter.Serialize(stream, patrolData);
+        stream.Close();
+
+    }
+
 
 
 
@@ -186,6 +205,19 @@ public static class Save
         for (int i = 0; i < boris.Length; i++)
         {
             borisSave(boris[i].GetComponentInChildren<Boris>(), i);
+        }
+
+        /*--------------------------------------------------------------*
+        * 
+        * patrol
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] patrols = GameObject.FindGameObjectsWithTag("Patrol");
+
+        for (int i = 0; i < patrols.Length; i++)
+        {
+            patrolSave(patrols[i].GetComponentInChildren<Patrol>(), i);
         }
     }
 

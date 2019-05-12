@@ -1,5 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6424534422281505522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327092562112833004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78239729bb34440359a6b9b5eb500e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+--- !u!114 &6424534422281505523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327092562112833004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d07ce676d7afda4dabb3b0f7dd5e654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &6424534421359992656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6205,7 +6234,7 @@ GameObject:
   - component: {fileID: 6424534421798055546}
   m_Layer: 2
   m_Name: Nemico e waypoint
-  m_TagString: Untagged
+  m_TagString: Patrol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12701,35 +12730,6 @@ Transform:
   m_Father: {fileID: 6424534422523553154}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6424534422281505522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2327092562112833004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78239729bb34440359a6b9b5eb500e8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
---- !u!114 &6424534422281505523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2327092562112833004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d07ce676d7afda4dabb3b0f7dd5e654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!1 &6424534422281672609
 GameObject:
   m_ObjectHideFlags: 0
@@ -27311,21 +27311,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6424534421928919756}
     m_Modifications:
-    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
-        type: 3}
-      propertyPath: m_Name
-      value: Blood
-      objectReference: {fileID: 0}
-    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
-        type: 3}
-      propertyPath: m_TagString
-      value: Head
-      objectReference: {fileID: 0}
     - target: {fileID: 8779013024683193737, guid: 8e9f472dbb158854ab9683863c2d4937,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27395,6 +27380,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
+        type: 3}
+      propertyPath: m_Name
+      value: Blood
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779013024683193736, guid: 8e9f472dbb158854ab9683863c2d4937,
+        type: 3}
+      propertyPath: m_TagString
+      value: Head
       objectReference: {fileID: 0}
     - target: {fileID: 8779013024683193743, guid: 8e9f472dbb158854ab9683863c2d4937,
         type: 3}
@@ -27689,6 +27689,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6424534423059106121}
     m_Modifications:
+    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
+        type: 3}
+      propertyPath: m_Name
+      value: Cone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
+        type: 3}
+      propertyPath: m_TagString
+      value: ZonaLama
+      objectReference: {fileID: 0}
     - target: {fileID: 1665834918783511446, guid: e6f142f6753fd427c8a82c6ece8b76ef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27753,21 +27768,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 4.000895
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
-        type: 3}
-      propertyPath: m_Name
-      value: Cone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747105791939734028, guid: e6f142f6753fd427c8a82c6ece8b76ef,
-        type: 3}
-      propertyPath: m_TagString
-      value: ZonaLama
       objectReference: {fileID: 0}
     - target: {fileID: 210671967637894861, guid: e6f142f6753fd427c8a82c6ece8b76ef,
         type: 3}

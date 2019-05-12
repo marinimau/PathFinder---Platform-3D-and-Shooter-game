@@ -25,6 +25,7 @@ TagManager:
   - Collectible
   - Sniper
   - Boris
+  - Patrol
   layers:
   - Default
   - TransparentFX
