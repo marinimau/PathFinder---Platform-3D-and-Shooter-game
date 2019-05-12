@@ -104,6 +104,30 @@ public static class Load
     }
 
 
+    /*--------------------------------------------------------------*
+     * 
+     * Boris
+     *
+     *--------------------------------------------------------------*/
+    public static BorisData borisLoad(int i)
+    {
+        string path = Application.persistentDataPath + "/boris" + i + ".fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            BorisData data = formatter.Deserialize(stream) as BorisData;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.Log("Errore caricamento, File non trovato");
+            return null;
+        }
+    }
+
 
 
     /*--------------------------------------------------------------*
@@ -221,6 +245,24 @@ public static class Load
             snipers[i].GetComponent<Sniper>().isDead = sniperData.isDead;
             snipers[i].GetComponent<Sniper>().life = sniperData.life;
             snipers[i].GetComponent<Sniper>().animEnemy.Rebind();
+        }
+
+        /*--------------------------------------------------------------*
+         * 
+         * boris
+         *
+         *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] boris = GameObject.FindGameObjectsWithTag("Boris");
+        BorisData borisData;
+
+        for (int i = 0; i < boris.Length; i++)
+        {
+            borisData = borisLoad(i);
+            boris[i].GetComponentInChildren<Boris>().isDead = borisData.isDead;
+            boris[i].GetComponentInChildren<Boris>().life = borisData.life;
+            boris[i].GetComponentInChildren<Boris>().transform.position=new Vector3(borisData.position[0], borisData.position[1], borisData.position[2]);
+            boris[i].GetComponentInChildren<Boris>().animBoris.Rebind();
         }
     }
 

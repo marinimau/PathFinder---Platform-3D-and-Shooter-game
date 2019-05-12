@@ -24,6 +24,7 @@ TagManager:
   - Player&UI
   - Collectible
   - Sniper
+  - Boris
   layers:
   - Default
   - TransparentFX

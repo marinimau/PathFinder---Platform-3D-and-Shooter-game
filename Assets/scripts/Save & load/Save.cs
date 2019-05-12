@@ -81,6 +81,25 @@ public static class Save
 
     }
 
+    /*--------------------------------------------------------------*
+    * 
+    * Boris
+    *
+    *--------------------------------------------------------------*/
+
+    private static void borisSave(Boris boris, int i)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/boris" + i + ".fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        BorisData borisData = new BorisData(boris);
+
+        formatter.Serialize(stream, borisData);
+        stream.Close();
+
+    }
+
 
 
 
@@ -154,6 +173,19 @@ public static class Save
         for (int i = 0; i < snipers.Length; i++)
         {
             sniperSave(snipers[i].GetComponent<Sniper>(), i);
+        }
+
+        /*--------------------------------------------------------------*
+        * 
+        * boris
+        *
+        *--------------------------------------------------------------*/
+        /*recupero i campi da salvare*/
+        GameObject[] boris = GameObject.FindGameObjectsWithTag("Boris");
+
+        for (int i = 0; i < boris.Length; i++)
+        {
+            borisSave(boris[i].GetComponentInChildren<Boris>(), i);
         }
     }
 

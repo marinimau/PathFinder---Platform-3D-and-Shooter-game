@@ -12552,7 +12552,7 @@ GameObject:
   - component: {fileID: 4312999138776813102}
   m_Layer: 2
   m_Name: Boris e waypoints
-  m_TagString: Untagged
+  m_TagString: Boris
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

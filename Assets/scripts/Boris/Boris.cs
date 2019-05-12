@@ -18,7 +18,7 @@ public class Boris : MonoBehaviour
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-    private Animator animBoris;
+    public Animator animBoris;
     public bool isLamabile;
     public GameObject boris;
     public ParticleSystem blood;
@@ -334,17 +334,16 @@ public class Boris : MonoBehaviour
         //speed = 0;
 
 
-        //Destroy(zonaLama);
-        //Destroy(navMesh);
-        navMesh.enabled = false;
+
+        //navMesh.enabled = false;
         if (!isDead)
         {
             isDead = true;
             killOk = true;
         }
         animBoris.SetBool("isDead", true);
-        Destroy(navMesh);
-        Destroy(this);
+        //Destroy(navMesh);
+        //Destroy(this);
         //Destroy(transform);
     }
 
