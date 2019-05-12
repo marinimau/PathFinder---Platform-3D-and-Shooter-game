@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class NonPiuRicercato : MonoBehaviour
 {
+
+    public ParticleSystem smoke;
+    public collectible c;
     // Start is called before the first frame update
     void Start()
     {
-        
+        c = GetComponent<collectible>();
     }
 
     // Update is called once per frame
@@ -19,14 +22,18 @@ public class NonPiuRicercato : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //player
-        if (other.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag.Equals("Player") && c.active)
         {
             //riprodurre un suono che ci dia un feedback quando entriamo
-            EnemySight.player_contact = false;
+            CharacterControllerScript.player_contact = false;
+            CharacterControllerScript.player_contact_deactivated = true;
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
-            Destroy(gameObject);
+            smoke.Play();
+            c.active = false;
+            //Destroy(gameObject);
             ShowMessage.id = 2;
+            Talk.id = 5;
         }
 
     }

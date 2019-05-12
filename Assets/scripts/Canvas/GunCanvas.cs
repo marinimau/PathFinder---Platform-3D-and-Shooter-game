@@ -15,8 +15,6 @@ public class GunCanvas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CharacterControllerScript.isDead){
-            canvas.enabled = false;
-        }
+
     }
 }

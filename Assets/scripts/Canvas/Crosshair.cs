@@ -15,7 +15,7 @@ public class Crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButton("Fire2"))
+        if(Input.GetButton("Fire2") && !PauseMenu.isPaused )
         {
             canvas.enabled = true; 
         }

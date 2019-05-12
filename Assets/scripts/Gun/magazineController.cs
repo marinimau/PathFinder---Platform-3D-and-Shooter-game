@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class magazineController : MonoBehaviour
 {
-    static float startWidth = 167.89f;
+    static float startWidth = 11.9921f*GunScript.nColpi;
     float currentWidth = startWidth;
     RectTransform rectTransform;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class magazineController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.R)){
             //non uso startWidth per gestire i due casi di ricarica
-            currentWidth = (startWidth / (14)) * (GunScript.nColpi+1);
+            currentWidth = startWidth;
             rectTransform.sizeDelta = new Vector2(currentWidth, 30.06f);
         }
     }

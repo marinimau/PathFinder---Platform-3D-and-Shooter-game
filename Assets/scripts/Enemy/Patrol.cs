@@ -12,28 +12,41 @@ public class Patrol : MonoBehaviour
     private int randomSpots;
 
     private float waitTime;
-    public float startWaitTime = 20;
+    private bool setWait;
+    public float startWaitTime = 1;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
     public GameObject player;
-    private Animator animEnemy;
+    public Animator animEnemy;
     public bool isLamabile;
     public GameObject enemy;
+    public ParticleSystem blood;
+    public ParticleSystem bloodBody;
+
+    public ParticleSystem fire;
 
     public bool isFiring;
     public float fireTimer;
 
     public float life;
     public bool isDead;
+    public bool killOk;
 
-    public ParticleSystem fuoco;
 
     public float cadenzaFuoco = 1f;
 
-    public ParticleSystem blood;
+    public AudioSource enemyFireSound;
 
     public GameObject zonaLama;
+
+    public AudioSource hitSound;
+
+    public bool bodyHit;
+    public bool headHit;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +63,7 @@ public class Patrol : MonoBehaviour
         isLamabile = false;
         isFiring = false;
         isDead = false;
+        killOk = false;
         //fuoco.enableEmission = false;
         life = 100f;
 
@@ -64,43 +78,61 @@ public class Patrol : MonoBehaviour
          * -----------------------*/
         randomSpots = Random.Range(0, moveSpots.Length);
 
+
+        bodyHit = false;
+        headHit = false;
+
     }
 
     private void Update()
     {
-        navMesh.speed = speed;
         if (life == 0)
             isDead = true;
-        if (speed == 0)
-            animEnemy.SetFloat("speedPercentage", 0);
-        else
+        if (navMesh.velocity != Vector3.zero)
             animEnemy.SetFloat("speedPercentage", 1);
+        else
+            animEnemy.SetFloat("speedPercentage", 0);
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isDead){
+        if (isDead && !killOk)
+        {
             kill();
         }
 
-        if (!EnemySight.player_contact)
+
+        if (!CharacterControllerScript.player_contact || isDead)
         {
             /*------------------------
-             *  se il nemico non ci vede
-             * -----------------------*/
+                *  se il nemico non ci vede
+                * -----------------------*/
+            if (CharacterControllerScript.player_contact_deactivated)
+            {
+                //se il player è sfuggito
+                navMesh.SetDestination(moveSpots[randomSpots].position);
+                waitTime = 0;
+                animEnemy.SetBool("isShooting", false);
+            }
 
 
-            if (!navMesh.pathPending && navMesh.remainingDistance < 0.5f)
+            if ((!navMesh.pathPending && navMesh.remainingDistance < 0.5f) || isDead)
             {
                 /*------------------------
-                 *  se è in posizione
-                 * -----------------------*/
+                *  se è in posizione
+                * -----------------------*/
+                if (!setWait)
+                {
+                    setWait = true;
+                    waitTime = startWaitTime;
+                }
+
                 if (waitTime <= 0)
                 {
                     /*------------------------
-                     *  vai alla prossima posizione
-                     * -----------------------*/
+                    *  vai alla prossima posizione
+                    * -----------------------*/
                     //randomSpots =(Random.Range(0, moveSpots.Length);
                     if (moveSpots.Length == 0)
                     {
@@ -110,33 +142,36 @@ public class Patrol : MonoBehaviour
                     {
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
-                    waitTime = startWaitTime;
                     navMesh.SetDestination(moveSpots[randomSpots].position);
+                    navMesh.speed = 1;
+                    animEnemy.SetBool("isWalking", true);
+                    setWait = false;
 
                 }
                 else
                 {
                     /*------------------------
-                     *  aspetta nel waypoint
-                     * -----------------------*/
-                    waitTime -= Time.deltaTime;
+                        *  aspetta nel waypoint
+                        * -----------------------*/
+                    waitTime -= Time.deltaTime * 0.01f;
+                    navMesh.speed = 0;
                     animEnemy.SetBool("isWalking", false);
+                    animEnemy.SetFloat("speedPercentage", 0);
                     //qua deve guardarsi attorno
                 }
 
             }
             else
             {
-                /*------------------------
-                 *  cambio di posizione
-                 * -----------------------*/
+               /*------------------------
+                *  cambio di posizione
+                * -----------------------*/
 
                 navMesh.destination = moveSpots[randomSpots].position;
                 if (navMesh.velocity.sqrMagnitude > Mathf.Epsilon)
                 {
                     transform.rotation = Quaternion.LookRotation(navMesh.velocity.normalized);
                 }
-
                 //navMesh.transform.LookAt(moveSpots[randomSpots].position);
             }
 
@@ -145,10 +180,10 @@ public class Patrol : MonoBehaviour
         {
 
             /*------------------------
-             *  se siamo stati visti dal nemico
-             * -----------------------*/
-            //navMesh.destination = player.transform.position;
-            transform.LookAt(player.transform.position);
+            *  se siamo stati visti dal nemico
+            * -----------------------*/
+            navMesh.destination = player.transform.position;
+            transform.LookAt(player.transform.position + (new Vector3(0, 1f, 0)));
             navMesh.stoppingDistance = 10;
             if (navMesh.remainingDistance < 50)
             {
@@ -158,11 +193,30 @@ public class Patrol : MonoBehaviour
             }
         }
 
-        if (animEnemy.GetBool("isHeadHit") == true){
-            kill();
+        if (headHit)
+        {
+            animEnemy.SetBool("isHeadHit", true);
+            blood.Play();
+            if (life > 0)
+            {
+                decrLife(100);
+            }
+            headHit = false;
 
         }
 
+        if (bodyHit)
+        {
+            bloodBody.Play();
+            if (life > 0)
+            {
+                decrLife(50);
+                CharacterControllerScript.player_contact = true;
+                hitSound.Play();
+            }
+            bodyHit = false;
+
+        }
     }
 
     void fireOnPlayer()
@@ -170,21 +224,30 @@ public class Patrol : MonoBehaviour
         RaycastHit hit;
         Vector3 fucile = navMesh.transform.position;
         fucile.y += 0.5f;
-        if (!isFiring)
+        if (!isFiring && CharacterControllerScript.player_contact)
         {
             isFiring = true;
-            fireTimer = 1f;
+            fireTimer = Random.Range(0, 5);
             if (Physics.Raycast(fucile, navMesh.transform.forward, out hit))
             {
                 animEnemy.SetBool("isShooting", true);
-                fuoco.Play();
+                fire.enableEmission = true;
+                fire.Play();
+                enemyFireSound.Play();
                 Debug.Log("Enemy Fire");
                 Debug.DrawRay(fucile, navMesh.transform.forward * 10, Color.green);
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Player" && !CharacterControllerScript.immortality)
+                if (hit.collider.gameObject.tag == "Player")
                 {
-                    CharacterControllerScript.decrHealth(5);
+                    if(!CharacterControllerScript.immortality){
+                        CharacterControllerScript.decrHealth(16);
+                        if(CharacterControllerScript.isDead){
+                            ShowMessage.id = 8;
+                        }
+                    }
+                    CharacterControllerScript.PlayerBlood.Play();
                     Debug.Log("Player hit");
+                    Talk.id = 2;
                 }
             }
         }
@@ -221,20 +284,25 @@ public class Patrol : MonoBehaviour
         }
     }
 
-    public void kill(){
+    public void kill()
+    {
         ShowMessage.id = 0;
-        speed = 0;
-        if(animEnemy.GetBool("isHeadHit") == false)
+        navMesh.isStopped = true;
+        if (animEnemy.GetBool("isHeadHit") == false)
             animEnemy.SetBool("isDead", true);
-        Destroy(zonaLama);
-        Destroy(navMesh);
-        navMesh.enabled = false;
-        Destroy(this);
+        if (!isDead)
+        {
+            isDead = true;
+            killOk = true;
+        }
     }
 
-    public void setSpeed()
+
+    public void stopEnemy()
     {
-        this.speed = 0;
+        this.speed = 0f;
+        navMesh.isStopped = true;
+        animEnemy.SetFloat("speedPercentage", 0.1f);
     }
 
 }

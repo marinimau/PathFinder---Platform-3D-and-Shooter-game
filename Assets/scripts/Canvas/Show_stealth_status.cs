@@ -14,18 +14,20 @@ public class Show_stealth_status : MonoBehaviour
     public RectTransform stealth_iconRT;
     public RectTransform not_stealth_iconRT;
     public RectTransform warning_iconRT;
-
+    public Canvas canvas;
 
     void Start()
     {
         stealth_iconRT = stealth_icon.GetComponent<RectTransform>();
         not_stealth_iconRT = not_stealth_icon.GetComponent<RectTransform>();
         warning_iconRT = warning_icon.GetComponent<RectTransform>();
+        canvas=GetComponent<Canvas>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         switch (icon)
         {
             case 0:

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterControllerScript : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class CharacterControllerScript : MonoBehaviour
 
     public float turnSmoothTime = 0.2f;
     float turnSmoothVelocity;
+    
+
+    private bool load=false;
+    private bool load_data = false;
 
     public float speedSmoothTime = 0.1f;
     float speedSmoothVelocity;
@@ -33,22 +38,45 @@ public class CharacterControllerScript : MonoBehaviour
     float airTime;
     bool isJumping;
     float staticJumpBuff;
+    private float bigJumpTime;
 
     public static int health;
     public static bool isDead;
     public static bool immortality;
+    public static float immortalityTimer;
+    public static bool invisible;
+    public static float invisibleTimer;
 
-    Animator animator;
+    public bool isReloading;
+
+    public Animator animator;
     Transform cameraT;
     CharacterController controller;
+
+    public static bool player_contact;
+    public static bool boss_contact;
+    public static bool player_contact_deactivated;
+
+    //danni da caduta
+    public bool bigJump;
+    public float jumpTimeStart; 
 
     public Vector2 pitchMinMax = new Vector2(-40, 85);
     float lastRotation; //Serve a resettare la posizione del personaggio durante la mira sull'asse verticale
     public Boolean flag = false;
 
+    public static ParticleSystem PlayerBlood;
+
     float targetSpeed;
     public static Boolean fire = false;
+    public Renderer mesh;
+    public Material materialMesh;
+    public Material invisibleMaterial;
 
+    public static bool gameOver = false;
+
+    public static bool key;
+    public static bool reset;
 
 
     // Start is called before the first frame update
@@ -58,93 +86,168 @@ public class CharacterControllerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         cameraT = Camera.main.transform;
         controller = GetComponent<CharacterController>();
+        PlayerBlood = GetComponentInChildren<ParticleSystem>();
         health = 100;
         isDead = false;
         immortality = false;
+        immortalityTimer = 0;
+        invisible = false;
+        invisibleTimer = 0;
+        bigJump = false;
+        //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
+        materialMesh = mesh.material;
+        player_contact = false;
+        boss_contact = false;
+        player_contact_deactivated = false;
+        key = false;
+        isReloading = false;
+        reset = false;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(reset){
+            cameraT = Camera.main.transform;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            reset = false;
+        }
 
-        bool running = Input.GetKey(KeyCode.LeftShift);
-
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        Vector2 inputDir = input.normalized;
-        if(!isDead){
-            if (Input.GetButton("Fire2"))
+        if (!PauseMenu.isPaused)
+        {
+            if (invisible)
             {
-                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+                if (mesh.material == materialMesh)
                 {
-                    animator.SetBool("jumpStatic", true);
-                    StartCoroutine("Jump_Static_Land", WaitTime);
+                    mesh.material = invisibleMaterial;
+                }
+                Debug.Log("Player invisibile");
+                invisibleTimer -= Time.deltaTime * 0.1f;
+                if (invisibleTimer <= 0)
+                {
+                    ShowMessage.id = 5;
+                    Debug.Log("Player visibile");
+                    invisible = false;
 
                 }
-                else
-                {
-                    if (Input.GetAxis("Jump") > 0)
-                    {
-                        JumpWhileAiming();
-                        animator.SetBool("Jumping", true);
-
-                    }
-                }
-                MoveWhileAiming(inputDir, running);
             }
             else
             {
-
-                if (flag)
+                if (mesh.material != materialMesh)
                 {
-                    transform.localEulerAngles = new Vector3(0, lastRotation, 0);
-                    flag = false;
+                    mesh.material = materialMesh;
                 }
+            }
 
-                if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+            if (immortality)
+            {
+                immortalityTimer -= Time.deltaTime * 0.1f;
+                if (immortalityTimer <= 0)
                 {
-                    animator.SetBool("jumpStatic", true);
-                    StartCoroutine("Jump_Static_Land", WaitTime);
+                    ShowMessage.id = 6;
+                    Debug.Log("Player MORTALE");
+                    immortality = false;
+                }
+            }
 
+
+            bool running = Input.GetKey(KeyCode.LeftShift);
+
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 inputDir = input.normalized;
+            if (!isDead)
+            {
+                if (Input.GetButton("Fire2"))
+                {
+                    if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f && !isJumping)
+                    {
+                        animator.SetBool("jumpStatic", true);
+                        StartCoroutine("Jump_Static_Land", WaitTime);
+
+                    }
+                    else
+                    {
+                        if (Input.GetAxis("Jump") > 0)
+                        {
+                            JumpWhileAiming();
+                            animator.SetBool("Jumping", true);
+
+                        }
+                    }
+                    MoveWhileAiming(inputDir, running);
                 }
                 else
                 {
-                    if (Input.GetAxis("Jump") > 0)
+
+                    if (flag)
                     {
-                        Jump();
-                        animator.SetBool("Jumping", true);
+                        transform.localEulerAngles = new Vector3(0, lastRotation, 0);
+                        flag = false;
+                    }
+
+                    if (Input.GetAxis("Jump") > 0 && currentSpeed <= 0.1f)
+                    {
+                        animator.SetBool("jumpStatic", true);
+                        StartCoroutine("Jump_Static_Land", WaitTime);
 
                     }
+                    else
+                    {
+                        if (Input.GetAxis("Jump") > 0)
+                        {
+                            Jump();
+                            animator.SetBool("Jumping", true);
+
+                        }
+                    }
+                    //input per movimento
+                    Move(inputDir, running);
                 }
-                //input per movimento
-                Move(inputDir, running);
-            }
 
 
-            if (Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
-            {
-                //AnimazioneSparo();
-                Recoil.recoilActive = true;
-            }
-
-            if (fire)
-            {
-                smooth += Time.deltaTime * 4F;
-                transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
-                if (smooth > 1)
+                if (Input.GetButtonDown("Fire1") && !fire && !GunScript.armaScarica)
                 {
-                    fire = false;
+                    //AnimazioneSparo();
+                    Recoil.recoilActive = true;
                 }
+
+                if (fire)
+                {
+                    smooth += Time.deltaTime * 4F;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, old_rotation, smooth);
+                    if (smooth > 1)
+                    {
+                        fire = false;
+                    }
+                }
+
+
+                //animator
+                float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
+                animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
+
             }
+            else
+            {
+                //Il player è morto
+                if (gameOver == false)
+                {
+                    Debug.Log("Sono morto una volta");
+                    health = 0;
+                    gameOver = true;
+                    animator.SetBool("dead", true);
+                    player_contact_deactivated = true;
+                    player_contact = false;
+                    boss_contact = false;
+                }
 
-
-            //animator
-            float animationSpeedPercent = ((running) ? currentSpeed / runSpeed : currentSpeed / walkSpeed * .5f);
-            animator.SetFloat("speedPercentage", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
-
-        } else{
-            //Il player è morto
-            Debug.Log("Player Ucciso");
+            }
         }
+        
 
     }
 
@@ -168,7 +271,7 @@ public class CharacterControllerScript : MonoBehaviour
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
         }
 
-        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running && !isReloading) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
 
         velocityY += Time.deltaTime * gravity;      //velocità asse y calcolata a parte.
@@ -191,14 +294,36 @@ public class CharacterControllerScript : MonoBehaviour
         {
             airTime += Time.deltaTime;
 
-            if (airTime > 1.2f && isJumping == true)
+
+            if((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
             {
                 animator.SetBool("airTime", true);
+                if (!bigJump)
+                {
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }
             }
 
-            if (airTime > 0.3f && isJumping == false)
-            {
-                animator.SetBool("airTime", true);
+
+
+        }
+
+        if(controller.isGrounded && bigJump){
+            bigJump = false;
+            if(Time.time-timerJump>=0){
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                bigJumpTime = (float)((Time.time - timerJump));
+                if(bigJumpTime>0.6){
+                    int quantityOfDamage = (int)(bigJumpTime * 40.0);
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
+            }
+            else{
+                Talk.id = 6;
             }
 
         }
@@ -235,7 +360,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
 
         Vector3 moveDirection;
-        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
+        targetSpeed = ((running && !isReloading) ? runSpeed : walkSpeed) * inputDir.magnitude;     //Se stiamo correndo allora la velocità sarà uguale a runspeed, altrimenti a walkspeed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));       //solo asse x e z
         velocityY += Time.deltaTime * gravity;
 
@@ -267,6 +392,51 @@ public class CharacterControllerScript : MonoBehaviour
             //animator.SetBool("airTime", false);
             isJumping = false;
         }
+
+        if (!controller.isGrounded)
+        {
+            airTime += Time.deltaTime;
+
+
+            if ((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
+            {
+                animator.SetBool("airTime", true);
+                if (!bigJump)
+                {
+                    Debug.Log("caduta");
+                    bigJump = true;
+                    timerJump = Time.time;
+                }
+            }
+
+
+
+        }
+
+        if (controller.isGrounded && bigJump)
+        {
+            bigJump = false;
+            if (Time.time - timerJump >= 0)
+            {
+                Debug.Log("tempo di salto " + (Time.time - timerJump));
+                bigJumpTime = (float)((Time.time - timerJump));
+                if (bigJumpTime > 0.4 || Input.GetKey(KeyCode.LeftShift))
+                {
+                    int quantityOfDamage;
+                    if (Input.GetKey(KeyCode.LeftShift)){
+                        quantityOfDamage = (int)(bigJumpTime * 150.0);
+                    } else {
+                        quantityOfDamage = (int)(bigJumpTime * 50.0);
+                    }
+
+                    decrHealth(quantityOfDamage);
+                    Talk.id = 1;
+                }
+
+            }
+        }
+
+
 
     }
 

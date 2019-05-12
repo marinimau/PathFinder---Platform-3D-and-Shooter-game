@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Keyscript : MonoBehaviour
 {
+    public collectible c;
     // Start is called before the first frame update
     void Start()
     {
-        
+        c = GetComponent<collectible>();
     }
 
     // Update is called once per frame
@@ -18,12 +19,14 @@ public class Keyscript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-            if (other.gameObject.tag.Equals("Player"))
+            if (other.gameObject.tag.Equals("Player") && c.active)
             {
 
-               
+                Talk.id = 5;
+                CharacterControllerScript.key = true;
                 Debug.Log("collectible");
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                c.active = false;
             }
 
         
