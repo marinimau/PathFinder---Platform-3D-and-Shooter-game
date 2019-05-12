@@ -25,13 +25,16 @@ public class NonPiuRicercato : MonoBehaviour
         if (other.gameObject.tag.Equals("Player") && c.active)
         {
             //riprodurre un suono che ci dia un feedback quando entriamo
-            CharacterControllerScript.player_contact = false;
-            CharacterControllerScript.player_contact_deactivated = true;
+            
+            if (CharacterControllerScript.player_contact)
+            {
+                CharacterControllerScript.player_contact = false;
+                CharacterControllerScript.player_contact_deactivated = true;
+            }
             Show_stealth_status.icon = 0;
             Debug.Log("collectible");
             smoke.Play();
             c.active = false;
-            //Destroy(gameObject);
             ShowMessage.id = 2;
             Talk.id = 5;
         }

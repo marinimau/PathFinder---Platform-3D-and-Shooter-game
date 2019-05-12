@@ -52,7 +52,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
 
         if (!PauseMenu.isPaused){
-            if (Input.GetButton("Fire2"))
+            if (Input.GetButton("Fire2") && !CharacterControllerScript.isDead)
             {
                 flag_mira = true;
                 currentRotation = target_aim.eulerAngles;
