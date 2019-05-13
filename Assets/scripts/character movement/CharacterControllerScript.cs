@@ -295,7 +295,7 @@ public class CharacterControllerScript : MonoBehaviour
             airTime += Time.deltaTime;
 
 
-            if((airTime > 1.2f && isJumping == true) || (airTime > 0.3f && isJumping == false))
+            if((airTime > 0.6f && isJumping == true) || (airTime > 0.3f && isJumping == false))
             {
                 animator.SetBool("airTime", true);
                 if (!bigJump)
