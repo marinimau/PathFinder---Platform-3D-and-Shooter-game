@@ -30,29 +30,29 @@ public class ShowMessage : MonoBehaviour
                     message.text = "Uccisione silenziosa <V>";
                     break;
                 case 2:
-                    message.text = "I nemici hanno perso le tue tracce";
+                    message.text = "[FUGA] I nemici hanno perso le tue tracce";
                     isShowing = true;
-                    showTimer = 1f;
+                    showTimer = 2f;
                     break;
                 case 3:
-                    message.text = "Immortalità attiva";
+                    message.text = "[IMMORTALE] Immortalità attiva";
                     isShowing = true;
-                    showTimer = 1f;
+                    showTimer = 2f;
                     break;
                 case 4:
-                    message.text = "Invisibilità attiva";
+                    message.text = "[INVISIBILITA'] Invisibilità attiva";
                     isShowing = true;
-                    showTimer = 1f;
+                    showTimer = 2f;
                     break;
                 case 5:
-                    message.text = "Sei di nuovo visibile";
+                    message.text = "[/INVISIBILITA'] Sei di nuovo visibile";
                     isShowing = true;
-                    showTimer = 1f;
+                    showTimer = 2f;
                     break;
                 case 6:
-                    message.text = "Sei di nuovo un mortale";
+                    message.text = "[/IMMORTALE] Sei di nuovo un mortale";
                     isShowing = true;
-                    showTimer = 1f;
+                    showTimer = 2f;
                     break;
                 case 7:
                     message.text = "Missione fallita. Sei stato ucciso da un cecchino";
@@ -73,6 +73,16 @@ public class ShowMessage : MonoBehaviour
                     message.text = "Missione fallita. Il boss ti ha ucciso";
                     isShowing = true;
                     showTimer = 25f;
+                    break;
+                case 11:
+                    message.text = "[SUPER BULLET] Il danno della tua pistola è triplicato";
+                    isShowing = true;
+                    showTimer = 2f;
+                    break;
+                case 12:
+                    message.text = "[/SUPER BULLET] Il danno della tua pistola è di nuovo normale";
+                    isShowing = true;
+                    showTimer = 2f;
                     break;
             }
         } else{

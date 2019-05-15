@@ -242,9 +242,20 @@ public class Boris : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                decrLife(34);
-                CharacterControllerScript.player_contact = true;
-                hitSound.Play();
+                if (CharacterControllerScript.specialBullet)
+                {
+                    decrLife(34 * 3);
+                }
+                else
+                {
+                    decrLife(34);
+                }
+                if (life > 0)
+                {
+                    CharacterControllerScript.player_contact = true;
+                    hitSound.Play();
+                }
+
             }
             bodyHit = false;
 

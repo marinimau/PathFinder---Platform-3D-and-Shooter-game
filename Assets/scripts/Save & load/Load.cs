@@ -196,6 +196,10 @@ public static class Load
         CharacterControllerScript.immortality = playerData.immortale;
         CharacterControllerScript.immortalityTimer = playerData.timer_immortale;
 
+        //special bullet
+        CharacterControllerScript.specialBullet = playerData.special_bullet;
+        CharacterControllerScript.specialBulletTimer = playerData.timer_special_bullet;
+
         //chiave
         CharacterControllerScript.key = playerData.key;
 

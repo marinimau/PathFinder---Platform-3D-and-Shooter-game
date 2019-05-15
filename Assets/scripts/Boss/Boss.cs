@@ -146,7 +146,14 @@ public class Boss : MonoBehaviour
             blood.Play();
             if (life > 0)
             {
-                decrLife(6);
+                if (CharacterControllerScript.specialBullet)
+                {
+                    decrLife(6 * 3);
+                }
+                else
+                {
+                    decrLife(6);
+                }
                 hitSound.Play();
                 if (!CharacterControllerScript.boss_contact)
                 {
@@ -162,7 +169,12 @@ public class Boss : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                decrLife(2);
+                if(CharacterControllerScript.specialBullet){
+                    decrLife(2*3);
+                }
+                else{
+                    decrLife(2);
+                }
                 hitSound.Play();
                 if(!CharacterControllerScript.boss_contact){
                     CharacterControllerScript.boss_contact = true;

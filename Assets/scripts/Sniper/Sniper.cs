@@ -124,12 +124,20 @@ public class Sniper : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                decrLife(50);
-                hitSound.Play();
-                if (!CharacterControllerScript.player_contact)
+                if (CharacterControllerScript.specialBullet)
+                {
+                    decrLife(50 * 3);
+                }
+                else
+                {
+                    decrLife(50);
+                }
+                if (life > 0)
                 {
                     CharacterControllerScript.player_contact = true;
+                    hitSound.Play();
                 }
+
             }
             bodyHit = false;
 

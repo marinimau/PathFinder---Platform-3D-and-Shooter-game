@@ -46,6 +46,8 @@ public class CharacterControllerScript : MonoBehaviour
     public static float immortalityTimer;
     public static bool invisible;
     public static float invisibleTimer;
+    public static bool specialBullet;
+    public static float specialBulletTimer;
 
     public bool isReloading;
 
@@ -93,6 +95,8 @@ public class CharacterControllerScript : MonoBehaviour
         immortalityTimer = 0;
         invisible = false;
         invisibleTimer = 0;
+        specialBullet = false;
+        specialBulletTimer = 0;
         bigJump = false;
         //mesh= gameObject.transform.GetChild(5).GetComponent<Renderer>();
         mesh = gameObject.transform.GetChild(5).GetComponent<Renderer>();
@@ -140,6 +144,17 @@ public class CharacterControllerScript : MonoBehaviour
                 if (mesh.material != materialMesh)
                 {
                     mesh.material = materialMesh;
+                }
+            }
+
+            if (specialBullet)
+            {
+                specialBulletTimer -= Time.deltaTime * 0.1f;
+                if (specialBulletTimer <= 0)
+                {
+                    ShowMessage.id = 12;
+                    Debug.Log("Potenza pistola normale");
+                    specialBullet = false;
                 }
             }
 

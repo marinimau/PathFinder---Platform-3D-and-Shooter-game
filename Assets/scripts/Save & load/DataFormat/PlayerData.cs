@@ -21,6 +21,10 @@ public class PlayerData
     public bool invisibile;
     public float timer_invisibile;
 
+    //special bullet
+    public bool special_bullet;
+    public float timer_special_bullet;
+
     //contatti
     public bool player_contact;
     public bool boss_contact;
@@ -51,6 +55,10 @@ public class PlayerData
         //invisibilità
         invisibile = CharacterControllerScript.invisible;
         timer_invisibile = CharacterControllerScript.invisibleTimer;
+
+        //special bullet
+        special_bullet = CharacterControllerScript.specialBullet;
+        timer_special_bullet = CharacterControllerScript.specialBulletTimer;
 
         //contatti
         boss_contact = CharacterControllerScript.boss_contact;
