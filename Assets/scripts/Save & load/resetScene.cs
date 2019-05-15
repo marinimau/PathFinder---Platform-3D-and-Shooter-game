@@ -26,6 +26,8 @@ public class resetScene : MonoBehaviour
     public void Carica()
     {
         Load.doLoadAll();
+        PauseMenu.chiudi = true;
+
     }
 
 

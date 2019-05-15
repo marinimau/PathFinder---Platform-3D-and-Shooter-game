@@ -16,20 +16,24 @@ public class PauseMenu : MonoBehaviour
     public GameObject menuPrincipaleBtn;
     public GameObject areYouSure;
 
+    public static bool chiudi;
+
     public string sceneName = "MenuPrincipale_scena";
 
     void Start()
     {
         CameraObject = transform.GetComponent<Animator>();
         cameraObj.SetActive(false);
+        chiudi = false;
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) || chiudi)
         {
             isPaused = !isPaused;
             areYouSure.gameObject.SetActive(false);
+            chiudi = false;
         }
         if (isPaused)
         {
