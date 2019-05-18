@@ -8839,7 +8839,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958301590}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1958301595
 Transform:
   m_ObjectHideFlags: 0
@@ -8848,7 +8848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958301590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.57, y: 9.14, z: 23.23}
+  m_LocalPosition: {x: 8.57, y: 8.78, z: 23.23}
   m_LocalScale: {x: 6.5424, y: 1, z: 6.8072457}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9712,6 +9712,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1475115818}
     m_Modifications:
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: Priority
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 687ddb8cce80845c5a05612615a74eb1, type: 3}
     - target: {fileID: 6829524290683799553, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
         type: 3}
       propertyPath: m_Name

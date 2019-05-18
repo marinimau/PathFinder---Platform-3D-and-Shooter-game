@@ -20,7 +20,7 @@ public class SniperWarning : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player") && !CharacterControllerScript.isDead)
         {
-            Talk.id = 9;
+            Talk.id = 8;
         }
     }
 }
