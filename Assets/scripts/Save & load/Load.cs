@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 
 public static class Load
@@ -14,7 +15,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static PlayerData playerLoad()
     {
-        string path = Application.persistentDataPath + "/player.fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "player.fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -38,7 +39,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static LightData lightLoad(int i)
     {
-        string path = Application.persistentDataPath + "/light"+i+".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "light" +i+".fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -62,7 +63,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static CollectibleData collectibleLoad(int i)
     {
-        string path = Application.persistentDataPath + "/collectible" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "collectible" + i + ".fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -86,7 +87,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static SniperData sniperLoad(int i)
     {
-        string path = Application.persistentDataPath + "/sniper" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "sniper" + i + ".fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -111,7 +112,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static BorisData borisLoad(int i)
     {
-        string path = Application.persistentDataPath + "/boris" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "boris" + i + ".fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -136,7 +137,7 @@ public static class Load
      *--------------------------------------------------------------*/
     public static PatrolData patrolLoad(int i)
     {
-        string path = Application.persistentDataPath + "/patrol" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "patrol" + i + ".fun";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

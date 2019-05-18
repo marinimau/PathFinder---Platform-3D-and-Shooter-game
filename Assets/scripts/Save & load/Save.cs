@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 
 public static class Save
 {
-     /*--------------------------------------------------------------*
+
+    /*--------------------------------------------------------------*
       * 
       * Player
       *
@@ -15,10 +17,11 @@ public static class Save
     private static void playerSave(CharacterControllerScript characterControllerScipt)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/player.fun";
+        string path = Application.persistentDataPath +"/"+SceneManager.GetActiveScene().name+"player.fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PlayerData playerData = new PlayerData(characterControllerScipt);
+        Debug.Log("scena: "+SceneManager.GetActiveScene().name);
 
         formatter.Serialize(stream, playerData);
         stream.Close();
@@ -33,7 +36,7 @@ public static class Save
     private static void lightSave(lightPointCollider lpc, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/light"+i+".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "light" +i+".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         LightData lightData = new LightData(lpc);
@@ -52,7 +55,7 @@ public static class Save
     private static void collectibleSave(collectible cd, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/collectible"+i+".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "collectible" +i+".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         CollectibleData collectibleData = new CollectibleData(cd);
@@ -71,7 +74,7 @@ public static class Save
     private static void sniperSave(Sniper sniper, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/sniper" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "sniper" + i + ".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SniperData sniperData = new SniperData(sniper);
@@ -90,7 +93,7 @@ public static class Save
     private static void borisSave(Boris boris, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/boris" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "boris" + i + ".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         BorisData borisData = new BorisData(boris);
@@ -109,7 +112,7 @@ public static class Save
     private static void patrolSave(Patrol patrol, int i)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/patrol" + i + ".fun";
+        string path = Application.persistentDataPath + "/" + SceneManager.GetActiveScene().name + "patrol" + i + ".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PatrolData patrolData = new PatrolData(patrol);
