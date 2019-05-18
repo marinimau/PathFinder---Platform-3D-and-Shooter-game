@@ -12,6 +12,7 @@ public class Talk : MonoBehaviour
     public AudioSource beep;
     public AudioSource cadutaNoDanni;
     public AudioSource knife;
+    public AudioSource sniper;
 
     public static int id;
 
@@ -50,6 +51,9 @@ public class Talk : MonoBehaviour
                     break;
                 case 7:
                     knife.Play();
+                    break;
+                case 8:
+                    sniper.Play();
                     break;
             }
 
