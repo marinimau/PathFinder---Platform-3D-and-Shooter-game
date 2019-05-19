@@ -102,7 +102,7 @@ public class Patrol : MonoBehaviour
             kill();
         }
 
-        
+
         if (!CharacterControllerScript.player_contact || isDead)
         {
             /*------------------------
