@@ -72,6 +72,7 @@ public class allowToUseKnifeBoris : MonoBehaviour
         knife.SetActive(false);
         borisController.bodyHit=true;
         controller.setStandardWalkSpeed();
+        borisController.startMoving();
         yield return true;
     }
 

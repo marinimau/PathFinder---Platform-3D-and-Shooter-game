@@ -366,4 +366,10 @@ public class Boris : MonoBehaviour
         //animBoris.SetFloat("speedPercentage", 0.1f);
     }
 
+    public void startMoving()
+    {
+        this.speed = 1;
+        navMesh.isStopped = false;
+    }
+
 }
