@@ -20,6 +20,7 @@ public class FineLivello : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player") && CharacterControllerScript.key){
             ShowMessage.id = 9;
+            SceneLoader.loadNextLevel();
         }
     }
 }
