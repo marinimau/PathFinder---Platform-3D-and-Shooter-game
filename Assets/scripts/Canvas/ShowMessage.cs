@@ -84,6 +84,11 @@ public class ShowMessage : MonoBehaviour
                     isShowing = true;
                     showTimer = 2f;
                     break;
+                case 13:
+                    message.text = "Partita caricata";
+                    isShowing = true;
+                    showTimer = 2f;
+                    break;
             }
         } else{
             showTimer -= Time.deltaTime*0.7f;

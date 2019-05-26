@@ -211,16 +211,17 @@ public static class Load
         //contatti
         CharacterControllerScript.boss_contact = playerData.boss_contact;
         //se ero in una situazione di contatto ma quando carico non lo sono più
-        if (CharacterControllerScript.player_contact && !playerData.player_contact)
-        {
-            CharacterControllerScript.player_contact_deactivated = true;
-            CharacterControllerScript.player_contact = false;
-        }
-        else
-        {
-            CharacterControllerScript.player_contact_deactivated = playerData.player_contact_deactivated;
-        }
-        CharacterControllerScript.player_contact = playerData.player_contact;
+
+        //if (CharacterControllerScript.player_contact && !playerData.player_contact)
+        //{
+        //    CharacterControllerScript.player_contact_deactivated = true;
+        //    CharacterControllerScript.player_contact = false;
+        //}
+        //else
+        //{
+        //    CharacterControllerScript.player_contact_deactivated = playerData.player_contact_deactivated;
+        //}
+
 
 
         //game over
@@ -317,6 +318,19 @@ public static class Load
             }
             
         }
+
+
+        if (playerData.player_contact)
+            Show_stealth_status.icon = 2;
+        else
+            Show_stealth_status.icon = 0;
+        //CharacterControllerScript.player_contact = false;
+        //CharacterControllerScript.player_contact_deactivated = true;
+
+        //CharacterControllerScript.player_contact = playerData.player_contact;
+
+
+        ShowMessage.id = 13;
     }
 
 }
