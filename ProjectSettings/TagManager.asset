@@ -26,6 +26,7 @@ TagManager:
   - Sniper
   - Boris
   - Patrol
+  - DeathZone
   layers:
   - Default
   - TransparentFX

@@ -53,7 +53,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 0.025565155, g: 0.022828415, b: 0.028301895, a: 1}
+  m_Color: {r: 0.70354223, g: 0.9622642, b: 0.9105189, a: 1}
   m_Intensity: 30
   m_Range: 10
   m_SpotAngle: 16
@@ -205,6 +205,7 @@ MonoBehaviour:
   loaded: 0
   moved: 0
   oldPosition: {x: 0, y: 0, z: 0}
+  hidePosition: {x: 0, y: -100, z: 0}
 --- !u!1001 &465056316492549450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +277,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 8817bceb9795049c2ac9e91155990948, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 664339e92f4de854eb97a4018e8cb4fb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8817bceb9795049c2ac9e91155990948, type: 3}
 --- !u!1 &465056316492516330 stripped

@@ -14,6 +14,8 @@ public class allowToUseKnifeBoris : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //knife = GameObject.FindGameObjectWithTag("Coltello");
         anim = player.GetComponent<Animator>();
         allowKnife = false;
         controller = player.GetComponent<CharacterControllerScript>();

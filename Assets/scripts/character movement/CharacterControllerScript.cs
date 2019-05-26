@@ -539,4 +539,11 @@ public class CharacterControllerScript : MonoBehaviour
             health = 100;
         }
     }
+
+    private void OnOnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("DeathZone"))
+            decrHealth(100);
+            //Debug.Log("MUORI");
+        }
 }

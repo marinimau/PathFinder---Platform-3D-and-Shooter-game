@@ -212,6 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accesa: 0
   luce: {fileID: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  hidePos: {x: 0, y: 0, z: 0}
 --- !u!1 &3215144168864997160
 GameObject:
   m_ObjectHideFlags: 0

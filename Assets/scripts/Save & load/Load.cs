@@ -214,6 +214,7 @@ public static class Load
         if (CharacterControllerScript.player_contact && !playerData.player_contact)
         {
             CharacterControllerScript.player_contact_deactivated = true;
+            CharacterControllerScript.player_contact = false;
         }
         else
         {
