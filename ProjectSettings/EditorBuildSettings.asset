@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/SlimUI/Modern Menu 1/Scenes/MenuPrincipale_scena.unity
-    guid: 53e0db7c579d54f4da5d360b96be0985
+    path: Assets/Scenes/MenuPrincipale_scena.unity
+    guid: 015d22d1d03ba48fda7b1e2388e5c55b
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 90fe5b211929fd14a9e793fe363b7d78
   - enabled: 1
     path: Assets/Scenes/Fogna.unity
-    guid: 8203a3a62ccf9564f8d6fe76023a1fb0
+    guid: b62bfcd52c78f1247bf1a489d48d3172
   - enabled: 1
     path: Assets/Scenes/Boschetto.unity
     guid: 45a0d87afc012584bbb8b7987f752423

@@ -106,7 +106,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (sceneName != "")
         {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene("MenuPrincipale_scena", LoadSceneMode.Single);
         }
     }
 }
