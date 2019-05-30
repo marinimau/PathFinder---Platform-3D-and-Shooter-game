@@ -41,7 +41,7 @@ public class MainMenuNew : MonoBehaviour {
 
 	public void NewGame(){
 		if(sceneName != ""){
-			SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            SceneLoader.loadLevelById(1);
 		}
 	}
     
@@ -51,7 +51,10 @@ public class MainMenuNew : MonoBehaviour {
 		newGameBtn.gameObject.SetActive(false);
 	}
 
-
+    public void ContinueCampaign()
+    {
+        SceneLoader.loadMostAdvancedProgress();
+    }
 
 
     public void SelectLevel()
@@ -103,7 +106,7 @@ public class MainMenuNew : MonoBehaviour {
         Application.Quit();
     }
 
-
+    
 
 
 }

@@ -321,9 +321,19 @@ public static class Load
 
 
         if (playerData.player_contact)
+        {
             Show_stealth_status.icon = 2;
+            Debug.Log("VISTO");
+            CharacterControllerScript.player_contact = true;
+            CharacterControllerScript.player_contact_deactivated = false;
+        }
         else
+        {
             Show_stealth_status.icon = 0;
+            Debug.Log("NON VISTO");
+            CharacterControllerScript.player_contact = false;
+            CharacterControllerScript.player_contact_deactivated = true;
+        }
         //CharacterControllerScript.player_contact = false;
         //CharacterControllerScript.player_contact_deactivated = true;
 

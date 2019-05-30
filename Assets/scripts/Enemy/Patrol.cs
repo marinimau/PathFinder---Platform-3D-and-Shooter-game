@@ -13,7 +13,7 @@ public class Patrol : MonoBehaviour
 
     private float waitTime;
     private bool setWait;
-    public float startWaitTime = 1;
+    public float startWaitTime = 0;
 
     public float gravity = -12;
     public NavMeshAgent navMesh;
@@ -108,12 +108,17 @@ public class Patrol : MonoBehaviour
             /*------------------------
                 *  se il nemico non ci vede
                 * -----------------------*/
+
+
             if (CharacterControllerScript.player_contact_deactivated)
             {
                 //se il player è sfuggito
-                navMesh.SetDestination(moveSpots[randomSpots].position);
+                //navMesh.SetDestination(moveSpots[randomSpots].position);
+                //navMesh.speed = 1;
                 waitTime = 0;
                 animEnemy.SetBool("isShooting", false);
+
+                Debug.Log("Contact Deactivated");
             }
 
 
@@ -133,7 +138,7 @@ public class Patrol : MonoBehaviour
                     /*------------------------
                     *  vai alla prossima posizione
                     * -----------------------*/
-                    //randomSpots =(Random.Range(0, moveSpots.Length);
+                    //randomSpots = (Random.Range(0, moveSpots.Length));
                     if (moveSpots.Length == 0)
                     {
                         randomSpots = 0;
@@ -142,7 +147,7 @@ public class Patrol : MonoBehaviour
                     {
                         randomSpots = Random.Range(0, moveSpots.Length);
                     }
-                    navMesh.SetDestination(moveSpots[randomSpots].position);
+                    navMesh.SetDestination(moveSpots[randomSpots].position);    //randomSpots -> 0
                     navMesh.speed = 1;
                     animEnemy.SetBool("isWalking", true);
                     setWait = false;
@@ -151,9 +156,10 @@ public class Patrol : MonoBehaviour
                 else
                 {
                     /*------------------------
-                        *  aspetta nel waypoint
-                        * -----------------------*/
-                    waitTime -= Time.deltaTime * 0.01f;
+                    *  aspetta nel waypoint
+                    * -----------------------*/
+                    Debug.Log("ASPETTA NEL WAYPOINT");
+                    waitTime -= 0.001f;
                     navMesh.speed = 0;
                     animEnemy.SetBool("isWalking", false);
                     animEnemy.SetFloat("speedPercentage", 0);
@@ -163,11 +169,12 @@ public class Patrol : MonoBehaviour
             }
             else
             {
-               /*------------------------
-                *  cambio di posizione
-                * -----------------------*/
+                /*------------------------
+                 *  cambio di posizione
+                 * -----------------------*/
 
-                navMesh.destination = moveSpots[randomSpots].position;
+                Debug.Log("CAMBIO POSIZIONE");
+                navMesh.SetDestination(moveSpots[randomSpots].position);
                 if (navMesh.velocity.sqrMagnitude > Mathf.Epsilon)
                 {
                     transform.rotation = Quaternion.LookRotation(navMesh.velocity.normalized);
@@ -210,12 +217,16 @@ public class Patrol : MonoBehaviour
             bloodBody.Play();
             if (life > 0)
             {
-                if(CharacterControllerScript.specialBullet){
-                    decrLife(50*3);
-                } else{
+                if (CharacterControllerScript.specialBullet)
+                {
+                    decrLife(50 * 3);
+                }
+                else
+                {
                     decrLife(50);
                 }
-                if(life>0){
+                if (life > 0)
+                {
                     CharacterControllerScript.player_contact = true;
                     hitSound.Play();
                 }
@@ -246,9 +257,11 @@ public class Patrol : MonoBehaviour
                 Debug.Log("Nemico colpisce: " + hit.collider.gameObject.name);
                 if (hit.collider.gameObject.tag == "Player")
                 {
-                    if(!CharacterControllerScript.immortality){
+                    if (!CharacterControllerScript.immortality)
+                    {
                         CharacterControllerScript.decrHealth(16);
-                        if(CharacterControllerScript.isDead){
+                        if (CharacterControllerScript.isDead)
+                        {
                             ShowMessage.id = 8;
                         }
                     }

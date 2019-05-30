@@ -13,6 +13,20 @@ public class resetScene : MonoBehaviour
         {
             Save.doSaveAll();
         }
+
+        for (int idx = 0; idx < SceneLoader.scenes.Length; idx++)
+        {
+            if (SceneManager.GetActiveScene().name.Equals(SceneLoader.scenes[idx]))
+            {
+                if (SceneLoader.sceneLoaded[idx])
+                {
+                    Carica();
+                    SceneLoader.sceneLoaded[idx] = false;
+                }
+
+            }
+
+        }
     }
 
     // Update is called once per frame
@@ -30,7 +44,6 @@ public class resetScene : MonoBehaviour
     {
         Load.doLoadAll();
         PauseMenu.chiudi = true;
-
     }
 
 

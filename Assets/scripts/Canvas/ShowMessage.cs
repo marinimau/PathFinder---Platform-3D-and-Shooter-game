@@ -57,12 +57,12 @@ public class ShowMessage : MonoBehaviour
                 case 7:
                     message.text = "Missione fallita. Sei stato ucciso da un cecchino";
                     isShowing = true;
-                    showTimer = 25f;
+                    showTimer = 2f;
                     break;
                 case 8:
                     message.text = "Sei morto";
                     isShowing = true;
-                    showTimer = 25f;
+                    showTimer = 2f;
                     break;
                 case 9:
                     message.text = "Missione compiuta";
