@@ -89,6 +89,11 @@ public class ShowMessage : MonoBehaviour
                     isShowing = true;
                     showTimer = 2f;
                     break;
+                case 14:
+                    message.text = "Complimenti, hai completato il gioco.";
+                    isShowing = true;
+                    showTimer = 25f;
+                    break;
             }
         } else{
             showTimer -= Time.deltaTime*0.7f;

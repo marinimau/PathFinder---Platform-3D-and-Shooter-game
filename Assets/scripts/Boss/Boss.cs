@@ -279,6 +279,7 @@ public class Boss : MonoBehaviour
             isDead = true;
             killOk = true;
         }
+        ShowMessage.id = 14;
         Destroy(this);
 
     }
