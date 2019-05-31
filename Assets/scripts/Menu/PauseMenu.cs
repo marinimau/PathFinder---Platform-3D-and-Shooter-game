@@ -13,9 +13,9 @@ public class PauseMenu : MonoBehaviour
     Animator CameraObject;
     public GameObject riprendiBtn;
     public GameObject salvaBtn;
-    public GameObject ricominciaBtn;
     public GameObject menuPrincipaleBtn;
     public GameObject areYouSure;
+    public GameObject ricominciaBtn;
 
     public static bool chiudi;
 
@@ -39,11 +39,14 @@ public class PauseMenu : MonoBehaviour
         if (isPaused)
         {
             ActivateMenu();
-            if(CharacterControllerScript.isDead){
+            if (CharacterControllerScript.isDead)
+            {
                 riprendiBtn.SetActive(false);
                 salvaBtn.SetActive(false);
                 ricominciaBtn.SetActive(true);
-            } else{
+            }
+            else
+            {
                 riprendiBtn.SetActive(true);
                 salvaBtn.SetActive(true);
                 ricominciaBtn.SetActive(false);
@@ -116,7 +119,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (sceneName != "")
         {
-            SceneManager.LoadScene("MenuPrincipale_scena", LoadSceneMode.Single);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
 }

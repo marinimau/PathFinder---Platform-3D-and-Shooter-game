@@ -38,7 +38,8 @@ public class resetScene : MonoBehaviour
         Show_stealth_status.icon = 0;
         PauseMenu.chiudi = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        PauseMenu.chiudi = true;
+        PauseMenu.isPaused = false;
     }
-
 
 }
