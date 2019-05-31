@@ -18,7 +18,7 @@ public class resetScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     public void Salva()
@@ -38,6 +38,9 @@ public class resetScene : MonoBehaviour
         Show_stealth_status.icon = 0;
         PauseMenu.chiudi = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        CharacterControllerScript cs = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterControllerScript>();
+        cs.animator.Rebind();
+        //Load.doLoadAll();
         PauseMenu.chiudi = true;
         PauseMenu.isPaused = false;
     }

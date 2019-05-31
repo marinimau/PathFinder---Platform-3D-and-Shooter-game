@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour
             {
                 riprendiBtn.SetActive(false);
                 salvaBtn.SetActive(false);
-                ricominciaBtn.SetActive(true);
+                ricominciaBtn.SetActive(false);
             }
             else
             {

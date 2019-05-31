@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -9379,6 +9379,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 986073286431277339, guid: 6d58daa62eeb34b73b6432a8bff1a830,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 877307221925990203, guid: 6d58daa62eeb34b73b6432a8bff1a830,
         type: 3}
       propertyPath: m_Name
@@ -9438,11 +9443,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 986073286431277339, guid: 6d58daa62eeb34b73b6432a8bff1a830,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d58daa62eeb34b73b6432a8bff1a830, type: 3}
@@ -10425,6 +10425,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: Priority
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 687ddb8cce80845c5a05612615a74eb1, type: 3}
+    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: field of view
+      value: 63
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_FocalLength
+      value: 19.58222
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6829524290683799557, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10480,26 +10515,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: field of view
-      value: 63
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: m_FocalLength
-      value: 19.58222
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829524289938454840, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6829524289938454836, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
         type: 3}
       propertyPath: m_IsActive
@@ -10535,21 +10550,6 @@ PrefabInstance:
       propertyPath: sniper
       value: 
       objectReference: {fileID: 1972649586}
-    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: Priority
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9017147497728377630, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 687ddb8cce80845c5a05612615a74eb1, type: 3}
     - target: {fileID: 6829524290513522944, guid: 4bcd3953431c344269bc7ba5ca1dafe2,
         type: 3}
       propertyPath: m_TagString
