@@ -3,7 +3,7 @@
 ![alt text](https://media.discordapp.net/attachments/462245716073644033/584141655741825056/pepe.png)
 ![alt text](https://media.discordapp.net/attachments/462245716073644033/584142706184421376/pepessluce.png)
 
-PathFinder is a 3rd person shooter & 3D platform game. Write with Unity 3D and C#.
+PathFinder is a 3rd person shooter & 3D platform game. Is write with Unity 3D and C#.
 
 The game is composed by 3 levels. The aim of each level is found a key collectible. This key can open the door which leads to the next level.
 
