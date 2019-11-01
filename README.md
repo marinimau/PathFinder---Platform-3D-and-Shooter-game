@@ -17,20 +17,25 @@ The best way to accomplish the levels is to keep stealth. The lights won't help 
 
 ## Links
 
+Windows: 
 ```bash
-Windows:
-
-MacOS: https://drive.google.com/file/d/1AMSxlHut667rca1fe154Hcc7aDH9kOUG/view?usp=sharing
-
-Linux:
+https://drive.google.com/file/d/1F9MzNKFf9jOZGFqVmIarj02TQOI5sUeE/view?usp=drivesdk
 ```
+MacOS:
+```bash
+https://drive.google.com/file/d/1AMSxlHut667rca1fe154Hcc7aDH9kOUG/view?usp=sharing
+```
+Linux:
+
 
 ## Contributing
-Riccardo Espa
+[Mauro Marini](https://github.com/marinimau/)
 
-Marcello Agnese
+[Riccardo Espa](https://github.com/OpBlkBeard)
 
-Enrico Carnio
+[Marcello Agnese](https://github.com/marcelloagnese)
+
+[Enrico Carnio](https://github.com/EnricoCarnio)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/) 
+[MPL](https://choosealicense.com/licenses/mpl-2.0/) 
