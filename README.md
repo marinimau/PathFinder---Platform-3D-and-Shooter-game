@@ -9,6 +9,10 @@ The game is composed by 3 levels. The aim of each level is found a key collectib
 
 The best way to accomplish the levels is to keep stealth. The lights won't help you, shoot them!
 
+## Warning
+
+Many assets used in this project, for lack of space, are not in the repository.
+
 ## Installation
 
 1) Download the correct executable file for your OS from the 'Links' section below.
