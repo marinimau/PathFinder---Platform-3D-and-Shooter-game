@@ -16,7 +16,7 @@ The best way to accomplish the levels is to keep stealth. The lights won't help 
 
 ## Warning
 
-Many assets used in this project, for lack of space, are not in the repository.
+Many assets used in this project, for lack of space, are not in the repository. If you play new campain the first level is a training level without assets.
 
 ## Installation
 
