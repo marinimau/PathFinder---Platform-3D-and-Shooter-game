@@ -25,7 +25,7 @@ The best way to accomplish the levels is to keep stealth. The lights won't help 
 2) Run the file. 
 
 
-## Links
+## Links - standalone builds
 
 Windows: 
 ```bash
