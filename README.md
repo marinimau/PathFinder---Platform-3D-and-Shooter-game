@@ -8,15 +8,16 @@
 ![alt text](https://media.discordapp.net/attachments/462245716073644033/584141655741825056/pepe.png)
 ![alt text](https://media.discordapp.net/attachments/462245716073644033/584142706184421376/pepessluce.png)
 
-PathFinder is a 3rd person shooter & 3D platform game. Is write with Unity 3D and C#.
+PathFinder is a 3rd person shooter & 3D platform game. It is write with Unity 3D and C#.
 
-The game is composed by 3 levels. The aim of each level is found a key collectible. This key can open the door which leads to the next level.
+The game is composed by 3 levels. The aim of each level is to find a key collectible. This key can open the door which leads to the next level.
 
 The best way to accomplish the levels is to keep stealth. The lights won't help you, shoot them!
 
 ## Warning
 
-Many assets used in this project, for lack of space, are not in the repository. If you play new campain the first level is a training level without assets.
+1) Many assets used in this project, for lack of space, are not in the repository (only if you need to build it from the source code). 
+2) If you play new campain the first level is a training/debug level without assets.
 
 ## Installation
 
