@@ -1,7 +1,7 @@
 # PathFinder
 
 ## Gameplay
-[![GamePlay](https://media.discordapp.net/attachments/483291446598696970/640941120372736010/path.png?width=961&height=331)](https://youtu.be/xVvjlPoNaZA "RMI Fibonacci Java")
+[![GamePlay](https://media.discordapp.net/attachments/483291446598696970/640941120372736010/path.png?width=961&height=331)](https://youtu.be/xVvjlPoNaZA "PF gameplay")
 
 ## Images
 ![alt text](https://media.discordapp.net/attachments/462245716073644033/584138118127681567/unknown.png?width=1920&height=810)
